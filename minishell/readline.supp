@@ -1,0 +1,20 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    readline.supp                                      :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/10 17:22:47 by jqueijo-          #+#    #+#              #
+#    Updated: 2024/06/10 17:24:34 by jqueijo-         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp
+
+{
+    leak readline
+    Memcheck:Leak
+    ...
+    fun:readline
+}
