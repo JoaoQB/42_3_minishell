@@ -6,7 +6,7 @@
 #    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/06/12 11:45:52 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/06/20 11:12:09 by jqueijo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,10 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/processing/process_input.c \
 	$(SRC_PATH)/processing/trim_input.c \
 	$(SRC_PATH)/processing/tokenize_input.c \
+	$(SRC_PATH)/processing/reorg_input.c \
+	$(SRC_PATH)/processing/tokenize_refine.c \
+	$(SRC_PATH)/processing/reorg_word.c \
+	# $(SRC_PATH)/parsing/first_pars.c \
 
 # OBJ = $(SRC:.c=.o)
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)

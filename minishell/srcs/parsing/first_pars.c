@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_x.c                                             :+:      :+:    :+:   */
+/*   first_pars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/09 09:55:50 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/17 13:31:42 by jqueijo-         ###   ########.fr       */
+/*   Created: 2024/06/17 12:23:33 by jqueijo-          #+#    #+#             */
+/*   Updated: 2024/06/17 16:06:31 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_isoperator(int c)
-{
-	if (c == '<' || c == '>' || c == '|' || c == '$')
-		return (1);
-	else
-		return (0);
-}
+// void	first_pars(t_main *main_s, t_token *first)
+// {
+// 	t_token	*current;
 
-int	ft_isspace(int c)
-{
-	if ((c >= '\t' && c <= '\r') || c == ' ')
-		return (1);
-	else
-		return (0);
-}
+// 	current = first;
+// 	while (current)
+// 	{
+// 		if (current->type == WORD)
+// 		{
+// 			check_token_word(current);
+// 		}
+// 	}
+// }

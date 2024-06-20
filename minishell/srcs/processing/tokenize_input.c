@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize.c                                         :+:      :+:    :+:   */
+/*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:11:02 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/12 10:58:17 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:05:28 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,15 @@ static void	append_token_back(t_token *first, t_token *new_node)
 	t_token	*last;
 
 	last = get_last_token(first);
+	if (!last)
+	{
+		first = new_node;
+		return ;
+	}
 	last->next = new_node;
 }
 
-static int	token_assign(t_token *token)
+int	token_assign(t_token *token)
 {
 	if (!token)
 		return (-1);
@@ -46,8 +51,6 @@ static int	token_assign(t_token *token)
 		return (RED_OUT_APP);
 	else if (!ft_strncmp(token->value, "|", 2) && token->value[1] == '\0')
 		return (PIPE);
-	else if (!ft_strncmp(token->value, "$", 2) && token->value[1] == '\0')
-		return (EXP);
 	else if (!ft_strncmp(token->value, "'", 2) && token->value[1] == '\0')
 		return (QT_SIN);
 	else if (!ft_strncmp(token->value, "\"", 2) && token->value[1] == '\0')
