@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/20 11:09:17 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:55:46 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ int		token_assign(t_token *token);
 /* reorg_input.c */
 char	*reorg_input(t_main *main_s);
 
-/* tokenize_refine.c */
-t_token	*tokenize_refine(t_main *main_s);
+/* tokenize_refine_word.c */
+t_token	*tokenize_refine_word(t_main *main_s);
 void	reindex_tokens(t_token *first);
 void	append_token_front(t_token **first, t_token *target, t_token *new);
 
@@ -122,14 +122,15 @@ void	append_token_front(t_token **first, t_token *target, t_token *new);
 void	reorg_word(t_main *main_s, t_token *token);
 t_token	*ft_token_new_late(char *string, int len);
 
-// /* extract_before_operator.c */
-// void	extract_before_operator(t_main *main_s, t_token *token, int len);
-
 /************************/
 /******* PARSING ********/
 /************************/
 
 /* first_pars.c */
-// void	first_pars(t_main *main_s, t_token *first);
+bool	first_pars(t_main *main_s, t_token *first);
+
+/* error_msg.c */
+void	syntax_error_msg(t_main *main_s);
+void	syntax_error_pipe(t_main *main_s);
 
 #endif

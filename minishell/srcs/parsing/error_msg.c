@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reorg_input.c                                      :+:      :+:    :+:   */
+/*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 12:10:40 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/26 11:56:24 by jqueijo-         ###   ########.fr       */
+/*   Created: 2024/06/26 10:31:51 by jqueijo-          #+#    #+#             */
+/*   Updated: 2024/06/26 11:25:11 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*reorg_input(t_main *main_s)
+void	syntax_error_pipe(t_main *main_s)
 {
-	// char	*reorg;
+	write(2, "Syntax error near unexpected token `|'\n", 40);
+}
 
-	main_s->tokens = tokenize_refine_word(main_s);
-	first_pars(main_s, main_s->tokens);
-	// tokenize_smarter(main_s->tokens);
-	return (NULL);
+void	syntax_error_msg(t_main *main_s)
+{
+	write(2, "Syntax error\n", 14);
 }

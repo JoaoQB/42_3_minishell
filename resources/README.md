@@ -103,3 +103,73 @@ bash: warning: here-document at line 7 delimited by end-of-file (wanted `EOF')
 jqueijo-@c1r16s15:~$
 
 If on here_doc and start to type but not press enter and then Ctrl+D, then it does nothing.
+
+# First Pars
+
+## Pipes
+
+### ending in pipe
+
+When doing `cmd |` (spaces after allowed e.g `cmd |   `), bash opens "here_doc".
+```
+jqueijo-@c2r10s6:~$ ls |
+>
+```
+Waits for input (if pressed enter, new line, e.g.:)
+```
+ls |
+>
+>
+```
+When input is sent, checks if it doable, e.g.:
+```
+cd .. |
+> ls
+42-EXAM  Documents  eval     jqueijo-  Pictures   Public    snap       Videos
+Desktop  Downloads  goinfre  Music     projectos  sgoinfre  Templates
+```
+
+or if not possible:
+```
+pwd |
+> lol
+Command 'lol' not found, did you mean:
+```
+
+In any case, when arrow is pressed, history becomes `cmd | cmd`.
+Please note that spaces are kept. e.g.:
+
+```
+pwd |       '
+> lol'
+
+becomes
+pwd |        lol'
+```
+
+```
+pwd |'
+>         lol'
+
+becomes
+'pwd |         lol'
+```
+
+```
+pwd |'
+> lol'
+
+becomes
+pwd | lol'
+```
+
+MIGHT NOT NEED TO HANDLE NOTHING AFTER PIPE, JUST DO SYNTAX ERROR
+
+### after pipe
+
+if pipe (`cmd | |`)
+
+bash: syntax error near unexpected token `|'
+
+if (cat | cat | cat | ls)
+	waits for n eofs, n being number of cats.
