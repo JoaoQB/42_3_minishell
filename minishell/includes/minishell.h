@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/05 16:28:27 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:55:09 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,15 @@ typedef struct s_main
 	int		*fd_pipeline[2]; // file descriptors from eachs of the execve processes rest is all closed
 	int		*pid_pipeline; // process id of each of the execve child processes.
 	bool	silence_info; // if string ends in & nothing will be printed at any point.
+	t_main	*next; // for possible linked list?
 }	t_main;
+
+typedef struct s_all_mains
+{
+	t_main	*first; // linked list of t_main // structure for && ||
+	char	**envp; // environment variables this will also be used for $VAR subs in the " "
+	bool	silence_info; // if string ends in & nothing will be printed at any point.
+} t_all_mains;
 
 /************************/
 /********* INIT *********/
