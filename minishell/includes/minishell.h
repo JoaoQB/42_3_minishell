@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/05 16:55:09 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:04:45 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 // # include <>
 
 typedef struct s_token	t_token;
+typedef struct s_main	t_main;
 
 typedef enum e_token_type
 {

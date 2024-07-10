@@ -2,3 +2,5 @@
 libft.a
 /minishell/minishell
 /minishell/obj
+/.vscode
+/resources/other_minishells
