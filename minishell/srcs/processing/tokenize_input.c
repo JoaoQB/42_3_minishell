@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:11:02 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/20 11:05:28 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:40:51 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ t_token	*tokenize_input(char **words)
 			append_token_back(first, new_token);
 		i++;
 	}
+	// print_tokens(first);
 	return (first);
 }

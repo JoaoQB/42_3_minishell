@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 14:11:50 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/20 11:12:36 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:10:41 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	check_after_operator(char *string)
 	else if (!ft_strncmp(string, ">>", 2) && string[2] != '\0')
 		return (true);
 	else if (string[1] != '\0' && (ft_strncmp(string, ">>", 2)
-		&& ft_strncmp(string, "<<", 2)))
+			&& ft_strncmp(string, "<<", 2)))
 		return (true);
 	return (false);
 }
@@ -86,7 +86,7 @@ void	reorg_word(t_main *main_s, t_token *current)
 	{
 		if (!ft_strncmp(current->value, "<<", 2)
 			|| !ft_strncmp(current->value, ">>", 2))
-				extract_before_operator(main_s, current, 2);
+			extract_before_operator(main_s, current, 2);
 		else
 			extract_before_operator(main_s, current, 1);
 	}

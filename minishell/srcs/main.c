@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:42:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/12 10:47:36 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:30:38 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	main(int argc, char **argv, char **envp)
 	main_s = malloc(sizeof(t_main));
 	if (!main_s)
 		return (1);
-	// main_s = init_main(main_s, envp);
 	repl(main_s, envp);
 	cleanup_main(main_s);
 	return (0);
