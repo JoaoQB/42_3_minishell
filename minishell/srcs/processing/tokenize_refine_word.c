@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_refine.c                                  :+:      :+:    :+:   */
+/*   tokenize_refine_word.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:13:32 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/26 11:55:12 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:43:00 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,10 @@ t_token	*tokenize_refine_word(t_main *main_s)
 	t_token	*current;
 
 	current = main_s->tokens;
+	// printf("entering tokenize_refine_word\n");
 	while (current)
 	{
+		// printf("entering tokenize_refine_word loop\n");
 		if (current->type == WORD)
 		{
 			if (check_token_word(main_s, current))

@@ -6,33 +6,39 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:23:33 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/26 11:54:53 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:43:22 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static bool	pars_redin(t_main *main_s, t_token *current)
+static bool	pars_redirection(t_main *main_s, t_token *current)
 {
 	t_token	*next;
 
 	if (!current->next)
 	{
-		synstax_error_msg(main_s);
+		syntax_error_msg(main_s);
 		return (false);
 	}
+	next = current->next;
+	if (next->type != WORD && next->type != QT_SIN && next->type != QT_DBL)
+	{
+		syntax_error_msg(main_s);
+		return (false);
+	}
+	return (true);
 }
 
 /* Checking if after pipe comes nothing or other pipe */
+/* If after pipe comes nothing, return syntax error */
 static bool	pars_pipe(t_main *main_s, t_token *current)
 {
 	t_token	*next;
 
 	if (!current->next)
 	{
-		// opens here_doc line to check for rest of input.
-		// pipe_doc(current); TODO
-		syntar_error_pipe(main_s);
+		syntax_error_pipe(main_s);
 		return (false);
 	}
 	else
@@ -50,13 +56,22 @@ bool	first_pars(t_main *main_s, t_token *first)
 	t_token	*current;
 
 	current = first;
+	// printf("entered first pars \n");
 	while (current)
 	{
+		// printf("checking first pars\n");
 		if (current->type == PIPE)
+		{
 			if (!pars_pipe(main_s, current))
 				return (false);
-		else if (current->type == RED_IN)
-			if (!pars_redin(main_s, current))
+		}
+		else if (current->type == RED_IN || current->type == RED_OUT
+			|| current->type == RED_OUT_APP)
+		{
+			if (!pars_redirection(main_s, current))
 				return (false);
+		}
+		current = current->next;
 	}
+	return (true);
 }

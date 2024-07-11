@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:10:33 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/17 12:06:07 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:41:58 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*trim_input(t_main	*main_s, char *user_input)
 	if (!words)
 		return (NULL);
 	main_s->tokens = tokenize_input(words);
+	// print_tokens(main_s->tokens);
 	total_len = 0;
 	i = -1;
 	while (words[++i])

@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/11 10:56:57 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/11 10:58:38 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stddef.h>
 # include <stdio.h>
 # include <stdbool.h>
-// # include <>
+# include <unistd.h>
 
 typedef struct s_token	t_token;
 typedef struct s_main	t_main;
@@ -51,14 +51,14 @@ typedef struct s_token
 
 typedef struct s_main
 {
+	char	**menv;
+	t_token	*tokens;
 	char	*user_input;
 	char	*input_trim;
 	char	*input_reorg;
-	t_token	*tokens;
-	char	**menv;
-	int		exe_fd[2]; // initial file descriptor from the < >> >> >
-	int		size; // number of commands
 	char	***cmd; // list of commands and flags to be execved
+	int		size; // number of commands
+	int		exe_fd[2]; // initial file descriptor from the < >> >> >
 	int		*fd_pipeline[2]; // file descriptors from eachs of the execve processes rest is all closed
 	int		*pid_pipeline; // process id of each of the execve child processes.
 	bool	silence_info; // if string ends in & nothing will be printed at any point.
@@ -70,7 +70,7 @@ typedef struct s_all_mains
 	t_main	*first; // linked list of t_main // structure for && ||
 	char	**envp; // environment variables this will also be used for $VAR subs in the " "
 	bool	silence_info; // if string ends in & nothing will be printed at any point.
-} t_all_mains;
+}	t_all_mains;
 
 /************************/
 /********* INIT *********/
@@ -116,7 +116,8 @@ char	**split_into_words(char const *s);
 
 /* process_input.c */
 void	process_input(t_main *main_s, char *user_input);
-void 	print_tokens(t_token *tokens);
+void	print_tokens(t_token *tokens);
+char	*reorg_input(t_main *main_s);
 
 /* trim_input.c */
 char	*trim_input(t_main	*main_s, char *user_input);
@@ -124,9 +125,6 @@ char	*trim_input(t_main	*main_s, char *user_input);
 /* tokenize_input.c */
 t_token	*tokenize_input(char **words);
 int		token_assign(t_token *token);
-
-/* reorg_input.c */
-char	*reorg_input(t_main *main_s);
 
 /* tokenize_refine_word.c */
 t_token	*tokenize_refine_word(t_main *main_s);

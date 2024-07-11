@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/17 16:25:05 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:45:39 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,22 @@ void print_tokens(t_token *tokens)
     }
 }
 
+char	*reorg_input(t_main *main_s)
+{
+	// char	*reorg;
+
+	main_s->tokens = tokenize_refine_word(main_s);
+	print_tokens(main_s->tokens);
+	if (!first_pars(main_s, main_s->tokens))
+		return (NULL);
+	// tokenize_smarter(main_s->tokens);
+	return (NULL);
+}
+
 void	process_input(t_main *main_s, char *user_input)
 {
-	// if (main_s->input_trim)
 	main_s->input_trim = trim_input(main_s, user_input);
 	printf("Trim Input: '%s'\n", main_s->input_trim);
 	print_tokens(main_s->tokens);
 	main_s->input_reorg = reorg_input(main_s);
-	print_tokens(main_s->tokens);
 }
