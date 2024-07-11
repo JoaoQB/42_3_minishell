@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:11:02 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/10 13:40:51 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:01:18 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static t_token	*ft_token_new(char **words, int i)
 	new_token->type = token_assign(new_token);
 	new_token->index = i;
 	new_token->next = NULL;
+	new_token->cmd = NULL;
 	return (new_token);
 }
 
@@ -107,6 +108,5 @@ t_token	*tokenize_input(char **words)
 			append_token_back(first, new_token);
 		i++;
 	}
-	// print_tokens(first);
 	return (first);
 }

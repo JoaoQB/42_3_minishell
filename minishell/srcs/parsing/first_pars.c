@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:23:33 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/10 13:43:22 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:19:31 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ bool	first_pars(t_main *main_s, t_token *first)
 	t_token	*current;
 
 	current = first;
-	// printf("entered first pars \n");
 	while (current)
 	{
-		// printf("checking first pars\n");
 		if (current->type == PIPE)
 		{
 			if (!pars_pipe(main_s, current))

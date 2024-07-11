@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/11 10:58:38 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:58:12 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 typedef struct s_token	t_token;
 typedef struct s_main	t_main;
 
+/* Other Possible sub-tokens: CMD_BUILTIN/EXTERNAL; PATH_ABSOLUTE/RELATIVE*/
 typedef enum e_token_type
 {
 	RED_IN,
@@ -44,7 +45,7 @@ typedef struct s_token
 {
 	int		type;
 	char	*value;
-	char	**cmd; // list of commands and flags for cmd tokens
+	char	**cmd;
 	int		index;
 	t_token	*next;
 }	t_token;
@@ -56,28 +57,28 @@ typedef struct s_main
 	char	*user_input;
 	char	*input_trim;
 	char	*input_reorg;
-	char	***cmd; // list of commands and flags to be execved
-	int		size; // number of commands
-	int		exe_fd[2]; // initial file descriptor from the < >> >> >
-	int		*fd_pipeline[2]; // file descriptors from eachs of the execve processes rest is all closed
-	int		*pid_pipeline; // process id of each of the execve child processes.
-	bool	silence_info; // if string ends in & nothing will be printed at any point.
-	t_main	*next; // for possible linked list?
+	char	***cmd;
+	int		size;
+	int		exe_fd[2];
+	int		*fd_pipeline[2];
+	int		*pid_pipeline;
+	bool	silence_info;
+	t_main	*next;
 }	t_main;
 
-typedef struct s_all_mains
-{
-	t_main	*first; // linked list of t_main // structure for && ||
-	char	**envp; // environment variables this will also be used for $VAR subs in the " "
-	bool	silence_info; // if string ends in & nothing will be printed at any point.
-}	t_all_mains;
+// typedef struct s_all_mains
+// {
+// 	t_main	*first;
+// 	char	**envp;
+// 	bool	silence_info;
+// }	t_all_mains;
 
 /************************/
 /********* INIT *********/
 /************************/
 
 /* init.c */
-t_main	*init_main(t_main *main, char **envp);
+void	init_main(t_main *main_s, char **envp);
 
 /* cleanup.c */
 void	cleanup_main(t_main *main_struct);
@@ -134,6 +135,9 @@ void	append_token_front(t_token **first, t_token *target, t_token *new);
 /* reorg_word.c */
 void	reorg_word(t_main *main_s, t_token *token);
 t_token	*ft_token_new_late(char *string, int len);
+
+/* tokenize_smarter.c */
+void	tokenize_smarter(t_token *first);
 
 /************************/
 /******* PARSING ********/
