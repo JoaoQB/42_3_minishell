@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:28:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/14 16:38:23 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/14 16:43:19 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	tokenize_args(t_token *current, int type)
 		while (current && current->type != PIPE)
 		{
 			if (current->type == RED_IN || current->type == RED_OUT
-			|| current->type == RED_OUT_APP)
+				|| current->type == RED_OUT_APP)
 				current->next->type = PATH;
 			else if (current->type == HERE_DOC)
 				current->next->type = DELIM;
@@ -51,12 +51,12 @@ void	tokenize_smarter(t_token *first)
 		else if (current->type == PIPE)
 			no_cmd = true;
 		else if ((current->type == RED_IN || current->type == RED_OUT
-			|| current->type == RED_OUT_APP)
+				|| current->type == RED_OUT_APP)
 			&& current->next && current->next->type == WORD)
-				current->next->type = PATH;
+			current->next->type = PATH;
 		else if (current->type == HERE_DOC
 			&& current->next && current->next->type == WORD)
-				current->next->type = DELIM;
+			current->next->type = DELIM;
 		current = current->next;
 	}
 }
