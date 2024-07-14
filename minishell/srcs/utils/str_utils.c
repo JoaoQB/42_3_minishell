@@ -6,11 +6,28 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:35:30 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/10 15:36:18 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/14 10:59:47 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*ft_strcat(char *dest, const char *src)
+{
+	char	*dest_end;
+
+	dest_end = dest;
+	while (*dest_end != '\0')
+		dest_end++;
+	while (*src != '\0')
+	{
+		*dest_end = *src;
+		dest_end++;
+		src++;
+	}
+	*dest_end = '\0';
+	return (dest);
+}
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {

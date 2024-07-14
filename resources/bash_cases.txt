@@ -1,0 +1,6 @@
+ls > output.txt > input.txt Makefile
+	Makefile is an arg of ls.
+	output.txt is created if it didn't exist.
+	redirection is overwritten to input.txt
+	output.txt is now empty.
+	input.txt has Makefile written.

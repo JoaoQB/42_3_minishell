@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/11 12:58:12 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/14 15:55:51 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef enum e_token_type
 {
 	RED_IN,
 	RED_OUT,
-	DELIM,
+	HERE_DOC,
 	RED_OUT_APP,
 	PIPE,
 	QT_SIN,
@@ -38,6 +38,7 @@ typedef enum e_token_type
 	WORD,
 	CMD,
 	ARG,
+	DELIM,
 	PATH
 }	t_token_type;
 
@@ -103,6 +104,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+char	*ft_strcat(char *dest, const char *src);
 
 /* is_x.c */
 int		ft_isspace(int c);
@@ -119,6 +121,7 @@ char	**split_into_words(char const *s);
 void	process_input(t_main *main_s, char *user_input);
 void	print_tokens(t_token *tokens);
 char	*reorg_input(t_main *main_s);
+char	*concat_tokens(t_token *first);
 
 /* trim_input.c */
 char	*trim_input(t_main	*main_s, char *user_input);
