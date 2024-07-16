@@ -6,11 +6,29 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:28:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/14 16:43:19 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/15 12:45:47 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	count_cmd_size(t_token *first)
+{
+	int		cmd_size;
+	t_token	*current;
+
+	if (!first)
+		return (0);
+	cmd_size = 0;
+	current = first;
+	while (current)
+	{
+		if (current->type == CMD)
+			cmd_size++;
+		current = current->next;
+	}
+	return (cmd_size);
+}
 
 static void	tokenize_args(t_token *current, int type)
 {
