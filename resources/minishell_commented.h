@@ -18,7 +18,7 @@ typedef enum e_token_type
 {
 	RED_IN,
 	RED_OUT,
-	DELIM,
+	HERE_DOC,
 	RED_OUT_APP,
 	PIPE,
 	QT_SIN,
@@ -26,6 +26,7 @@ typedef enum e_token_type
 	WORD,
 	CMD,
 	ARG,
+	DELIM,
 	PATH
 }	t_token_type;
 

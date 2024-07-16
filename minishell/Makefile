@@ -6,7 +6,7 @@
 #    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/07/11 11:52:37 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/07/16 17:05:55 by jqueijo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,14 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/utils/str_utils.c \
 	$(SRC_PATH)/utils/is_x.c \
 	$(SRC_PATH)/utils/split_into_words.c \
+	$(SRC_PATH)/utils/print_utils.c \
 	$(SRC_PATH)/processing/process_input.c \
 	$(SRC_PATH)/processing/trim_input.c \
 	$(SRC_PATH)/processing/tokenize_input.c \
 	$(SRC_PATH)/processing/tokenize_refine_word.c \
 	$(SRC_PATH)/processing/reorg_word.c \
 	$(SRC_PATH)/processing/tokenize_smarter.c \
+	$(SRC_PATH)/processing/create_cmd_array.c \
 	$(SRC_PATH)/parsing/first_pars.c \
 	$(SRC_PATH)/parsing/error_msg.c \
 

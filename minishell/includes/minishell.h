@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/11 12:58:12 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:08:47 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef enum e_token_type
 {
 	RED_IN,
 	RED_OUT,
-	DELIM,
+	HERE_DOC,
 	RED_OUT_APP,
 	PIPE,
 	QT_SIN,
@@ -38,6 +38,7 @@ typedef enum e_token_type
 	WORD,
 	CMD,
 	ARG,
+	DELIM,
 	PATH
 }	t_token_type;
 
@@ -81,10 +82,11 @@ typedef struct s_main
 void	init_main(t_main *main_s, char **envp);
 
 /* cleanup.c */
-void	cleanup_main(t_main *main_struct);
-void	free_double_array(char **array);
 void	free_main_input(t_main *main_s);
 void	free_tokens(t_token *token);
+void	cleanup_main(t_main *main_struct);
+void	free_double_array(char **array);
+void	free_triple_array(char ***array);
 
 /* env.c */
 char	**get_env(char **envp);
@@ -103,6 +105,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+char	*ft_strcat(char *dest, const char *src);
 
 /* is_x.c */
 int		ft_isspace(int c);
@@ -111,14 +114,18 @@ int		ft_isoperator(int c);
 /* split_spaces.c */
 char	**split_into_words(char const *s);
 
+/* print_utils.c */
+void	print_tokens(t_token *tokens);
+void	print_cmd_array(char ***cmd);
+
 /************************/
 /****** PROCESSING ******/
 /************************/
 
 /* process_input.c */
 void	process_input(t_main *main_s, char *user_input);
-void	print_tokens(t_token *tokens);
 char	*reorg_input(t_main *main_s);
+char	*concat_tokens(t_token *first);
 
 /* trim_input.c */
 char	*trim_input(t_main	*main_s, char *user_input);
@@ -138,6 +145,10 @@ t_token	*ft_token_new_late(char *string, int len);
 
 /* tokenize_smarter.c */
 void	tokenize_smarter(t_token *first);
+int		count_cmd_size(t_token *first);
+
+/* create_cmd_array.c */
+char	***create_cmd_array(t_main *main_s);
 
 /************************/
 /******* PARSING ********/

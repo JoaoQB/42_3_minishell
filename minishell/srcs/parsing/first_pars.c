@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:23:33 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/11 11:19:31 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:50:56 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ static bool	pars_redirection(t_main *main_s, t_token *current)
 	return (true);
 }
 
-/* Checking if after pipe comes nothing or other pipe */
-/* If after pipe comes nothing, return syntax error */
 static bool	pars_pipe(t_main *main_s, t_token *current)
 {
 	t_token	*next;
@@ -64,7 +62,7 @@ bool	first_pars(t_main *main_s, t_token *first)
 				return (false);
 		}
 		else if (current->type == RED_IN || current->type == RED_OUT
-			|| current->type == RED_OUT_APP)
+			|| current->type == RED_OUT_APP || current->type == HERE_DOC)
 		{
 			if (!pars_redirection(main_s, current))
 				return (false);

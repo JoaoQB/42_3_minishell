@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:11:02 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/11 13:01:18 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/14 15:57:39 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	token_assign(t_token *token)
 	else if (!ft_strncmp(token->value, ">", 2) && token->value[1] == '\0')
 		return (RED_OUT);
 	else if (!ft_strncmp(token->value, "<<", 3) && token->value[2] == '\0')
-		return (DELIM);
+		return (HERE_DOC);
 	else if (!ft_strncmp(token->value, ">>", 3) && token->value[2] == '\0')
 		return (RED_OUT_APP);
 	else if (!ft_strncmp(token->value, "|", 2) && token->value[1] == '\0')
