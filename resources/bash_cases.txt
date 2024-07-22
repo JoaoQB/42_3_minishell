@@ -4,3 +4,18 @@ ls > output.txt > input.txt Makefile
 	redirection is overwritten to input.txt
 	output.txt is now empty.
 	input.txt has Makefile written.
+
+echo "
+Syntax Error
+
+echo " ' " '
+Syntax Error
+
+echo " ' "
+ '
+
+echo ""
+(new_line)
+
+echo " ' " ' "
+Syntax Error

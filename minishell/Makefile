@@ -6,7 +6,7 @@
 #    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/07/16 17:05:55 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/07/22 14:28:35 by jqueijo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,11 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/utils/len_utils.c \
 	$(SRC_PATH)/utils/str_utils.c \
 	$(SRC_PATH)/utils/is_x.c \
-	$(SRC_PATH)/utils/split_into_words.c \
 	$(SRC_PATH)/utils/print_utils.c \
 	$(SRC_PATH)/processing/process_input.c \
 	$(SRC_PATH)/processing/trim_input.c \
+	$(SRC_PATH)/processing/split_into_words.c \
+	$(SRC_PATH)/processing/split_into_words_quotes.c \
 	$(SRC_PATH)/processing/tokenize_input.c \
 	$(SRC_PATH)/processing/tokenize_refine_word.c \
 	$(SRC_PATH)/processing/reorg_word.c \
@@ -33,6 +34,8 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/processing/create_cmd_array.c \
 	$(SRC_PATH)/parsing/first_pars.c \
 	$(SRC_PATH)/parsing/error_msg.c \
+	$(SRC_PATH)/parsing/find_quotes.c \
+	$(SRC_PATH)/processing/trim_input_quotes.c \
 
 # OBJ = $(SRC:.c=.o)
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)

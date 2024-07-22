@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/16 17:08:47 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:39:26 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,6 @@ char	*ft_strcat(char *dest, const char *src);
 int		ft_isspace(int c);
 int		ft_isoperator(int c);
 
-/* split_spaces.c */
-char	**split_into_words(char const *s);
-
 /* print_utils.c */
 void	print_tokens(t_token *tokens);
 void	print_cmd_array(char ***cmd);
@@ -129,6 +126,12 @@ char	*concat_tokens(t_token *first);
 
 /* trim_input.c */
 char	*trim_input(t_main	*main_s, char *user_input);
+
+/* split_into_words.c */
+char	**split_into_words(char const *s);
+
+/* split_into_words_quotes.c */
+char	**split_into_words_quotes(char const *s);
 
 /* tokenize_input.c */
 t_token	*tokenize_input(char **words);
@@ -160,5 +163,8 @@ bool	first_pars(t_main *main_s, t_token *first);
 /* error_msg.c */
 void	syntax_error_msg(t_main *main_s);
 void	syntax_error_pipe(t_main *main_s);
+
+/* find_quotes.c */
+bool	find_quotes(t_main *main_s);
 
 #endif
