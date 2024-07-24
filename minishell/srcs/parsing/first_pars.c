@@ -6,11 +6,35 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:23:33 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/15 11:50:56 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:13:34 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+bool	parse_quotes(t_main *main_s, char *input)
+{
+	int		i;
+	bool	in_sng_qt;
+	bool	in_dbl_qt;
+
+	i = 0;
+	in_dbl_qt = false;
+	in_sng_qt = false;
+	while (input[i])
+	{
+		if (input[i] == '"' && !in_sng_qt)
+			in_dbl_qt = !in_dbl_qt;
+		else if (input[i] == '\'' && !in_dbl_qt)
+			in_sng_qt = !in_sng_qt;
+		i++;
+	}
+	if (!in_sng_qt && !in_dbl_qt)
+		return (true);
+	else
+		syntax_error_msg(main_s);
+	return (false);
+}
 
 static bool	pars_redirection(t_main *main_s, t_token *current)
 {

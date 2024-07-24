@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/22 14:39:26 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:13:47 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ char	*ft_strcat(char *dest, const char *src);
 /* is_x.c */
 int		ft_isspace(int c);
 int		ft_isoperator(int c);
+int		ft_isquotes(int c);
 
 /* print_utils.c */
 void	print_tokens(t_token *tokens);
@@ -130,8 +131,8 @@ char	*trim_input(t_main	*main_s, char *user_input);
 /* split_into_words.c */
 char	**split_into_words(char const *s);
 
-/* split_into_words_quotes.c */
-char	**split_into_words_quotes(char const *s);
+// /* split_into_words_quotes.c */
+// char	**split_into_words_quotes(char const *s);
 
 /* tokenize_input.c */
 t_token	*tokenize_input(char **words);
@@ -159,6 +160,7 @@ char	***create_cmd_array(t_main *main_s);
 
 /* first_pars.c */
 bool	first_pars(t_main *main_s, t_token *first);
+bool	parse_quotes(t_main *main_s, char *input);
 
 /* error_msg.c */
 void	syntax_error_msg(t_main *main_s);

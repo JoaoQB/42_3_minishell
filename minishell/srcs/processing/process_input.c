@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/22 14:21:10 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:01:44 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ char	*reorg_input(t_main *main_s)
 
 void	process_input(t_main *main_s, char *user_input)
 {
-	if (find_quotes(main_s))
-		parse_quotes(main_s, user_input);
 	main_s->input_trim = trim_input(main_s, user_input);
 	printf("Trim Input: '%s'\nTrimmed tokens:\n", main_s->input_trim);
 	print_tokens(main_s->tokens);
