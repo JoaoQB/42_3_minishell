@@ -19,3 +19,6 @@ echo ""
 
 echo " ' " ' "
 Syntax Error
+
+minishell->              ""
+giving loads of errors.
