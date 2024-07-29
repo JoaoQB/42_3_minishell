@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reorg_word.c                                       :+:      :+:    :+:   */
+/*   extract_operator_word.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 14:11:50 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/10 13:10:41 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:42:45 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	extract_before_operator(t_main *main_s, t_token *current, int len)
 	current->value = remove_before_operator(current, len);
 }
 
-void	reorg_word(t_main *main_s, t_token *current)
+void	extract_operator_word(t_main *main_s, t_token *current)
 {
 	int		i;
 

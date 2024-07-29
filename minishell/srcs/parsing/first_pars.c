@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:23:33 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/24 11:13:34 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:15:38 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static bool	pars_redirection(t_main *main_s, t_token *current)
 		return (false);
 	}
 	next = current->next;
-	if (next->type != WORD && next->type != QT_SIN && next->type != QT_DBL)
+	if (next->type != WORD && next->type != QUOTE)
 	{
 		syntax_error_msg(main_s);
 		return (false);

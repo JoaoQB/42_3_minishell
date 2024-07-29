@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/16 17:08:08 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:16:30 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ void print_tokens(t_token *tokens)
             case HERE_DOC: type_str = "HERE_DOC"; break;
             case RED_OUT_APP: type_str = "RED_OUT_APP"; break;
             case PIPE: type_str = "PIPE"; break;
-            case QT_SIN: type_str = "QT_SIN"; break;
-            case QT_DBL: type_str = "QT_DBL"; break;
+            case QUOTE: type_str = "QUOTE"; break;
             case WORD: type_str = "WORD"; break;
             case CMD: type_str = "CMD"; break;
             case ARG: type_str = "ARG"; break;

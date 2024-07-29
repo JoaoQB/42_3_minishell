@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/24 11:13:47 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:24:12 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ typedef enum e_token_type
 	HERE_DOC,
 	RED_OUT_APP,
 	PIPE,
-	QT_SIN,
-	QT_DBL,
+	QUOTE,
 	WORD,
 	CMD,
 	ARG,
@@ -143,8 +142,8 @@ t_token	*tokenize_refine_word(t_main *main_s);
 void	reindex_tokens(t_token *first);
 void	append_token_front(t_token **first, t_token *target, t_token *new);
 
-/* reorg_word.c */
-void	reorg_word(t_main *main_s, t_token *token);
+/* extract_operator_word.c */
+void	extract_operator_word(t_main *main_s, t_token *current);
 t_token	*ft_token_new_late(char *string, int len);
 
 /* tokenize_smarter.c */
@@ -167,6 +166,6 @@ void	syntax_error_msg(t_main *main_s);
 void	syntax_error_pipe(t_main *main_s);
 
 /* find_quotes.c */
-bool	find_quotes(t_main *main_s);
+bool	find_quotes(char *str);
 
 #endif

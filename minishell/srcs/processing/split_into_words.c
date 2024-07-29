@@ -6,15 +6,13 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:28:52 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/24 11:05:06 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/29 13:44:41 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* Don't forget to free double array after calling this function. */
-
-
+/* Don't forget to free double array after calling split_into_words(). */
 static char	*fill_substr(const char *src, size_t len)
 {
 	char	*dest;

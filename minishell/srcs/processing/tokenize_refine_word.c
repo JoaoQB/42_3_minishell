@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:13:32 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/11 13:00:19 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:25:12 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static bool	check_token_word(t_main *main_s, t_token *token)
 	{
 		if (ft_isoperator(current->value[i]))
 		{
-			reorg_word(main_s, current);
+			extract_operator_word(main_s, current);
 			return (true);
 		}
 		i++;

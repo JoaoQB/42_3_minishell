@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:28:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/15 12:45:47 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:15:05 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	tokenize_smarter(t_token *first)
 	current = first;
 	while (current)
 	{
-		if (no_cmd == true && current->type == WORD)
+		if (no_cmd == true && (current->type == WORD || current->type == QUOTE))
 		{
 			tokenize_args(current, CMD);
 			no_cmd = false;

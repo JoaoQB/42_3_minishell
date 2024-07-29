@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/23 17:01:44 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:26:41 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	process_input(t_main *main_s, char *user_input)
 	main_s->input_trim = trim_input(main_s, user_input);
 	printf("Trim Input: '%s'\nTrimmed tokens:\n", main_s->input_trim);
 	print_tokens(main_s->tokens);
+	if (main_s->silence_info)
+		return ;
 	main_s->input_reorg = reorg_input(main_s);
 	printf("Reorganized input: '%s'\n", main_s->input_reorg);
 	if (main_s->silence_info)
