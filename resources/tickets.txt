@@ -14,11 +14,9 @@ repeated spaces are ignored
 if <|> is found we NULL terminate last "**char commands[n]" slot and jump to next n
 new_ticket: in case last token is empy we call gnl_openfd and all that text will be executed as <minishell(* char)>
 
---here ignore quotes for now,
-/but prepare to receive an quotes finder
-/to send the addr of the start of the word that as quotes and receive new token
-/token = *char process quotes(&char[i])
-/return (next string token)
+QUOTES:
+Need to refine words that have quotes. i.e. foo|bar"quote"
+Remove quotes but do expansion before in case of $ and ''.
 
 ticket 3:
 function that executes each **char commands[n] and pipe it to the next

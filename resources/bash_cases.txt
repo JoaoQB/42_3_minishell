@@ -20,5 +20,4 @@ echo ""
 echo " ' " ' "
 Syntax Error
 
-minishell->              ""
-giving loads of errors.
+When doing expansions, check case "foo"'$bar'
