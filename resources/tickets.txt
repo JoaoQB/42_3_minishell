@@ -14,7 +14,7 @@ repeated spaces are ignored
 if <|> is found we NULL terminate last "**char commands[n]" slot and jump to next n
 	new_ticket: in case last token is empy we call gnl_openfd and all that text will be executed as <minishell(* char)> //TODO
 
-ticket 2.1: QUOTES
+ticket 2.1: QUOTES - DONE
 Need to refine words that have quotes. i.e. foo|bar"quote"
 Remove quotes but do expansion before in case of $ and "".
 
