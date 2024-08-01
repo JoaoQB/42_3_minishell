@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/29 14:16:30 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:17:25 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	print_cmd_array(char ***cmd)
 {
 	int	i;
 	int	j;
+
 	if (!cmd)
 	{
 		printf("Command array is NULL\n");
@@ -58,9 +59,9 @@ void	print_cmd_array(char ***cmd)
 		while (cmd[i][j] != NULL)
 		{
 			if (j == 0)
-				printf("CMD: %s\n", cmd[i][j]);
+				printf("CMD: '%s'\n", cmd[i][j]);
 			else if (j > 0)
-				printf("ARG: %s\n", cmd[i][j]);
+				printf("ARG: '%s'\n", cmd[i][j]);
 			j++;
 		}
 		i++;

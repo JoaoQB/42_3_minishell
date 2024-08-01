@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/29 14:24:12 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/01 12:50:33 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,14 @@ void	append_token_front(t_token **first, t_token *target, t_token *new);
 
 /* extract_operator_word.c */
 void	extract_operator_word(t_main *main_s, t_token *current);
-t_token	*ft_token_new_late(char *string, int len);
+
+/* quotes_remover.c */
+void	quotes_remover(t_token *first);
 
 /* tokenize_smarter.c */
 void	tokenize_smarter(t_token *first);
 int		count_cmd_size(t_token *first);
+t_token	*ft_token_new_late(char *string, int len);
 
 /* create_cmd_array.c */
 char	***create_cmd_array(t_main *main_s);

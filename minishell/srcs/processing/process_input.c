@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/29 14:26:41 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/01 13:37:25 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ char	*reorg_input(t_main *main_s)
 	print_tokens(main_s->tokens);
 	if (!first_pars(main_s, main_s->tokens))
 		return (NULL);
+	// var_swap(main_s->tokens); //TODO
+	quotes_remover(main_s->tokens);
 	tokenize_smarter(main_s->tokens);
 	printf("Smarter Tokens:\n");
 	print_tokens(main_s->tokens);

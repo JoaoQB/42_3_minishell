@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:55:50 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/23 14:04:55 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:33:14 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_isquotes(int c)
 
 int	ft_isoperator(int c)
 {
-	if (c == '<' || c == '>' || c == '|' || c == '$')
+	if (c == '<' || c == '>' || c == '|')
 		return (1);
 	else
 		return (0);

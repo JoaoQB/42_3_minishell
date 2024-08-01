@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 14:11:50 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/29 14:42:45 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:14:13 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,6 @@ static bool	check_after_operator(char *string)
 			&& ft_strncmp(string, "<<", 2)))
 		return (true);
 	return (false);
-}
-
-t_token	*ft_token_new_late(char *string, int len)
-{
-	t_token	*new_token;
-
-	new_token = (t_token *)malloc(sizeof(t_token));
-	if (!new_token)
-		return (NULL);
-	new_token->value = (char *)malloc((len + 1) * sizeof(char));
-	if (!new_token->value)
-	{
-		free(new_token);
-		return (NULL);
-	}
-	ft_strlcpy(new_token->value, string, len + 1);
-	new_token->type = token_assign(new_token);
-	new_token->index = -1;
-	new_token->next = NULL;
-	return (new_token);
 }
 
 static char	*remove_before_operator(t_token *current, int len)
@@ -72,13 +52,31 @@ static void	extract_before_operator(t_main *main_s, t_token *current, int len)
 	current->value = remove_before_operator(current, len);
 }
 
+static int	iterate_quotes(char *str)
+{
+	int		i;
+	char	qt_char;
+
+	if (!str)
+		return (0);
+	i = 0;
+	qt_char = str[i++];
+	while (str[i] != qt_char && str[i])
+		i++;
+	return (i);
+}
+
 void	extract_operator_word(t_main *main_s, t_token *current)
 {
 	int		i;
 
 	i = 0;
 	while (current->value[i] && !ft_isoperator(current->value[i]))
+	{
+		if (ft_isquotes(current->value[i]))
+			i += iterate_quotes(&current->value[i]);
 		i++;
+	}
 	if (i != 0)
 		extract_before_operator(main_s, current, i);
 	i = 0;

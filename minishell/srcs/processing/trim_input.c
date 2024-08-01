@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:10:33 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/29 14:03:54 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:20:07 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,8 @@ char	*trim_input(t_main	*main_s, char *user_input)
 	int		i;
 	int		total_len;
 
-	if (find_quotes(main_s->user_input))
-	{
-		if (!parse_quotes(main_s, user_input))
-			return (NULL);
-	}
+	if (!parse_quotes(main_s, user_input))
+		return (NULL);
 	words = split_into_words(user_input);
 	if (!words)
 		return (NULL);

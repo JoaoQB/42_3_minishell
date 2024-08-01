@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:13:32 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/29 14:25:12 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:50:43 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_token	*tokenize_refine_word(t_main *main_s)
 	current = main_s->tokens;
 	while (current)
 	{
-		if (current->type == WORD)
+		if (current->type == WORD || current->type == QUOTE)
 		{
 			if (check_token_word(main_s, current))
 			{
