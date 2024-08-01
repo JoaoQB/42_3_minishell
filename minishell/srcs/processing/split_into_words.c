@@ -6,14 +6,13 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:28:52 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/10 16:02:39 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:18:18 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* Don't forget to free double array after calling this function. */
-
+/* Don't forget to free double array after calling split_into_words(). */
 static char	*fill_substr(const char *src, size_t len)
 {
 	char	*dest;
@@ -37,8 +36,19 @@ static char	**ft_free(char **strs, int count)
 
 static int	iterate_i(const char *s, int i)
 {
+	char	quote_char;
+
 	while (s[i] && !ft_isspace(s[i]))
+	{
+		if (ft_isquotes(s[i]))
+		{
+			quote_char = s[i];
+			i++;
+			while (s[i] != quote_char)
+				i++;
+		}
 		i++;
+	}
 	return (i);
 }
 

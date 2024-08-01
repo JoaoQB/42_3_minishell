@@ -1,24 +1,29 @@
-ticket 0:
+ticket 0: DONE
 header file with the structure
 
-ticket 1:
+ticket 1: DONE
 do a finder <, >, >>, process that and remove processed text from the string.
 "DIR <" needs to have preceded text, if not empty string is passed to open
 "> DIR" needs to have proceeded text, if not empty string is passed to open
 >> is the same as > with diff permissions
 << just opens function gnl_openfd (I have this function)
 
-ticket 2:
+ticket 2: DONE
 parcel while remaining string, and add to the structure token by token
 repeated spaces are ignored
 if <|> is found we NULL terminate last "**char commands[n]" slot and jump to next n
-new_ticket: in case last token is empy we call gnl_openfd and all that text will be executed as <minishell(* char)>
+	new_ticket: in case last token is empy we call gnl_openfd and all that text will be executed as <minishell(* char)> //TODO
 
---here ignore quotes for now,
-/but prepare to receive an quotes finder
-/to send the addr of the start of the word that as quotes and receive new token
-/token = *char process quotes(&char[i])
-/return (next string token)
+ticket 2.1: QUOTES
+Need to refine words that have quotes. i.e. foo|bar"quote"
+Remove quotes but do expansion before in case of $ and "".
+
+ticket 2.2: Var expansion
+https://github.com/ahokcool/frankenshell/blob/main/docs/documentation.md#variable-expansion
+
+
+ticket 2.3: ENV linked list
+
 
 ticket 3:
 function that executes each **char commands[n] and pipe it to the next

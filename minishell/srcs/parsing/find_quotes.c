@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_msg.c                                        :+:      :+:    :+:   */
+/*   find_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 10:31:51 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/23 17:03:41 by jqueijo-         ###   ########.fr       */
+/*   Created: 2024/07/22 10:52:02 by jqueijo-          #+#    #+#             */
+/*   Updated: 2024/07/29 14:18:32 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	syntax_error_pipe(t_main *main_s)
+bool	find_quotes(char *str)
 {
-	write(2, "Syntax error near unexpected token `|'\n", 40);
-	main_s->silence_info = true;
-}
+	int		i;
 
-void	syntax_error_msg(t_main *main_s)
-{
-	write(2, "Syntax error\n", 14);
-	main_s->silence_info = true;
+	if (!str)
+		return (false);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
+			return (true);
+		i++;
+	}
+	return (false);
 }

@@ -4,3 +4,57 @@ ls > output.txt > input.txt Makefile
 	redirection is overwritten to input.txt
 	output.txt is now empty.
 	input.txt has Makefile written.
+
+------------------------------------------------
+
+echo "
+Syntax Error
+
+echo " ' " '
+Syntax Error
+
+echo " ' "
+ '
+
+echo ""
+(new_line)
+
+echo " ' " ' "
+Syntax Error
+
+When doing expansions, check case "foo"'$bar'
+
+---------------------------------------------------
+
+Variable Expansion
+
+The 📖environment variable expansion works similar like in 🔗bash.
+
+	Variable Expansion happens if the variable is not inside single 📖quotes.
+	Whitespaces inside the variable value will be marked as NO_SPACE characters (📖). Therefore the 📖tokenizer can make multiple tokens out of it.
+	If the variable is part of the 📖heredoc limiter it won't be expanded! (e.g. << $USER cat)
+
+✏️ Examples
+Command 		Valid Key 		Expand 		Output
+echo $USER 			✅ 			✅ 			astein
+echo "$USER" 		✅ 			✅ 			astein
+echo '$USER' 		✅ 			❌ 			$USER
+<< $USER cat 		N/A 		 ❌ 			Won't expand, so the EOF of the 📖heredoc will be $USER
+
+✏️ Examples (Special Cases)
+Special Case 		Valid Key 		Expand 		Explanation 										Output (example)
+echo $@ hi 				❌ 			❌ 		first char of false key gets swallowed 					hi
+echo $@@ hi 			❌ 			❌ 		first char of false key gets swallowed 					@ hi
+echo $1HOME 			❌ 			❌ 		first char of false key gets swallowed 					HOME
+$ 						❌ 			❌ 		no key 													$: command not found
+echo $ hi 				❌ 			❌ 		no key 													$ hi
+$? 						❎ 			✅ 		📖exit status of the last command 						42: command not found
+echo $? 				❎ 			✅ 		📖exit status of the last command 						42
+echo $?? 				❎ 			✅ 		📖exit status of the last command 						42?
+echo $"USER" 			❌ 			❌ 		the " block the key; contextual quotes get removed 		USER
+echo "foo $'BAR'" 		❌ 			❌ 		the ' block the key; contextual quotes get removed 		foo $'BAR'
+echo 'foo $"BAR"' 		N/A 		 ❌ 		 inside contextual quotes ' -> no expansion 			 foo $"BAR"
+echo 'foo $BAR' 		N/A 		 ❌ 		 inside contextual quotes ' -> no expansion 			 foo $BAR
+echo foo$USER$HOME 		✅ ✅		 ✅ ✅ 	  the second $ is not an allowed char of a key			  fooastein/home/astein
+											therfore it terminates the first key.
+echo foo $NOTEXIST bar 	✅ 			✅ 		the key doesn't exist; expands to NULL 					a b

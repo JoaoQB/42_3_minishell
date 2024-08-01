@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/16 17:08:47 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/01 12:50:33 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ typedef enum e_token_type
 	HERE_DOC,
 	RED_OUT_APP,
 	PIPE,
-	QT_SIN,
-	QT_DBL,
+	QUOTE,
 	WORD,
 	CMD,
 	ARG,
@@ -110,9 +109,7 @@ char	*ft_strcat(char *dest, const char *src);
 /* is_x.c */
 int		ft_isspace(int c);
 int		ft_isoperator(int c);
-
-/* split_spaces.c */
-char	**split_into_words(char const *s);
+int		ft_isquotes(int c);
 
 /* print_utils.c */
 void	print_tokens(t_token *tokens);
@@ -130,6 +127,12 @@ char	*concat_tokens(t_token *first);
 /* trim_input.c */
 char	*trim_input(t_main	*main_s, char *user_input);
 
+/* split_into_words.c */
+char	**split_into_words(char const *s);
+
+// /* split_into_words_quotes.c */
+// char	**split_into_words_quotes(char const *s);
+
 /* tokenize_input.c */
 t_token	*tokenize_input(char **words);
 int		token_assign(t_token *token);
@@ -139,13 +142,16 @@ t_token	*tokenize_refine_word(t_main *main_s);
 void	reindex_tokens(t_token *first);
 void	append_token_front(t_token **first, t_token *target, t_token *new);
 
-/* reorg_word.c */
-void	reorg_word(t_main *main_s, t_token *token);
-t_token	*ft_token_new_late(char *string, int len);
+/* extract_operator_word.c */
+void	extract_operator_word(t_main *main_s, t_token *current);
+
+/* quotes_remover.c */
+void	quotes_remover(t_token *first);
 
 /* tokenize_smarter.c */
 void	tokenize_smarter(t_token *first);
 int		count_cmd_size(t_token *first);
+t_token	*ft_token_new_late(char *string, int len);
 
 /* create_cmd_array.c */
 char	***create_cmd_array(t_main *main_s);
@@ -156,9 +162,13 @@ char	***create_cmd_array(t_main *main_s);
 
 /* first_pars.c */
 bool	first_pars(t_main *main_s, t_token *first);
+bool	parse_quotes(t_main *main_s, char *input);
 
 /* error_msg.c */
 void	syntax_error_msg(t_main *main_s);
 void	syntax_error_pipe(t_main *main_s);
+
+/* find_quotes.c */
+bool	find_quotes(char *str);
 
 #endif

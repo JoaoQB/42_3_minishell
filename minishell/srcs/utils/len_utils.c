@@ -6,33 +6,49 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:36:22 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/06/09 20:50:37 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:16:53 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static const char	*iterate_quotes(const char *str, int *count, bool *is_word)
+{
+	char	quote_char;
+
+	quote_char = *str;
+	if (!*is_word)
+	{
+		*is_word = true;
+		(*count)++;
+	}
+	str++;
+	while (*str && *str != quote_char)
+		str++;
+	return (str);
+}
+
 int	count_words(const char *str)
 {
-	int		i;
 	int		count;
 	bool	is_word;
 
-	if (!str)
+	if (!str || !*str)
 		return (0);
-	i = 0;
 	count = 0;
 	is_word = false;
-	while (str[i])
+	while (*str)
 	{
-		if (!ft_isspace(str[i]) && !is_word)
+		if (ft_isquotes(*str))
+			str = iterate_quotes(str, &count, &is_word);
+		else if (!ft_isspace(*str) && !is_word)
 		{
-			is_word = true;
 			count++;
+			is_word = true;
 		}
-		else if (ft_isspace(str[i]) && is_word == true)
+		else if (ft_isspace(*str) && is_word)
 			is_word = false;
-		i++;
+		str++;
 	}
 	return (count);
 }
