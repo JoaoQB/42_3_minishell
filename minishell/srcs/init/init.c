@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:49:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/13 18:07:55 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:55:10 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 void	init_main(t_main *main_s, char **envp)
 {
 	main_s->env = get_env(envp);
-	print_env(main_s->env);
-	// main_s->menv = get_env(envp);
+	// print_env(main_s->env);
 	main_s->tokens = NULL;
 	main_s->user_input = NULL;
 	main_s->input_trim = NULL;

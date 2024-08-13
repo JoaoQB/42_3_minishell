@@ -6,57 +6,24 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:14:31 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/13 18:09:50 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:55:55 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// char	**get_env(char **envp)
-// {
-// 	char	**menv;
-// 	int		env_count;
-// 	int		i;
-
-// 	env_count = count_arrays(envp);
-// 	menv = calloc(env_count + 1, sizeof(char *));
-// 	if (!menv)
-// 		return (NULL);
-// 	i = 0;
-// 	while (i < env_count)
-// 	{
-// 		menv[i] = ft_strdup(envp[i]);
-// 		if (!menv[i])
-// 		{
-// 			while (i-- > 0)
-// 				free(menv[i]);
-// 			free(menv);
-// 			return (NULL);
-// 		}
-// 		i++;
-// 	}
-// 	for (i = 0; menv[i] != NULL; i++)
-// 		printf("menv[%d]: %s\n", i, menv[i]);
-// 	return (menv);
-// }
-
-static t_env	*get_last_env(t_env *first)
+static void	append_env_back(t_env **first, t_env *new_env)
 {
 	t_env	*last;
-	if (!first)
-		return (NULL);
-	while (first->next != NULL)
-		first = first->next;
-	last = first;
-	return (last);
-}
 
-static void	append_env_back(t_env *first, t_env *new_env)
-{
-	t_env	*last;
-	last = get_last_env(first);
-	if (!last)
+	if (!*first)
+	{
+		*first = new_env;
 		return ;
+	}
+	last = *first;
+	while (last->next != NULL)
+		last = last->next;
 	last->next = new_env;
 }
 
@@ -104,10 +71,7 @@ t_env	*get_env(char **envp)
 				free_env(first);
 			return (NULL);
 		}
-		if (i == 0)
-			first = new_env;
-		else
-			append_env_back(first, new_env);
+		append_env_back(&first, new_env);
 		i++;
 	}
 	return (first);

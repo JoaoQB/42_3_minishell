@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/13 18:06:32 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:35:10 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_token
 
 typedef struct s_main
 {
-	// char	**menv;
 	t_env	*env;
 	t_token	*tokens;
 	char	*user_input;
@@ -102,7 +101,6 @@ void	free_tokens(t_token *token);
 void	free_env(t_env *first);
 
 /* env.c */
-// char	**get_env(char **envp);
 t_env	*get_env(char **envp);
 
 /************************/
