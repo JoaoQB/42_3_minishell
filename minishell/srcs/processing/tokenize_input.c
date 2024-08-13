@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:11:02 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/29 14:16:13 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:26:36 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ static void	append_token_back(t_token *first, t_token *new_node)
 
 	last = get_last_token(first);
 	if (!last)
-	{
-		first = new_node;
 		return ;
-	}
 	last->next = new_node;
 }
 
