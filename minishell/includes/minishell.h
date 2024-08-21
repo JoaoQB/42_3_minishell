@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/01 12:50:33 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/21 16:11:53 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <unistd.h>
+# include <fcntl.h>
 
 typedef struct s_token	t_token;
+typedef struct s_pipex	t_pipex;
 typedef struct s_main	t_main;
 
 /* Other Possible sub-tokens: CMD_BUILTIN/EXTERNAL; PATH_ABSOLUTE/RELATIVE*/
@@ -47,22 +49,34 @@ typedef struct s_token
 	char	*value;
 	char	**cmd;
 	int		index;
+	t_token *prev;
 	t_token	*next;
 }	t_token;
+
+typedef struct s_pipex  //mine2
+{
+	int		pid;
+	int		status;
+	char	**cmd;
+	int		pipe_fd[2];
+	t_pipex *prev;
+	t_pipex	*next;
+}	t_pipex;
 
 typedef struct s_main
 {
 	char	**menv;
-	t_token	*tokens;
 	char	*user_input;
 	char	*input_trim;
 	char	*input_reorg;
-	char	***cmd;
-	int		size;
-	int		exe_fd[2];
-	int		*fd_pipeline[2];
-	int		*pid_pipeline;
 	bool	silence_info;
+	int		exe_fd[2]; //dont need
+	char	***cmd; //dont need
+	int		size; //dont need
+	int		*fd_pipeline[2]; //dont need
+	int		*pid_pipeline; //dont need
+	t_token	*tokens;
+	t_pipex	*pipex;
 	t_main	*next;
 }	t_main;
 
@@ -170,5 +184,23 @@ void	syntax_error_pipe(t_main *main_s);
 
 /* find_quotes.c */
 bool	find_quotes(char *str);
+
+/************************/
+/******** PIPEX *********/
+/************************/
+
+t_pipex *new_node(void);
+int	new_piper(t_pipex *pipex);
+int read_heredoc(t_token *token);
+int		ft_open_fd(t_main *main_s);
+int	create_array_cmd(t_token *token, t_pipex *pipex_node);
+int		ft_process_cmd(t_main *main_s);
+int	exe_cmd(t_main *main_s);
+char	*ft_strnjoin(char *old_str, char *str_add, int size);
+void	print_struct(t_main *main_s);
+int	extract_pipe_cmds(t_token *token, t_pipex *pipex_node);
+int	extract_pipe_fds(t_token *token, t_pipex *pipex);
+int create_pipeline(t_main *main_s);
+char* get_file_name_from_fd(int fd);
 
 #endif

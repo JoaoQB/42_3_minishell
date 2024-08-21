@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:11:02 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/29 14:16:13 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:57:27 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	append_token_back(t_token *first, t_token *new_node)
 		return ;
 	}
 	last->next = new_node;
+	new_node ->prev = last; //added by fandre-b
 }
 
 int	token_assign(t_token *token)
@@ -75,6 +76,7 @@ static t_token	*ft_token_new(char **words, int i)
 	ft_strlcpy(new_token->value, words[i], word_len + 1);
 	new_token->type = token_assign(new_token);
 	new_token->index = i;
+	new_token->prev = NULL; //added by fandre-b
 	new_token->next = NULL;
 	new_token->cmd = NULL;
 	return (new_token);

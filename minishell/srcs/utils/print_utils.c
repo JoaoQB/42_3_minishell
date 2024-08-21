@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/01 14:17:25 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:40:13 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void print_tokens(t_token *tokens)
             // case NEW_TYPE_2: type_str = "NEW_TYPE_2"; break;
             default: type_str = "UNKNOWN";
         }
-        printf("Token: '%s', Type: %s, Index: '%d'\n", current->value, type_str, current->index);
+        printf("Token: '%s', Type: %s, %d, Index: '%d'\n", current->value, type_str, current->type, current->index);
         current = current->next;
     }
 }

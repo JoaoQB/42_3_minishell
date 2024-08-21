@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
+#    By: juka <juka@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/08/01 12:47:12 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/08/20 18:36:00 by juka             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,6 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/processing/process_input.c \
 	$(SRC_PATH)/processing/trim_input.c \
 	$(SRC_PATH)/processing/split_into_words.c \
-	$(SRC_PATH)/processing/split_into_words_quotes.c \
 	$(SRC_PATH)/processing/tokenize_input.c \
 	$(SRC_PATH)/processing/tokenize_refine_word.c \
 	$(SRC_PATH)/processing/extract_operator_word.c \
@@ -36,6 +35,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/parsing/first_pars.c \
 	$(SRC_PATH)/parsing/error_msg.c \
 	$(SRC_PATH)/parsing/find_quotes.c \
+	$(SRC_PATH)/exe_cmd/exe_cmd.c \
 
 # OBJ = $(SRC:.c=.o)
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)
