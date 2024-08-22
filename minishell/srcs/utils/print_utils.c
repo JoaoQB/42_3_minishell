@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/13 18:11:59 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:30:21 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_env(t_env *env)
 	while (current != NULL)
 	{
 		if (current->value)
-			printf("env: %s\n", current->value);
+			printf("\nenv: %s\n", current->value);
 		if (current->var)
 			printf("env_var: %s\n", current->var);
 		if (current->var_value)

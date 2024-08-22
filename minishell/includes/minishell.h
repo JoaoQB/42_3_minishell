@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/13 18:35:10 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:41:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void	free_env(t_env *first);
 
 /* env.c */
 t_env	*get_env(char **envp);
+char	*extract_var(t_env	*new_env);
+char	*extract_var_value(char *str);
 
 /************************/
 /********* UTILS ********/
@@ -144,8 +146,6 @@ char	*trim_input(t_main	*main_s, char *user_input);
 /* split_into_words.c */
 char	**split_into_words(char const *s);
 
-// /* split_into_words_quotes.c */
-// char	**split_into_words_quotes(char const *s);
 
 /* tokenize_input.c */
 t_token	*tokenize_input(char **words);
