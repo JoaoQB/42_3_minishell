@@ -6,13 +6,32 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/01 14:17:25 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:30:21 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void print_tokens(t_token *tokens)
+void	print_env(t_env *env)
+{
+	t_env	*current;
+
+	if (!env)
+		return ;
+	current = env;
+	while (current != NULL)
+	{
+		if (current->value)
+			printf("\nenv: %s\n", current->value);
+		if (current->var)
+			printf("env_var: %s\n", current->var);
+		if (current->var_value)
+			printf("env_var_value: %s\n", current->var_value);
+		current = current->next;
+	}
+}
+
+void	print_tokens(t_token *tokens)
 {
     t_token *current = tokens;
     while (current != NULL)

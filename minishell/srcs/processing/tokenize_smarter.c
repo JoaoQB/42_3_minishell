@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:28:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/01 14:08:32 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:27:26 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_token	*ft_token_new_late(char *string, int len)
 	new_token->type = token_assign(new_token);
 	new_token->index = -1;
 	new_token->next = NULL;
+	new_token->cmd = NULL;
 	return (new_token);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/01 12:50:33 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:41:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 typedef struct s_token	t_token;
 typedef struct s_main	t_main;
+typedef struct s_env	t_env;
 
 /* Other Possible sub-tokens: CMD_BUILTIN/EXTERNAL; PATH_ABSOLUTE/RELATIVE*/
 typedef enum e_token_type
@@ -41,6 +42,15 @@ typedef enum e_token_type
 	PATH
 }	t_token_type;
 
+typedef struct s_env
+{
+	char	*value;
+	char	*var;
+	char	*var_value;
+	int		index;
+	t_env	*next;
+}	t_env;
+
 typedef struct s_token
 {
 	int		type;
@@ -52,7 +62,7 @@ typedef struct s_token
 
 typedef struct s_main
 {
-	char	**menv;
+	t_env	*env;
 	t_token	*tokens;
 	char	*user_input;
 	char	*input_trim;
@@ -82,13 +92,18 @@ void	init_main(t_main *main_s, char **envp);
 
 /* cleanup.c */
 void	free_main_input(t_main *main_s);
-void	free_tokens(t_token *token);
 void	cleanup_main(t_main *main_struct);
 void	free_double_array(char **array);
 void	free_triple_array(char ***array);
 
+/* cleanup_struct.c */
+void	free_tokens(t_token *token);
+void	free_env(t_env *first);
+
 /* env.c */
-char	**get_env(char **envp);
+t_env	*get_env(char **envp);
+char	*extract_var(t_env	*new_env);
+char	*extract_var_value(char *str);
 
 /************************/
 /********* UTILS ********/
@@ -114,6 +129,7 @@ int		ft_isquotes(int c);
 /* print_utils.c */
 void	print_tokens(t_token *tokens);
 void	print_cmd_array(char ***cmd);
+void	print_env(t_env *env);
 
 /************************/
 /****** PROCESSING ******/
@@ -130,8 +146,6 @@ char	*trim_input(t_main	*main_s, char *user_input);
 /* split_into_words.c */
 char	**split_into_words(char const *s);
 
-// /* split_into_words_quotes.c */
-// char	**split_into_words_quotes(char const *s);
 
 /* tokenize_input.c */
 t_token	*tokenize_input(char **words);

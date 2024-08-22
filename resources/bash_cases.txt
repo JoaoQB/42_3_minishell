@@ -1,4 +1,11 @@
 ls > output.txt > input.txt Makefile
+	cat Makefile > out.txt > out2.txt > out3.txt
+
+	Cria primeiros dois ficheiros mas so 3 tem o cat do Makefile.
+
+------------------------------------------------
+
+
 	Makefile is an arg of ls.
 	output.txt is created if it didn't exist.
 	redirection is overwritten to input.txt
