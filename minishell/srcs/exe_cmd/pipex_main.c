@@ -6,7 +6,7 @@
 /*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by juka              #+#    #+#             */
-/*   Updated: 2024/08/24 17:52:45 by juka             ###   ########.fr       */
+/*   Updated: 2024/08/24 18:14:04 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,10 @@ void	process_child_pipes(t_pipex *pipex_s)
 
 int	ft_shell_pipex(t_main *main_s)
 {
+	if (!main_s->tokens)
+		return(0);
 	ft_process_tokens_s(main_s);
-	print_struct(main_s);
+	//print_struct(main_s);
 	ft_exe_pipex_s(main_s->pipex, main_s->menv);
 	//process_child_pipes(main_s->pipex); //manage_pid
 	free_pipex_s(main_s->pipex); //temp free

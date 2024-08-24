@@ -6,7 +6,7 @@
 /*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/21 17:35:26 by juka             ###   ########.fr       */
+/*   Updated: 2024/08/24 18:10:15 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,8 @@ void	process_input(t_main *main_s, char *user_input)
 	if (main_s->silence_info)
 		return ;
 	main_s->input_reorg = reorg_input(main_s);
-	if(main_s->input_reorg)
-		printf("Reorganized input: '%s'\n", main_s->input_reorg);
 	if (main_s->silence_info)
 		return ;
 	main_s->size = count_cmd_size(main_s->tokens);
 	main_s->cmd = create_cmd_array(main_s);
-	//print_cmd_array(main_s->cmd);
-	print_tokens(main_s->tokens);
 }
