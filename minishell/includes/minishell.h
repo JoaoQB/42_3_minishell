@@ -6,7 +6,7 @@
 /*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/21 16:11:53 by juka             ###   ########.fr       */
+/*   Updated: 2024/08/24 17:11:16 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <stdbool.h>
 # include <unistd.h>
 # include <fcntl.h>
+#include <sys/wait.h>
+#include <errno.h>
 
 typedef struct s_token	t_token;
 typedef struct s_pipex	t_pipex;
@@ -55,8 +57,9 @@ typedef struct s_token
 
 typedef struct s_pipex  //mine2
 {
-	int		pid;
+	pid_t		pid;
 	int		status;
+	char	*path;
 	char	**cmd;
 	int		pipe_fd[2];
 	t_pipex *prev;
@@ -189,18 +192,32 @@ bool	find_quotes(char *str);
 /******** PIPEX *********/
 /************************/
 
-t_pipex *new_node(void);
-int	new_piper(t_pipex *pipex);
-int read_heredoc(t_token *token);
-int		ft_open_fd(t_main *main_s);
-int	create_array_cmd(t_token *token, t_pipex *pipex_node);
-int		ft_process_cmd(t_main *main_s);
-int	exe_cmd(t_main *main_s);
+
+int	ft_shell_pipex(t_main *main_s);
+void	process_child_pipes(t_pipex *pipex_s);
+void free_pipex_s(t_pipex *pipex_s);
+void	close_all_fd(t_pipex *pipex_s);
+
+//Create pipex_s structure
+int		ft_process_tokens_s(t_main *main_s);
+int ft_create_pipeline(t_main *main_s);
+int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s);
+int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s);
+int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
+int read_heredoc(t_token *tokens_s);
+t_pipex *ft_init_pipex_s(void);
+
+//Execute pipex cmds
+void ft_exe_pipex_s(t_pipex *pipex_s, char **envp);
+int	execute_command(t_pipex *pipex_s, char **envp); //temp
+char	*get_cmd_path(char *cmd, char **envp);
+void	exe_cmd_child(t_pipex *pipex_s, char **envp);
+
+//pipex_utils
 char	*ft_strnjoin(char *old_str, char *str_add, int size);
-void	print_struct(t_main *main_s);
-int	extract_pipe_cmds(t_token *token, t_pipex *pipex_node);
-int	extract_pipe_fds(t_token *token, t_pipex *pipex);
-int create_pipeline(t_main *main_s);
+char	*ft_strstr(const char *big, const char *little);
 char* get_file_name_from_fd(int fd);
+void	print_struct(t_main *main_s);
+
 
 #endif

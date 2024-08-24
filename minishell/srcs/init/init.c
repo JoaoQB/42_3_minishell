@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:49:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/14 11:20:12 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:15:31 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_main(t_main *main_s, char **envp)
 {
-	main_s->menv = get_env(envp);
+	main_s->menv = (envp); //get_env so funcionava com sudo
 	main_s->tokens = NULL;
 	main_s->user_input = NULL;
 	main_s->input_trim = NULL;
