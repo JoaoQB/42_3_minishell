@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_refine_word.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:13:32 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/01 11:50:43 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/25 13:48:16 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	append_token_front(t_token **first, t_token *target, t_token *new)
 	if (*first == target)
 	{
 		new->next = target;
+		target->prev = new;
 		*first = new;
 		return ;
 	}
@@ -31,6 +32,8 @@ void	append_token_front(t_token **first, t_token *target, t_token *new)
 	{
 		new->next = target;
 		current->next = new;
+		new->prev = current;
+		target->prev = new;
 	}
 }
 
