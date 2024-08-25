@@ -6,7 +6,7 @@
 /*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/24 17:11:16 by juka             ###   ########.fr       */
+/*   Updated: 2024/08/25 12:11:34 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # include <fcntl.h>
 #include <sys/wait.h>
 #include <errno.h>
+#include <signal.h>
+
+
 
 typedef struct s_token	t_token;
 typedef struct s_pipex	t_pipex;

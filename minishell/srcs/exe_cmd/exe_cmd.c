@@ -6,7 +6,7 @@
 /*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by juka              #+#    #+#             */
-/*   Updated: 2024/08/24 17:49:44 by juka             ###   ########.fr       */
+/*   Updated: 2024/08/25 12:04:42 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,17 @@ int	execute_command(t_pipex *pipex_s, char **envp) //temp
 	return (status);
 }
 
+void handle_sigpipe(int sig)
+{
+    printf("Received SIGPIPE(%d), exiting...\n", sig);
+    exit(1);
+}
+
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
 	int	status;
 
+    signal(SIGPIPE, handle_sigpipe);
 	status = 0;
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
 	{
@@ -59,8 +66,6 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	close_all_fd(pipex_s);
 	if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
 		status = errno;
-	else
-		status = 0;
 	pipex_s->status = status;
 	exit (status);
 }

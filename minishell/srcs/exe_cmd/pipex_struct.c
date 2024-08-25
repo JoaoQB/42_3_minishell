@@ -6,7 +6,7 @@
 /*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by juka              #+#    #+#             */
-/*   Updated: 2024/08/24 17:43:26 by juka             ###   ########.fr       */
+/*   Updated: 2024/08/25 10:20:03 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ t_pipex *ft_init_pipex_s(void)
     pipex_s = (t_pipex *)malloc(sizeof(t_pipex));
     if (!pipex_s)
         return (NULL);
-    pipex_s->pid = 0;
+    pipex_s->pid = -1;
     pipex_s->status = 0;
 	pipex_s->path = NULL;
 	pipex_s->cmd = NULL;
