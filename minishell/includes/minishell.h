@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 11:13:47 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:25:46 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_pipex  //mine2
 
 typedef struct s_main
 {
-	char	**menv;
+	char	**env;
 	char	*user_input;
 	char	*input_trim;
 	char	*input_reorg;
@@ -87,7 +87,7 @@ typedef struct s_main
 	int		size; //dont need
 	int		*fd_pipeline[2]; //dont need
 	int		*pid_pipeline; //dont need
-	t_env	*env;
+	t_env	*menv;
 	t_token	*tokens;
 	t_pipex	*pipex;
 	// t_main	*next; // don't need
