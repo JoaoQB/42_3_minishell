@@ -6,7 +6,7 @@
 /*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by juka              #+#    #+#             */
-/*   Updated: 2024/08/25 12:12:23 by juka             ###   ########.fr       */
+/*   Updated: 2024/08/27 09:44:01 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	process_child_pipes(t_pipex *pipex_s)
 	times = 0;
 	printf("\n_________________________________________\n");
 	printf("\n	..::handle processes START::..\n");
-	while(rep && times < 5)
+	while(rep)
 	{
 		rep = 0;
 		printf("\n-> starting from last pipex_s\n");
@@ -104,6 +104,7 @@ void	process_child_pipes(t_pipex *pipex_s)
 				{
 					printf("[✗] process still running\n");
 					rep = 1;
+					times +=1;
 				}
 			}
 			else
@@ -114,11 +115,10 @@ void	process_child_pipes(t_pipex *pipex_s)
 		{
 			curr_pipex_s = pipex_s;
 			usleep(10000);
-			times += 1;
 		}
+		if (times == 5)
+			break;
 	}
-	if (times == 5)
-		printf("\n-->Somo processes are still running\n");
 	if (curr_pipex_s == NULL)
 		printf("\n-->all processes have been closed\n");
 	printf("\n	..::handle processes END::..\n");
@@ -127,10 +127,10 @@ void	process_child_pipes(t_pipex *pipex_s)
 
 int	ft_shell_pipex(t_main *main_s)
 {
-	if (!main_s->tokens)
+	if (main_s->silence_info)
 		return(0);
 	ft_process_tokens_s(main_s);
-	//print_struct(main_s);
+	print_struct(main_s);
 	ft_exe_pipex_s(main_s->pipex, main_s->menv);
 	sleep(1);
 	process_child_pipes(main_s->pipex); //manage_pid

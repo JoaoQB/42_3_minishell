@@ -6,7 +6,7 @@
 /*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by juka              #+#    #+#             */
-/*   Updated: 2024/08/25 12:04:42 by juka             ###   ########.fr       */
+/*   Updated: 2024/08/25 13:58:31 by juka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
 	int	status;
 
-    signal(SIGPIPE, handle_sigpipe);
+    //signal(SIGPIPE, handle_sigpipe);
 	status = 0;
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
 	{
