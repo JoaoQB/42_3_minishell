@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:49:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 10:03:29 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/27 10:21:13 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_main(t_main *main_s, char **envp)
 {
-	main_s->menv = (envp); //get_env so funcionava com sudo
+	main_s->env = (envp); //get_env so funcionava com sudo
 	main_s->tokens = NULL;
 	main_s->user_input = NULL;
 	main_s->input_trim = NULL;
