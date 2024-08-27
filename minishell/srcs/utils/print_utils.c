@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/22 15:30:21 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:01:41 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_env(t_env *env)
 	}
 }
 
-void	print_tokens(t_token *tokens)
+void print_tokens(t_token *tokens)
 {
     t_token *current = tokens;
     while (current != NULL)
@@ -55,16 +55,14 @@ void	print_tokens(t_token *tokens)
             // case NEW_TYPE_2: type_str = "NEW_TYPE_2"; break;
             default: type_str = "UNKNOWN";
         }
-        printf("Token: '%s', Type: %s, Index: '%d'\n", current->value, type_str, current->index);
+        printf("Token: '%s', Type: %s, %d, Index: '%d'\n", current->value, type_str, current->type, current->index);
         current = current->next;
     }
 }
-
 void	print_cmd_array(char ***cmd)
 {
 	int	i;
 	int	j;
-
 	if (!cmd)
 	{
 		printf("Command array is NULL\n");

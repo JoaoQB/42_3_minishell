@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/13 18:19:21 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:13:13 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	free_triple_array(char ***array)
 {
 	int	i;
-
 	i = 0;
 	if (array != NULL)
 	{
@@ -27,11 +26,9 @@ void	free_triple_array(char ***array)
 		free(array);
 	}
 }
-
 void	free_double_array(char **array)
 {
 	int	i;
-
 	if (!array)
 		return ;
 	i = 0;
@@ -42,11 +39,10 @@ void	free_double_array(char **array)
 	}
 	free(array);
 }
-
 void	cleanup_main(t_main *main_s)
 {
-	// if (main_s->menv)
-	// 	free_double_array(main_s->menv);
+	if (main_s->menv)
+		free_double_array(main_s->menv);
 	if (main_s->env)
 		free_env(main_s->env);
 }

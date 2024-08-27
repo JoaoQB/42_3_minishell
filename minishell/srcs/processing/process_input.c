@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/22 15:35:37 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/27 10:59:08 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,11 @@ char	*reorg_input(t_main *main_s)
 	if (main_s->silence_info)
 		return (NULL);
 	main_s->tokens = tokenize_refine_word(main_s);
-	printf("Words reorganized tokens:\n");
-	// print_tokens(main_s->tokens);
 	if (!first_pars(main_s, main_s->tokens))
 		return (NULL);
 	// var_swap(main_s->tokens); //TODO
 	quotes_remover(main_s->tokens);
 	tokenize_smarter(main_s->tokens);
-	printf("Smarter Tokens:\n");
-	print_tokens(main_s->tokens);
 	input_reorg = concat_tokens(main_s->tokens);
 	if (!input_reorg)
 		return (NULL);
@@ -74,17 +70,15 @@ char	*reorg_input(t_main *main_s)
 void	process_input(t_main *main_s, char *user_input)
 {
 	main_s->input_trim = trim_input(main_s, user_input);
-	if (main_s->input_trim)
-		printf("Trim Input: '%s'\nTrimmed tokens:\n", main_s->input_trim);
 	print_tokens(main_s->tokens);
 	if (main_s->silence_info)
 		return ;
 	main_s->input_reorg = reorg_input(main_s);
-	if (main_s->input_reorg)
-		printf("Reorgized input: '%s'\n", main_s->input_reorg);
+	// if (main_s->input_reorg)
+	// 	printf("Reorgized input: '%s'\n", main_s->input_reorg);
 	if (main_s->silence_info)
 		return ;
 	main_s->size = count_cmd_size(main_s->tokens);
 	main_s->cmd = create_cmd_array(main_s);
-	print_cmd_array(main_s->cmd);
+	// print_cmd_array(main_s->cmd);
 }

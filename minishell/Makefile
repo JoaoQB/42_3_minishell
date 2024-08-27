@@ -6,7 +6,7 @@
 #    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/08/22 17:41:42 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/08/27 11:07:57 by jqueijo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,11 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/parsing/first_pars.c \
 	$(SRC_PATH)/parsing/error_msg.c \
 	$(SRC_PATH)/parsing/find_quotes.c \
+	$(SRC_PATH)/exe_cmd/exe_cmd.c \
+	$(SRC_PATH)/exe_cmd/pipex_main.c \
+	$(SRC_PATH)/exe_cmd/pipex_struct.c \
+	$(SRC_PATH)/exe_cmd/pipex_utils.c \
 
-# OBJ = $(SRC:.c=.o)
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)
 
 CC = cc
