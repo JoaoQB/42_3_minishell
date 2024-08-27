@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 10:18:01 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:41:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,10 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <unistd.h>
-# include <fcntl.h>
-#include <sys/wait.h>
-#include <errno.h>
-#include <signal.h>
-
-
 
 typedef struct s_token	t_token;
-typedef struct s_pipex	t_pipex;
 typedef struct s_main	t_main;
+typedef struct s_env	t_env;
 
 /* Other Possible sub-tokens: CMD_BUILTIN/EXTERNAL; PATH_ABSOLUTE/RELATIVE*/
 typedef enum e_token_type
@@ -48,26 +42,23 @@ typedef enum e_token_type
 	PATH
 }	t_token_type;
 
+typedef struct s_env
+{
+	char	*value;
+	char	*var;
+	char	*var_value;
+	int		index;
+	t_env	*next;
+}	t_env;
+
 typedef struct s_token
 {
 	int		type;
 	char	*value;
 	char	**cmd;
 	int		index;
-	t_token *prev;
 	t_token	*next;
 }	t_token;
-
-typedef struct s_pipex  //mine2
-{
-	pid_t		pid;
-	int		status;
-	char	*path;
-	char	**cmd;
-	int		pipe_fd[2];
-	t_pipex *prev;
-	t_pipex	*next;
-}	t_pipex;
 
 typedef struct s_main
 {
@@ -76,13 +67,12 @@ typedef struct s_main
 	char	*user_input;
 	char	*input_trim;
 	char	*input_reorg;
+	char	***cmd;
+	int		size;
+	int		exe_fd[2];
+	int		*fd_pipeline[2];
+	int		*pid_pipeline;
 	bool	silence_info;
-	int		exe_fd[2]; //dont need
-	char	***cmd; //dont need
-	int		size; //dont need
-	int		*fd_pipeline[2]; //dont need
-	int		*pid_pipeline; //dont need
-	t_pipex	*pipex;
 	t_main	*next;
 }	t_main;
 
@@ -102,13 +92,18 @@ void	init_main(t_main *main_s, char **envp);
 
 /* cleanup.c */
 void	free_main_input(t_main *main_s);
-void	free_tokens(t_token *token);
 void	cleanup_main(t_main *main_struct);
 void	free_double_array(char **array);
 void	free_triple_array(char ***array);
 
+/* cleanup_struct.c */
+void	free_tokens(t_token *token);
+void	free_env(t_env *first);
+
 /* env.c */
-char	**get_env(char **envp);
+t_env	*get_env(char **envp);
+char	*extract_var(t_env	*new_env);
+char	*extract_var_value(char *str);
 
 /************************/
 /********* UTILS ********/
@@ -134,6 +129,7 @@ int		ft_isquotes(int c);
 /* print_utils.c */
 void	print_tokens(t_token *tokens);
 void	print_cmd_array(char ***cmd);
+void	print_env(t_env *env);
 
 /************************/
 /****** PROCESSING ******/
@@ -150,8 +146,6 @@ char	*trim_input(t_main	*main_s, char *user_input);
 /* split_into_words.c */
 char	**split_into_words(char const *s);
 
-// /* split_into_words_quotes.c */
-// char	**split_into_words_quotes(char const *s);
 
 /* tokenize_input.c */
 t_token	*tokenize_input(char **words);
@@ -190,37 +184,5 @@ void	syntax_error_pipe(t_main *main_s);
 
 /* find_quotes.c */
 bool	find_quotes(char *str);
-
-/************************/
-/******** PIPEX *********/
-/************************/
-
-
-int	ft_shell_pipex(t_main *main_s);
-void	process_child_pipes(t_pipex *pipex_s);
-void free_pipex_s(t_pipex *pipex_s);
-void	close_all_fd(t_pipex *pipex_s);
-
-//Create pipex_s structure
-int		ft_process_tokens_s(t_main *main_s);
-int ft_create_pipeline(t_main *main_s);
-int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s);
-int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s);
-int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
-int read_heredoc(t_token *tokens_s);
-t_pipex *ft_init_pipex_s(void);
-
-//Execute pipex cmds
-void ft_exe_pipex_s(t_pipex *pipex_s, char **envp);
-int	execute_command(t_pipex *pipex_s, char **envp); //temp
-char	*get_cmd_path(char *cmd, char **envp);
-void	exe_cmd_child(t_pipex *pipex_s, char **envp);
-
-//pipex_utils
-char	*ft_strnjoin(char *old_str, char *str_add, int size);
-char	*ft_strstr(const char *big, const char *little);
-char* get_file_name_from_fd(int fd);
-void	print_struct(t_main *main_s);
-
 
 #endif

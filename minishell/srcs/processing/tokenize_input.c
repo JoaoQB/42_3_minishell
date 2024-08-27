@@ -6,36 +6,25 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:11:02 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 10:30:41 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:59:07 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static t_token	*get_last_token(t_token *first)
+static void	append_token(t_token **first, t_token *new_node)
 {
 	t_token	*last;
 
-	if (!first)
-		return (NULL);
-	while (first->next != NULL)
-		first = first->next;
-	last = first;
-	return (last);
-}
-
-static void	append_token_back(t_token *first, t_token *new_node)
-{
-	t_token	*last;
-
-	last = get_last_token(first);
-	if (!last)
+	if (*first == NULL)
 	{
-		first = new_node;
+		*first = new_node;
 		return ;
 	}
+	last = *first;
+	while (last->next != NULL)
+		last = last->next;
 	last->next = new_node;
-	new_node ->prev = last; //added by fandre-b
 }
 
 int	token_assign(t_token *token)
@@ -76,7 +65,6 @@ static t_token	*ft_token_new(char **words, int i)
 	ft_strlcpy(new_token->value, words[i], word_len + 1);
 	new_token->type = token_assign(new_token);
 	new_token->index = i;
-	new_token->prev = NULL; //added by fandre-b
 	new_token->next = NULL;
 	new_token->cmd = NULL;
 	return (new_token);
@@ -102,10 +90,7 @@ t_token	*tokenize_input(char **words)
 			free_double_array(words);
 			return (NULL);
 		}
-		if (i == 0)
-			first = new_token;
-		else
-			append_token_back(first, new_token);
+		append_token(&first, new_token);
 		i++;
 	}
 	return (first);

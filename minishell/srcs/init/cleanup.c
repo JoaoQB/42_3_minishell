@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 10:20:24 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:19:21 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,6 @@ void	cleanup_main(t_main *main_s)
 	// 	free_double_array(main_s->menv);
 	if (main_s->env)
 		free_env(main_s->env);
-}
-
-void	free_tokens(t_token *token)
-{
-	t_token	*temp;
-
-	if (!token)
-		return ;
-	while (token)
-	{
-		temp = token;
-		token = token->next;
-		if (temp->value)
-			free (temp->value);
-		free (temp);
-	}
 }
 
 void	free_main_input(t_main *main_s)
