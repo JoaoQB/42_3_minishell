@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:28:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 10:58:13 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:21:29 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_token	*ft_token_new_late(char *string, int len)
 {
 	t_token	*new_token;
+
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
@@ -35,6 +36,7 @@ int	count_cmd_size(t_token *first)
 {
 	int		cmd_size;
 	t_token	*current;
+
 	if (!first)
 		return (0);
 	cmd_size = 0;
@@ -70,6 +72,7 @@ void	tokenize_smarter(t_token *first)
 {
 	t_token	*current;
 	bool	no_cmd;
+
 	if (!first)
 		return ;
 	no_cmd = true;

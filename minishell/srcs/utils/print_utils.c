@@ -6,11 +6,25 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 11:01:41 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:05:53 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	print_menv(char **menv)
+{
+	int	i;
+
+	if (!menv)
+		return ;
+	i = 0;
+	while (menv[i])
+	{
+		printf("env: %s\n", menv[i]);
+		i++;
+	}
+}
 
 void	print_env(t_env *env)
 {

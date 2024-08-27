@@ -4,3 +4,4 @@ libft.a
 /minishell/obj
 /.vscode
 /resources/other_minishells
+*.txt

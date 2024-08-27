@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:41:15 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/13 18:21:17 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:21:52 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ void	free_tokens(t_token *token)
 		token = token->next;
 		if (temp->value)
 			free (temp->value);
-		if (temp->cmd)
-			free_double_array(temp->cmd);
 		free (temp);
 	}
 }

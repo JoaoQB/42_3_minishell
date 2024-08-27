@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 11:54:06 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:19:05 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_token
 {
 	int		type;
 	char	*value;
-	char	**cmd;
 	int		index;
 	t_token *prev;
 	t_token	*next;
@@ -137,6 +136,8 @@ int		ft_isquotes(int c);
 /* print_utils.c */
 void	print_tokens(t_token *tokens);
 void	print_cmd_array(char ***cmd);
+void	print_env(t_env *env);
+void	print_menv(char **menv);
 
 /************************/
 /****** PROCESSING ******/

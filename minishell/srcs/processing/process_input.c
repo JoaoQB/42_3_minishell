@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 10:59:08 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:31:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,14 @@ char	*reorg_input(t_main *main_s)
 void	process_input(t_main *main_s, char *user_input)
 {
 	main_s->input_trim = trim_input(main_s, user_input);
-	print_tokens(main_s->tokens);
+	if (!main_s->input_trim || !*main_s->input_trim)
+		main_s->silence_info = true;
 	if (main_s->silence_info)
 		return ;
 	main_s->input_reorg = reorg_input(main_s);
 	// if (main_s->input_reorg)
 	// 	printf("Reorgized input: '%s'\n", main_s->input_reorg);
+	// print_tokens(main_s->tokens);
 	if (main_s->silence_info)
 		return ;
 	main_s->size = count_cmd_size(main_s->tokens);
