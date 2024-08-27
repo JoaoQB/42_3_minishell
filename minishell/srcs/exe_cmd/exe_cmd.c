@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 15:51:15 by juka              #+#    #+#             */
-/*   Updated: 2024/08/25 13:58:31 by juka             ###   ########.fr       */
+/*   Created: 2024/08/20 15:51:15 by fandre-b              #+#    #+#             */
+/*   Updated: 2024/08/27 11:21:14 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	execute_command(t_pipex *pipex_s, char **envp) //temp
 	int		status;
 
 	status = 0;
+	// if (pipex_s->status != 0)
+	//  	return(-1);
 	pipex_s->pid = fork();
 	if (pipex_s->pid == -1)
 		return (perror("fork failed"), errno);
@@ -41,11 +43,11 @@ int	execute_command(t_pipex *pipex_s, char **envp) //temp
 	return (status);
 }
 
-void handle_sigpipe(int sig)
-{
-    printf("Received SIGPIPE(%d), exiting...\n", sig);
-    exit(1);
-}
+// void handle_sigpipe(int sig)
+// {
+//     printf("Received SIGPIPE(%d), exiting...\n", sig);
+//     exit(1);
+// }
 
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
@@ -53,6 +55,8 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 
     //signal(SIGPIPE, handle_sigpipe);
 	status = 0;
+	if(pipex_s->status != 0)
+		exit(pipex_s->status);
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
 	{
 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 15:51:15 by juka              #+#    #+#             */
-/*   Updated: 2024/08/25 10:20:03 by juka             ###   ########.fr       */
+/*   Created: 2024/08/20 15:51:15 by fandre-b              #+#    #+#             */
+/*   Updated: 2024/08/25 10:20:03 by fandre-b             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s)
 	if (!pipex_s->cmd)
 		return (perror("Malloc commads array"), errno);
 	ft_update_cmds(tokens_s, pipex_s);
-	ft_update_fds(tokens_s, pipex_s);
+	pipex_s->status = ft_update_fds(tokens_s, pipex_s);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 15:51:15 by juka              #+#    #+#             */
-/*   Updated: 2024/08/27 09:44:01 by juka             ###   ########.fr       */
+/*   Created: 2024/08/20 15:51:15 by fandre-b              #+#    #+#             */
+/*   Updated: 2024/08/27 11:12:31 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	process_child_pipes(t_pipex *pipex_s)
 	while(rep)
 	{
 		rep = 0;
-		printf("\n-> starting from last pipex_s\n");
+		printf("\n-> Run: %d, starting from last pipex_s\n", times);
 		while(curr_pipex_s != NULL)
 		{
 			printf("    //%s(%d)\n", curr_pipex_s->cmd[0], curr_pipex_s->pid);
@@ -104,19 +104,19 @@ void	process_child_pipes(t_pipex *pipex_s)
 				{
 					printf("[✗] process still running\n");
 					rep = 1;
-					times +=1;
 				}
 			}
 			else
 					printf("[✓] closed\n");
 			curr_pipex_s = curr_pipex_s->prev;
 		}
+		times += 1;
 		if (rep == 1)
 		{
 			curr_pipex_s = pipex_s;
 			usleep(10000);
 		}
-		if (times == 5)
+		if (times == -1)
 			break;
 	}
 	if (curr_pipex_s == NULL)
