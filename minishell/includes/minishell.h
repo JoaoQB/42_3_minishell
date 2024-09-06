@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 12:19:05 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/06 08:47:00 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,17 @@
 # include <unistd.h>
 # include <fcntl.h>
 #include <sys/wait.h>
-#include <errno.h>
 #include <signal.h>
+#include <limits.h>
+
+# define MAX_HIST 30
 
 typedef struct s_env	t_env;
 typedef struct s_token	t_token;
 typedef struct s_pipex	t_pipex;
 typedef struct s_main	t_main;
+typedef struct s_hist	t_hist;
+extern volatile sig_atomic_t g_signal;
 
 typedef enum e_token_type
 {
@@ -69,10 +73,19 @@ typedef struct s_pipex  //mine2
 	int		status;
 	char	*path;
 	char	**cmd;
-	int		pipe_fd[2];
+	int		pipe_fd[2]; //restruct in case of *
 	t_pipex *prev;
 	t_pipex	*next;
+	t_main	*main_s;
 }	t_pipex;
+
+typedef struct s_hist
+{
+	int		idx;
+	char	*usr_input;
+    struct s_hist *next;
+    struct s_hist *prev;
+} t_hist;
 
 typedef struct s_main
 {
@@ -88,7 +101,8 @@ typedef struct s_main
 	int		*pid_pipeline; //dont need
 	t_env	*env;
 	t_token	*tokens;
-	t_pipex	*pipex;
+	t_pipex	*pipex; //fandre-b added
+	t_hist	*history; //fandre-b added
 	// t_main	*next; // don't need
 }	t_main;
 
@@ -127,6 +141,7 @@ char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 char	*ft_strcat(char *dest, const char *src);
+int	ft_strcmp(const char *s1, const char *s2);
 
 /* is_x.c */
 int		ft_isspace(int c);
@@ -171,11 +186,11 @@ void	quotes_remover(t_token *first);
 
 /* tokenize_smarter.c */
 void	tokenize_smarter(t_token *first);
-int		count_cmd_size(t_token *first);
+int		count_cmd_size(t_token *first); //no need
 t_token	*ft_token_new_late(char *string, int len);
 
 /* create_cmd_array.c */
-char	***create_cmd_array(t_main *main_s);
+char	***create_cmd_array(t_main *main_s); //no need
 
 /************************/
 /******* PARSING ********/
@@ -208,11 +223,12 @@ int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s);
 int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s);
 int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
 int read_heredoc(t_token *tokens_s);
-t_pipex *ft_init_pipex_s(void);
+t_pipex *ft_init_pipex_s(t_main *mains_s);
 
 //Execute pipex cmds
-void ft_exe_pipex_s(t_pipex *pipex_s, char **envp);
-int	execute_command(t_pipex *pipex_s, char **envp); //temp
+int	edge_cases(t_pipex *pipex_s);
+void ft_exe_pipex_s(t_main *main_s, char **envp);
+int	execute_command(t_pipex *pipex_s, char **envp);
 char	*get_cmd_path(char *cmd, char **envp);
 void	exe_cmd_child(t_pipex *pipex_s, char **envp);
 
@@ -221,5 +237,46 @@ char	*ft_strnjoin(char *old_str, char *str_add, int size);
 char	*ft_strstr(const char *big, const char *little);
 char* get_file_name_from_fd(int fd);
 void	print_struct(t_main *main_s);
+void	print_check_processes(t_pipex *pipex_s);
+
+/************************/
+/******* HISTORY ********/
+/************************/
+
+t_hist *ft_init_hist_s(void);
+void add_to_history(t_main *main_s);
+void get_history(t_hist *hist_s, int index);
+void    ft_rm_history(t_hist **hist_s);
+void free_history(t_hist *hist_s);
+
+/************************/
+/****** EDGE CASES ******/
+/************************/
+
+void run_pwd(void);
+int run_cd(t_pipex *pipex_s);
+int run_echo(t_pipex *pipex_s);
+int special_edge_cases(t_pipex *pipex_s);
+
+/************************/
+/***** ENV FUNCTIONS ****/
+/************************/
+
+// ft_getenv(char *var_name); TODO
+// ft_setenv(char *var_name, char *var_value, int overwrite); TODO
+char *ft_getenv(t_main *main_s, char *var_name); //TODO
+void ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite); //TODO
+t_env *new_menv_s(void);
+void export_env(t_main *main_s);
+void my_print_env(t_main *main_s);
+
+/************************/
+/*** SIGNAL HANDLERS ****/
+/************************/
+
+// int setup_signal_handlers(int process_type);
+int set_sig_handlers(int signal, void (*func_name)(int));
+void handle_sigquit(int sig);
+void handle_sigint(int sig);
 
 #endif

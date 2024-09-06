@@ -5,72 +5,104 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 15:51:15 by fandre-b              #+#    #+#             */
-/*   Updated: 2024/08/27 11:21:14 by fandre-b         ###   ########.fr       */
+/*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
+/*   Updated: 2024/09/04 09:35:12 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+int	check_for_pipeline(t_main *main_s)
+{
+	t_token *tokens_s;
+	int		check;
 
-void ft_exe_pipex_s(t_pipex *pipex_s, char **envp)
-{//sera usado para possivelmente chamar edge cases
+	check = 0;
+	tokens_s = main_s->tokens;
+	while(tokens_s)
+	{
+		if (tokens_s->type == PIPE)
+			return (1);
+		else if(tokens_s->type == PATH)
+		{
+			check = 1;
+			if (!special_edge_cases(main_s->pipex))
+				return (1);
+		}
+		tokens_s = tokens_s->next;
+	}
+	if (!check && !special_edge_cases(main_s->pipex))
+		return(1);
+	return (0);
+}
+
+void ft_exe_pipex_s(t_main *main_s, char **envp)
+{//join function with execute_command
+	t_pipex *pipex_s;
+
+	pipex_s = main_s->pipex;
+	if (!check_for_pipeline(main_s))
+		return; //this worked but i did simplier
+	// if(!pipex_s->next && special_edge_cases(pipex_s))
+	// 	return ;
 	while(pipex_s)
 	{
 		pipex_s->path = get_cmd_path(pipex_s->cmd[0], envp);
-		if (pipex_s->path)
-			execute_command(pipex_s, envp);
-		else
-			printf("%s: command not found\n", pipex_s->cmd[0]);
+		execute_command(pipex_s, envp);
 		pipex_s = pipex_s->next;
 	}
 }
 
 int	execute_command(t_pipex *pipex_s, char **envp) //temp
 {
-	int		status;
-
-	status = 0;
 	// if (pipex_s->status != 0)
 	//  	return(-1);
 	pipex_s->pid = fork();
 	if (pipex_s->pid == -1)
-		return (perror("fork failed"), errno);
+		return (perror("fork failed"), errno); //TODOfunction for errors
 	else if (pipex_s->pid == 0)
 		exe_cmd_child(pipex_s, envp);
-	// else change stuff here latter
-	// 	exe_cmd_parent()
-	return (status);
+	// else <parent> change stuff here latter
+	//		exe_cmd_parent()
+	return (0);
 }
 
 // void handle_sigpipe(int sig)
-// {
+// {//TODO signal handling for exit to. Se bem que consigo sem signals...
 //     printf("Received SIGPIPE(%d), exiting...\n", sig);
 //     exit(1);
 // }
 
+
+
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
 	int	status;
+	t_main *main_s;
 
-    //signal(SIGPIPE, handle_sigpipe);
+	main_s = pipex_s->main_s;
+    //signal(SIGPIPE, handle_sigpipe);//TODO signal in child?
 	status = 0;
 	if(pipex_s->status != 0)
 		exit(pipex_s->status);
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
-	{
 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
-		close(pipex_s->pipe_fd[0]);
-	}
 	if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
-	{
 		dup2(pipex_s->pipe_fd[1], STDOUT_FILENO);
-		close(pipex_s->pipe_fd[1]);
-	}
 	close_all_fd(pipex_s);
-	if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
+	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
+	{
+		free_main_input(main_s);
+		cleanup_main(main_s);
+		exit(0);
+	}
+	else if (!pipex_s->path && pipex_s->cmd[0])
+		printf("%s: command not found\n", pipex_s->cmd[0]); //TODO err 127
+	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
 		status = errno;
 	pipex_s->status = status;
+	free_main_input(main_s);
+	cleanup_main(main_s);
 	exit (status);
 }
 
@@ -82,12 +114,10 @@ char	*get_cmd_path(char *cmd, char **envp)
 
 	paths = NULL;
 	temp = NULL;
-    while (*envp != NULL)
-    {
-        if (ft_strncmp(*envp, "PATH=", 5) == 0)
-            paths = *envp + 5; // Skip "PATH="
-		envp++;
-    }
+	if(!cmd)
+		return(NULL);
+	paths = *envp;
+	paths = getenv("PATH");
 	while (paths && *paths != '\0')
 	{
 		i = 0;

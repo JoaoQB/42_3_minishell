@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
+#    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/08/27 11:07:57 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/09/05 11:16:12 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,11 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/exe_cmd/pipex_main.c \
 	$(SRC_PATH)/exe_cmd/pipex_struct.c \
 	$(SRC_PATH)/exe_cmd/pipex_utils.c \
+	$(SRC_PATH)/exe_cmd/history.c \
+	$(SRC_PATH)/exe_cmd/built_in_cmds.c \
+	$(SRC_PATH)/exe_cmd/env.c \
+	$(SRC_PATH)/exe_cmd/ft_signals.c \
+
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)
 

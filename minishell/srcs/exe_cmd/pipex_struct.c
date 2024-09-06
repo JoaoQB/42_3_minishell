@@ -62,6 +62,7 @@ int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
 	int count;
 
 	count = 0;
+	pipex_s->cmd[0] = NULL;
 	while (tokens_s && tokens_s->type != PIPE) //funcao para este
 	{
 		if (tokens_s->type == CMD || tokens_s->type == ARG)
@@ -76,6 +77,35 @@ int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
 	return (0);
 }
 
+
+
+int read_heredoc(t_token *tokens_s)
+{
+	char *input;
+	char *delim;
+	int		piper[2];
+
+	delim = tokens_s->value;
+	if (pipe(piper) == -1)
+		return(perror("failed pipe"), 0);
+	while(1)
+	{
+		input = readline("> ");
+		if (!input)
+			break;
+		if(ft_strcmp(input, delim) == 0)
+		{
+			free(input);
+			break;
+		}
+		write(piper[1], input, ft_strlen(input));
+		write (piper[1], "\n", 1);
+		free(input);
+	}
+	close(piper[1]);
+	return (piper[0]);
+}
+
 int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s)
 {
 	int		*io_fd;
@@ -87,7 +117,7 @@ int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s)
 			close (io_fd[0]);
 		if ((tokens_s->type == RED_OUT || tokens_s->type == RED_OUT_APP) && io_fd[1] > 2)
 			close (io_fd[1]);
-		if(tokens_s->type == HERE_DOC)
+		if(tokens_s->type == DELIM)
 			io_fd[0] = read_heredoc(tokens_s);
 		else if (tokens_s->type == RED_IN)
 			io_fd[0] = open(tokens_s->next->value, O_RDONLY, 0666);
@@ -108,7 +138,7 @@ int ft_create_pipeline(t_main *main_s)
 	t_token *tokens_s;
 	int	piper[2];
 
-	main_s->pipex = ft_init_pipex_s();
+	main_s->pipex = ft_init_pipex_s(main_s);
 	tokens_s = main_s->tokens;
 	pipex_s = main_s->pipex;
 	pipex_s->pipe_fd[0] = STDIN_FILENO;
@@ -117,7 +147,7 @@ int ft_create_pipeline(t_main *main_s)
 	{
 		if(tokens_s->type == PIPE)
 		{
-			pipex_s->next = ft_init_pipex_s();
+			pipex_s->next = ft_init_pipex_s(main_s);
 			pipex_s->next->prev = pipex_s;
 			if (pipe(piper) == -1)
 				return(perror ("pipe"), errno);
@@ -131,7 +161,7 @@ int ft_create_pipeline(t_main *main_s)
 	return (0);
 }
 
-t_pipex *ft_init_pipex_s(void)
+t_pipex *ft_init_pipex_s(t_main *main_s)
 {
     t_pipex *pipex_s;
 
@@ -146,14 +176,15 @@ t_pipex *ft_init_pipex_s(void)
     pipex_s->pipe_fd[1] = -2;
 	pipex_s->prev = NULL;
     pipex_s->next = NULL;
-    return pipex_s;
+	pipex_s->main_s = main_s;
+    return (pipex_s);
 }
 
-int read_heredoc(t_token *tokens_s)
-{
-	if (!tokens_s->next || tokens_s->next->type != DELIM || tokens_s->value == NULL)
-		return (perror("Delimiter not found or invalid"), -1);
-	printf("to read until: %s\n", tokens_s->value);
-	printf("here_doc still not working: \n");
-	return (-1);
-}
+// int read_heredoc(t_token *tokens_s)
+// {
+// 	if (!tokens_s->next || tokens_s->next->type != DELIM || tokens_s->value == NULL)
+// 		return (perror("Delimiter not found or invalid"), -1);
+// 	printf("to read until: %s\n", tokens_s->value);
+// 	printf("here_doc still not working: \n");
+// 	return (-1);
+// }

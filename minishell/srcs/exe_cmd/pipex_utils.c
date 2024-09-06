@@ -103,3 +103,19 @@ void	print_struct(t_main *main_s)
 	}
 	return ;
 }
+
+void	print_check_processes(t_pipex *pipex_s)
+{
+	// if (pipex_s == NULL)
+	// 	return;
+	while (pipex_s->next)
+	{
+		if (pipex_s->pid > 0)
+		{
+			printf("\n-->process with pid: %d from cmd: %s unclosed\n", pipex_s->pid, pipex_s->cmd[0]);
+			return;
+		}
+		pipex_s = pipex_s->next;
+	}
+	printf("\n-->all processes have been closed\n");
+}
