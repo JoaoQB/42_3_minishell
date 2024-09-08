@@ -41,10 +41,11 @@ void	free_double_array(char **array)
 }
 void	cleanup_main(t_main *main_s)
 {
-	if (main_s->menv)
-		free_double_array(main_s->menv);
+	// if (main_s->menv) //fandre-b
+	// 	free_double_array(main_s->menv);
 	if (main_s->env)
 		free_env(main_s->env);
+	free_history(main_s->history);//fandre-b free
 }
 
 void	free_main_input(t_main *main_s)
@@ -59,6 +60,8 @@ void	free_main_input(t_main *main_s)
 		free(main_s->input_reorg);
 	if (main_s->cmd)
 		free_triple_array(main_s->cmd);
+	if (main_s->pipex) //fandre-b free
+		free_pipex_s(main_s->pipex); 
 	main_s->size = -1;
 	main_s->exe_fd[0] = -1;
 	main_s->exe_fd[1] = -1;

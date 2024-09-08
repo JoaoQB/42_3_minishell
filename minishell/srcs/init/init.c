@@ -14,8 +14,8 @@
 
 void	init_main(t_main *main_s, char **envp)
 {
-	main_s->env = get_env(envp);
-	main_s->menv = (envp);
+	main_s->env = NULL; //fandre-b modified
+	main_s->menv = envp;
 	// print_env(main_s->env);
 	// print_menv(main_s->menv);
 	main_s->tokens = NULL;
@@ -30,5 +30,6 @@ void	init_main(t_main *main_s, char **envp)
 	main_s->fd_pipeline[1] = NULL;
 	main_s->pid_pipeline = NULL;
 	main_s->silence_info = false;
+	main_s->history = NULL; //fandre-b added
 	// main_s->next = NULL;
 }
