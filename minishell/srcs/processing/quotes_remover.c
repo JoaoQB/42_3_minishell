@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:02:51 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/01 14:20:11 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:29:10 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static int	n_quotes(char *str)
 {
 	int		i;
 	int		count;
-	char	qt_char;
 
 	if (!str)
 		return (0);
@@ -54,10 +53,7 @@ static int	n_quotes(char *str)
 		if (ft_isquotes(str[i]))
 		{
 			count += 2;
-			qt_char = str[i];
-			i++;
-			while (str[i] != qt_char && str[i])
-				i++;
+			i += iterate_quotes(&str[i]);
 		}
 		i++;
 	}
@@ -70,7 +66,7 @@ static char	*remove_quotes(t_token *token)
 	char	*input;
 	int		new_len;
 
-	if (!token)
+	if (!token || !token->value)
 		return (NULL);
 	input = token->value;
 	new_len = (ft_strlen(input) - n_quotes(input));
@@ -96,11 +92,9 @@ void	quotes_remover(t_token *first)
 		if (current->type == QUOTE)
 		{
 			new_value = remove_quotes(current);
-			free (current->value);
+			ft_free(&current->value);
 			if (new_value)
 				current->value = new_value;
-			else
-				current->value = ft_strdup("");
 			current->type = WORD;
 		}
 		current = current->next;

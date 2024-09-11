@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:41:15 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 12:21:52 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:34:26 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,22 @@ void	free_env(t_env *first)
 	}
 }
 
-void	free_tokens(t_token *token)
+void	free_tokens(t_token **first)
 {
+	t_token	*current;
 	t_token	*temp;
 
-	if (!token)
+	if (!first || !*first)
 		return ;
-	while (token)
+	current = *first;
+	while (current)
 	{
-		temp = token;
-		token = token->next;
+		temp = current;
+		current = current->next;
 		if (temp->value)
 			free (temp->value);
 		free (temp);
+		temp = NULL;
 	}
+	*first = NULL;
 }

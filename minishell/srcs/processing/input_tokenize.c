@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_input.c                                   :+:      :+:    :+:   */
+/*   input_tokenize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:11:02 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 12:19:18 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:20:13 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,30 @@ static void	append_token_back(t_token *first, t_token *new_node)
 		return ;
 	}
 	last->next = new_node;
-	new_node->prev = last; //added by fandre-b
+	new_node->prev = last;
 }
 
-int	token_assign(t_token *token)
+int	token_assign(char *str)
 {
-	if (!token)
+	if (!str)
 		return (-1);
-	else if (!ft_strncmp(token->value, "<", 2) && token->value[1] == '\0')
+	else if (str[0] == '<' && str[1] == '\0')
 		return (RED_IN);
-	else if (!ft_strncmp(token->value, ">", 2) && token->value[1] == '\0')
+	else if (str[0] == '>' && str[1] == '\0')
 		return (RED_OUT);
-	else if (!ft_strncmp(token->value, "<<", 3) && token->value[2] == '\0')
+	else if (str[0] == '<' && str[1] == '<' && str[2] == '\0')
 		return (HERE_DOC);
-	else if (!ft_strncmp(token->value, ">>", 3) && token->value[2] == '\0')
+	else if (str[0] == '>' && str[1] == '>' && str[2] == '\0')
 		return (RED_OUT_APP);
-	else if (!ft_strncmp(token->value, "|", 2) && token->value[1] == '\0')
+	else if (str[0] == '|' && str[1] == '\0')
 		return (PIPE);
-	else if (find_quotes(token->value))
+	else if (find_quotes(str))
 		return (QUOTE);
 	else
 		return (WORD);
 }
 
-static t_token	*ft_token_new(char **words, int i)
+static t_token	*ft_token_new(char *str)
 {
 	t_token	*new_token;
 	int		word_len;
@@ -66,22 +66,23 @@ static t_token	*ft_token_new(char **words, int i)
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	word_len = ft_strlen(words[i]);
+	word_len = ft_strlen(str);
 	new_token->value = (char *)malloc((word_len + 1) * sizeof(char));
 	if (!new_token->value)
 	{
 		free(new_token);
 		return (NULL);
 	}
-	ft_strlcpy(new_token->value, words[i], word_len + 1);
-	new_token->type = token_assign(new_token);
-	new_token->index = i;
-	new_token->prev = NULL; //added by fandre-b
+	ft_strlcpy2(new_token->value, str, word_len + 1);
+	if (new_token->value)
+		new_token->type = token_assign(new_token->value);
+	new_token->index = -1;
+	new_token->prev = NULL;
 	new_token->next = NULL;
 	return (new_token);
 }
 
-t_token	*tokenize_input(char **words)
+t_token	*input_tokenize(char **words)
 {
 	t_token	*new_token;
 	t_token	*first;
@@ -93,11 +94,10 @@ t_token	*tokenize_input(char **words)
 	i = 0;
 	while (i < word_count)
 	{
-		new_token = ft_token_new(words, i);
+		new_token = ft_token_new(words[i]);
 		if (!new_token)
 		{
-			if (first)
-				free_tokens(first);
+			free_tokens(&first);
 			free_double_array(words);
 			return (NULL);
 		}
@@ -107,5 +107,6 @@ t_token	*tokenize_input(char **words)
 			append_token_back(first, new_token);
 		i++;
 	}
+	reindex_tokens(first);
 	return (first);
 }

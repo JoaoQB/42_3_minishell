@@ -97,10 +97,9 @@ int	ft_shell_pipex(t_main *main_s)
 		printf("silencer activated as %d\n", main_s->silence_info);
 		return(0);
 	}
-	export_env(main_s);
 	//my_print_env(main_s);
 	ft_process_tokens_s(main_s);
-	add_to_history(main_s);
+	//add_to_history(main_s);
 	// print_struct(main_s);
 	ft_exe_pipex_s(main_s, main_s->menv);
 	process_child_pipes(main_s->pipex); //manage_pid

@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   str_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/08 16:49:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/11 13:37:18 by jqueijo-         ###   ########.fr       */
+/*   Created: 2024/09/09 15:54:16 by jqueijo-          #+#    #+#             */
+/*   Updated: 2024/09/11 13:40:52 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	init_main(t_main *main_s, char **envp)
+size_t	ft_strlcpy2(char *dst, const char *src, size_t size)
 {
-	main_s->env = get_env(envp);
-	main_s->menv = envp;
-	// print_env(main_s->env);
-	// print_menv(main_s->menv);
-	main_s->tokens = NULL;
-	main_s->user_input = NULL;
-	main_s->input_trim = NULL;
-	main_s->input_reorg = NULL;
-	main_s->silence_info = false;
-	main_s->history = NULL;
+	size_t	i;
+
+	if (!dst || !src || size == 0)
+		return (0);
+	i = 0;
+	while (src[i] && i < size - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (ft_strlen(src));
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while ((*s1 || *s2) && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return ((*(unsigned char *)s1 - *(unsigned char *)s2));
 }

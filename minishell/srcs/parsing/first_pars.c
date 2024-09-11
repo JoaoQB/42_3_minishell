@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:23:33 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/07/29 14:15:38 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:37:41 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,12 @@ static bool	pars_pipe(t_main *main_s, t_token *current)
 {
 	t_token	*next;
 
-	if (!current->next)
+	if (!current->prev)
+	{
+		syntax_error_pipe(main_s);
+		return (false);
+	}
+	else if (!current->next)
 	{
 		syntax_error_pipe(main_s);
 		return (false);

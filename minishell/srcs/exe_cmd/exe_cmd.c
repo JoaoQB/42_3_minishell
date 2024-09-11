@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/04 09:35:12 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:46:17 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	close_all_fd(pipex_s);
 	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
 	{
-		free_main_input(main_s);
-		cleanup_main(main_s);
+		// free_main_input(main_s);
+		// cleanup_main(main_s);
 		exit(0);
 	}
 	else if (!pipex_s->path && pipex_s->cmd[0])
@@ -101,8 +101,8 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
 		status = errno;
 	pipex_s->status = status;
-	free_main_input(main_s);
-	cleanup_main(main_s);
+	// free_main_input(main_s);
+	// cleanup_main(main_s);
 	exit (status);
 }
 

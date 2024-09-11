@@ -6,11 +6,19 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 11:53:24 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:51:22 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	ft_free(char **str)
+{
+	if (str && *str)
+		free (*str);
+	else
+	*str = NULL;
+}
 
 void	free_triple_array(char ***array)
 {
@@ -26,6 +34,7 @@ void	free_triple_array(char ***array)
 		free(array);
 	}
 }
+
 void	free_double_array(char **array)
 {
 	int	i;
@@ -39,34 +48,31 @@ void	free_double_array(char **array)
 	}
 	free(array);
 }
+
 void	cleanup_main(t_main *main_s)
 {
-	// if (main_s->menv) //fandre-b
+	// if (main_s->menv)
 	// 	free_double_array(main_s->menv);
 	if (main_s->env)
 		free_env(main_s->env);
-	free_history(main_s->history);//fandre-b free
+	free_history(main_s->history);
 }
 
 void	free_main_input(t_main *main_s)
 {
 	if (main_s->tokens)
-		free_tokens(main_s->tokens);
+		free_tokens(&main_s->tokens);
 	if (main_s->user_input)
 		free(main_s->user_input);
 	if (main_s->input_trim)
 		free(main_s->input_trim);
 	if (main_s->input_reorg)
 		free(main_s->input_reorg);
-	if (main_s->cmd)
-		free_triple_array(main_s->cmd);
 	if (main_s->pipex) //fandre-b free
-		free_pipex_s(main_s->pipex); 
-	main_s->size = -1;
-	main_s->exe_fd[0] = -1;
-	main_s->exe_fd[1] = -1;
-	main_s->fd_pipeline[0] = NULL;
-	main_s->fd_pipeline[1] = NULL;
-	main_s->pid_pipeline = NULL;
+		free_pipex_s(main_s->pipex);
+	main_s->tokens = NULL;
+	main_s->user_input = NULL;
+	main_s->input_trim = NULL;
+	main_s->input_reorg = NULL;
 	main_s->silence_info = false;
 }

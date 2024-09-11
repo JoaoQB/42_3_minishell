@@ -6,51 +6,16 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:28:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 12:21:29 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:46:16 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*ft_token_new_late(char *string, int len)
-{
-	t_token	*new_token;
-
-	new_token = (t_token *)malloc(sizeof(t_token));
-	if (!new_token)
-		return (NULL);
-	new_token->value = (char *)malloc((len + 1) * sizeof(char));
-	if (!new_token->value)
-	{
-		free(new_token);
-		return (NULL);
-	}
-	ft_strlcpy(new_token->value, string, len + 1);
-	new_token->type = token_assign(new_token);
-	new_token->index = -1;
-	new_token->next = NULL;
-	new_token->prev = NULL;
-	return (new_token);
-}
-int	count_cmd_size(t_token *first)
-{
-	int		cmd_size;
-	t_token	*current;
-
-	if (!first)
-		return (0);
-	cmd_size = 0;
-	current = first;
-	while (current)
-	{
-		if (current->type == CMD)
-			cmd_size++;
-		current = current->next;
-	}
-	return (cmd_size);
-}
 static void	tokenize_args(t_token *current, int type)
 {
+	if (!current || !current->type)
+		return ;
 	if (current && current->type == WORD)
 	{
 		current->type = type;
@@ -68,9 +33,11 @@ static void	tokenize_args(t_token *current, int type)
 		}
 	}
 }
+
 void	tokenize_smarter(t_token *first)
 {
 	t_token	*current;
+	t_token	*next;
 	bool	no_cmd;
 
 	if (!first)
@@ -79,6 +46,7 @@ void	tokenize_smarter(t_token *first)
 	current = first;
 	while (current)
 	{
+		next = current->next;
 		if (no_cmd == true && (current->type == WORD))
 		{
 			tokenize_args(current, CMD);
@@ -93,6 +61,6 @@ void	tokenize_smarter(t_token *first)
 		else if (current->type == HERE_DOC
 			&& current->next && current->next->type == WORD)
 			current->next->type = DELIM;
-		current = current->next;
+		current = next;
 	}
 }
