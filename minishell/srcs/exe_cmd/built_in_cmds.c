@@ -42,7 +42,7 @@ int run_cd(t_pipex *pipex_s)
 	ft_setenv(main_s, "OLDPWD", ft_getenv(main_s, "PWD"), 1);
 	if (cmd[2])
 		return (printf("%s: %s\n", cmd[0], "too many arguments"), 1);
-    else if (!chdir(new_dir) == 0)
+    else if (!(chdir(new_dir) == 0))
         return (printf("%s: %s: %s\n", cmd[0], cmd[1], strerror(errno)), 1);
     ft_setenv(main_s, "PWD", new_dir, 1);
     return (0);
@@ -66,7 +66,7 @@ int run_echo(t_pipex *pipex_s)
 	{
 		input = readline("> ");
 		if (input)
-			printf(input);
+			printf("%s", input);
 		free(input);
 	}
 	while(pipex_s->cmd[i])
