@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/11 13:51:22 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/11 18:19:10 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ void	free_main_input(t_main *main_s)
 	main_s->user_input = NULL;
 	main_s->input_trim = NULL;
 	main_s->input_reorg = NULL;
+	main_s->pipex = NULL;
 	main_s->silence_info = false;
 }
