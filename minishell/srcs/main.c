@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:42:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/06 11:16:56 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:42:42 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	repl(t_main *main_s, char **envp)
 			break;
 		if (!main_s->user_input)
 			break ;
-		process_input(main_s, main_s->user_input);
+		input_process(main_s, main_s->user_input);
 		//print_tokens(main_s->tokens);
 		ft_shell_pipex(main_s);
 		free_main_input(main_s);

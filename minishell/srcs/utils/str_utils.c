@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:35:30 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/30 19:23:46 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:14:06 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	if (n == 0)
 		return (0);
 	while ((*s1 || *s2) && n-- > 1 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return ((*(unsigned char *)s1 - *(unsigned char *)s2));
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	while ((*s1 || *s2) && *s1 == *s2)
 	{
 		s1++;
 		s2++;

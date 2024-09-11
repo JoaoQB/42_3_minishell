@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   trim_input.c                                       :+:      :+:    :+:   */
+/*   input_trim_and_tokenize.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 15:10:33 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 11:02:32 by jqueijo-         ###   ########.fr       */
+/*   Created: 2024/09/07 11:39:05 by jqueijo-          #+#    #+#             */
+/*   Updated: 2024/09/07 11:51:53 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ static char	*alloc_and_concat(char **words, int total_len, int j)
 	return (trimmed);
 }
 
-char	*trim_input(t_main	*main_s, char *user_input)
+char	*input_trim_and_tokenize(t_main *main_s, char *user_input)
 {
 	char	**words;
 	int		i;
 	int		total_len;
 
-	if (!parse_quotes(main_s, user_input))
+	if (!main_s || !user_input || !parse_quotes(main_s, user_input))
 		return (NULL);
 	words = split_into_words(user_input);
 	if (!words)
 		return (NULL);
-	main_s->tokens = tokenize_input(words);
+	main_s->tokens = input_tokenize(words);
 	total_len = 0;
 	i = -1;
 	while (words[++i])
@@ -67,7 +67,7 @@ char	*trim_input(t_main	*main_s, char *user_input)
 	{
 		if (words)
 			free_double_array(words);
-		return (ft_strdup(""));
+		return (NULL);
 	}
 	return (alloc_and_concat(words, total_len, i));
 }

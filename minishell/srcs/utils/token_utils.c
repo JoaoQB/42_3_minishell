@@ -1,18 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_refine_word.c                             :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juka <juka@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 12:13:32 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/25 13:48:16 by juka             ###   ########.fr       */
+/*   Created: 2024/09/03 17:20:48 by jqueijo-          #+#    #+#             */
+/*   Updated: 2024/09/11 12:12:00 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	append_token_front(t_token **first, t_token *target, t_token *new)
+void	token_extract_before(t_token **first, t_token *current, int i)
+{
+	t_token	*new;
+	char	*new_value;
+
+	new = (t_token *)malloc(sizeof(t_token));
+	if (!new)
+		return ;
+	new->value = extract_before_i(current->value, i);
+	if (!new->value)
+	{
+		free (new);
+		return ;
+	}
+	new->type = token_assign(new->value);
+	new->index = -1;
+	new->next = NULL;
+	new->prev = NULL;
+	token_append_before(first, current, new);
+	new_value = extract_from_i(current->value, i);
+	if (current->value)
+		ft_free(&current->value);
+	current->value = new_value;
+}
+
+void	token_append_after(t_token *target, t_token *new)
+{
+	if (!target || !new)
+		return ;
+	if (target->next)
+	{
+		new->next = target->next;
+		target->next->prev = new;
+		new->prev = target;
+		target->next = new;
+		return ;
+	}
+	target->next = new;
+	new->prev = target;
+}
+
+void	token_append_before(t_token **first, t_token *target, t_token *new)
 {
 	t_token	*current;
 
@@ -61,51 +102,8 @@ void	reassign_tokens(t_token *first)
 	current = first;
 	while (current)
 	{
-		current->type = token_assign(current);
+		current->type = token_assign(current->value);
 		current = current->next;
 		i++;
 	}
-}
-
-static bool	check_token_word(t_main *main_s, t_token *token)
-{
-	t_token	*current;
-	int		i;
-
-	current = token;
-	if (!current)
-		return (false);
-	i = 0;
-	while (current->value[i])
-	{
-		if (ft_isoperator(current->value[i]))
-		{
-			extract_operator_word(main_s, current);
-			return (true);
-		}
-		i++;
-	}
-	return (false);
-}
-
-t_token	*tokenize_refine_word(t_main *main_s)
-{
-	t_token	*current;
-
-	current = main_s->tokens;
-	while (current)
-	{
-		if (current->type == WORD || current->type == QUOTE)
-		{
-			if (check_token_word(main_s, current))
-			{
-				reassign_tokens(main_s->tokens);
-				reindex_tokens(main_s->tokens);
-				current = main_s->tokens;
-			}
-		}
-		current = current->next;
-	}
-	current = main_s->tokens;
-	return (current);
 }

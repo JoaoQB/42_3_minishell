@@ -6,13 +6,13 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:36:22 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/01 14:16:53 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:11:22 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static const char	*iterate_quotes(const char *str, int *count, bool *is_word)
+static const char	*iterate_quotes_str(const char *str, int *count, bool *is_word)
 {
 	char	quote_char;
 
@@ -40,7 +40,7 @@ int	count_words(const char *str)
 	while (*str)
 	{
 		if (ft_isquotes(*str))
-			str = iterate_quotes(str, &count, &is_word);
+			str = iterate_quotes_str(str, &count, &is_word);
 		else if (!ft_isspace(*str) && !is_word)
 		{
 			count++;

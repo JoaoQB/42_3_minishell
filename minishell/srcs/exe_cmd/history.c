@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/04 09:37:41 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:01:34 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void    get_history(t_hist *hist_s, int index)
 {//TODO poder receber numero de cmds para printar
     char *str_token;
     t_hist *curr_hist_s;
-    
+
     curr_hist_s = hist_s;
     if (index == -1)
     {

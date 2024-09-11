@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 12:05:53 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/09 19:29:56 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ void	print_env(t_env *env)
 
 void print_tokens(t_token *tokens)
 {
+	if (!tokens)
+	{
+		printf("no tokens\n");
+		return;
+	}
     t_token *current = tokens;
     while (current != NULL)
     {
@@ -64,15 +69,20 @@ void print_tokens(t_token *tokens)
             case ARG: type_str = "ARG"; break;
             case PATH: type_str = "PATH"; break;
             case DELIM: type_str = "DELIM"; break;
+            case CONC: type_str = "CONC"; break;
+			case VAR: type_str = "VAR"; break;
             // Add new token types here
-            // case NEW_TYPE_1: type_str = "NEW_TYPE_1"; break;
             // case NEW_TYPE_2: type_str = "NEW_TYPE_2"; break;
             default: type_str = "UNKNOWN";
-        }
-        printf("Token: '%s', Type: %s, %d, Index: '%d'\n", current->value, type_str, current->type, current->index);
+		}
+		if (current->value)
+        	printf("Token: '%s', Type: %s, %d, Index: '%d'\n", current->value, type_str, current->type, current->index);
+		else
+			printf("Token: 'no value', Type: %s, %d, Index: '%d'\n", type_str, current->type, current->index);
         current = current->next;
     }
 }
+
 void	print_cmd_array(char ***cmd)
 {
 	int	i;

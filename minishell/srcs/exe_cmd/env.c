@@ -48,31 +48,31 @@ t_env *new_menv_s(void)
 	return (menv_s);
 }
 
-void export_env(t_main *main_s)
-{//deprecated 
-	char	**envp;
-	int		i;
-	t_env	*menv_s;
+// void export_env(t_main *main_s)
+// {//deprecated
+// 	char	**envp;
+// 	int		i;
+// 	t_env	*menv_s;
 
-	if (main_s->env)
-		return;
-	main_s->env = new_menv_s();
-	menv_s = main_s->env;
-	envp = main_s->menv;
-    while (*envp != NULL)
-    {
-		i = 0;
-		while ((*envp)[i] && (*envp)[i] != '=')
-			i++;
-		menv_s->var = ft_strnjoin(NULL, *envp, i++);
-		menv_s->var_value = ft_strnjoin(NULL, *envp + i, -1);
-		if(*(++envp) == NULL)
-			break;
-		menv_s->next = new_menv_s();
-    	menv_s->next->index = menv_s->next->index + 1;
-		menv_s = menv_s->next;
-    }
-}
+// 	if (main_s->env)
+// 		return;
+// 	main_s->env = new_menv_s();
+// 	menv_s = main_s->env;
+// 	envp = main_s->menv;
+//     while (*envp != NULL)
+//     {
+// 		i = 0;
+// 		while ((*envp)[i] && (*envp)[i] != '=')
+// 			i++;
+// 		menv_s->var = ft_strnjoin(NULL, *envp, i++);
+// 		menv_s->var_value = ft_strnjoin(NULL, *envp + i, -1);
+// 		if(*(++envp) == NULL)
+// 			break;
+// 		menv_s->next = new_menv_s();
+//     	menv_s->next->index = menv_s->next->index + 1;
+// 		menv_s = menv_s->next;
+//     }
+// }
 
 void my_print_env(t_main *main_s)
 {

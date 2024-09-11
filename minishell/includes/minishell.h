@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/06 08:47:00 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:43:47 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ typedef struct s_main	t_main;
 typedef struct s_hist	t_hist;
 extern volatile sig_atomic_t g_signal;
 
+typedef enum e_neg_operator
+{
+	NEG_PIPE = -1,
+	NEG_LESS = -2,
+	NEG_GREATER = -3,
+	NEG_VAR = -4
+} t_neg_operator;
+
 typedef enum e_token_type
 {
 	RED_IN,
@@ -46,7 +54,9 @@ typedef enum e_token_type
 	CMD,
 	ARG,
 	DELIM,
-	PATH
+	PATH,
+	CONC,
+	VAR
 }	t_token_type;
 
 typedef struct s_env
@@ -94,16 +104,10 @@ typedef struct s_main
 	char	*input_trim;
 	char	*input_reorg;
 	bool	silence_info;
-	int		exe_fd[2]; //dont need
-	char	***cmd; //dont need
-	int		size; //dont need
-	int		*fd_pipeline[2]; //dont need
-	int		*pid_pipeline; //dont need
 	t_env	*env;
 	t_token	*tokens;
 	t_pipex	*pipex; //fandre-b added
 	t_hist	*history; //fandre-b added
-	// t_main	*next; // don't need
 }	t_main;
 
 /************************/
@@ -118,9 +122,10 @@ void	free_main_input(t_main *main_s);
 void	cleanup_main(t_main *main_struct);
 void	free_double_array(char **array);
 void	free_triple_array(char ***array);
+void	ft_free(char **str);
 
 /* cleanup_struct.c */
-void	free_tokens(t_token *token);
+void	free_tokens(t_token **first);
 void	free_env(t_env *first);
 
 /* env.c */
@@ -141,12 +146,22 @@ char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 char	*ft_strcat(char *dest, const char *src);
-int	ft_strcmp(const char *s1, const char *s2);
+
+/* str_utils2.c */
+int		ft_strcmp(const char *s1, const char *s2);
+size_t	ft_strlcpy2(char *dst, const char *src, size_t size);
+
+/* char_extract_utils.c */
+char	*extract_before_i(char *str, int i);
+char	*extract_from_i(char *str, int i);
+int		iterate_quotes(char *str);
 
 /* is_x.c */
 int		ft_isspace(int c);
 int		ft_isoperator(int c);
 int		ft_isquotes(int c);
+int		ft_ischar(int c);
+int		ft_isdigit(int c);
 
 /* print_utils.c */
 void	print_tokens(t_token *tokens);
@@ -154,43 +169,81 @@ void	print_cmd_array(char ***cmd);
 void	print_env(t_env *env);
 void	print_menv(char **menv);
 
+/* token_utils.c */
+void	reassign_tokens(t_token *first);
+void	reindex_tokens(t_token *first);
+void	token_append_before(t_token **first, t_token *target, t_token *new);
+void	token_append_after(t_token *target, t_token *new);
+void	token_extract_before(t_token **first, t_token *current, int i);
+
+/* token_utils2.c */
+void	token_extract_after(t_token *current, int i);
+void	clean_tokens(t_token **first);
+void	delete_token(t_token **first, t_token *current);
+
+/* var_utils.c */
+int		ft_isvar1stchar(int c);
+int		ft_isvarchar(int c);
+char	*var_extract_before(t_token **first, t_token *current, int i);
+char	*var_extract_after(t_token *current, int i);
+char	*extract_inside_quotes(char *str);
+
 /************************/
 /****** PROCESSING ******/
 /************************/
 
-/* process_input.c */
-void	process_input(t_main *main_s, char *user_input);
-char	*reorg_input(t_main *main_s);
-char	*concat_tokens(t_token *first);
+/* input_process.c */
+void	input_process(t_main *main_s, char *user_input);
+char	*input_and_tokens_reorg(t_main *main_s);
+char	*concat_tokens_to_char(t_token *first);
 
-/* trim_input.c */
-char	*trim_input(t_main	*main_s, char *user_input);
+/* input_trim_and_tokenize.c */
+char	*input_trim_and_tokenize(t_main *main_s, char *user_input);
 
 /* split_into_words.c */
 char	**split_into_words(char const *s);
 
-/* tokenize_input.c */
-t_token	*tokenize_input(char **words);
-int		token_assign(t_token *token);
+/* input_tokenize.c */
+t_token	*input_tokenize(char **words);
+int		token_assign(char *str);
 
-/* tokenize_refine_word.c */
-t_token	*tokenize_refine_word(t_main *main_s);
-void	reindex_tokens(t_token *first);
-void	append_token_front(t_token **first, t_token *target, t_token *new);
+/* token_separate_operator.c */
+t_token	*token_separate_operator(t_main *main_s);
 
-/* extract_operator_word.c */
-void	extract_operator_word(t_main *main_s, t_token *current);
+/* tilde_replace.c */
+void	tilde_replace(t_main *main_s, t_token *first);
+
+/* quotes_hide_operators.c */
+void	quotes_hide_operators(t_token *first);
+void	hide_operators(char *str);
+void	quotes_revert_operators(t_token *first);
+void	revert_operators(char *str);
+
+/* token_split_words.c */
+void	token_split_words(t_token **first);
 
 /* quotes_remover.c */
 void	quotes_remover(t_token *first);
 
 /* tokenize_smarter.c */
 void	tokenize_smarter(t_token *first);
-int		count_cmd_size(t_token *first); //no need
-t_token	*ft_token_new_late(char *string, int len);
 
-/* create_cmd_array.c */
-char	***create_cmd_array(t_main *main_s); //no need
+/* var_swap.c */
+void	var_swap(t_main *main_s, t_token **first);
+
+// /* var_divide.c */
+// void	var_divide(t_main *main_s, t_token **first, t_token *current);
+
+/* var_conc.c */
+t_token	*var_conc(t_token *target, t_token **first);
+
+/* var_remove_quotes.c */
+t_token	*var_remove_quotes(t_token **first, t_token *current, int i);
+t_token	*var_conc_quotes(t_token **first, t_token *current);
+char	*var_extract_after(t_token *current, int i);
+
+/* var_replace.c */
+t_token	*var_replace(t_main *main_s, t_token *current, int i);
 
 /************************/
 /******* PARSING ********/

@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:14:31 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/22 15:32:54 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:56:21 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*extract_var_value(char *str)
 	if (!str)
 		return (NULL);
 	i = 1;
+	if (str[i] == '"')
+		return (extract_inside_quotes(&str[i]));
 	while (str[i])
 		i++;
 	if (i == 1)
@@ -27,7 +29,7 @@ char	*extract_var_value(char *str)
 	var_value = (char *)malloc(sizeof(char) * i);
 	if (!var_value)
 		return (NULL);
-	ft_strlcpy(var_value, str + 1, i);
+	ft_strlcpy2(var_value, str + 1, i);
 	return (var_value);
 }
 
@@ -46,7 +48,7 @@ char	*extract_var(t_env	*new_env)
 	var = (char *)malloc(sizeof(char) * (i + 1));
 	if (!var)
 		return (NULL);
-	ft_strlcpy(var, str, i + 1);
+	ft_strlcpy2(var, str, i + 1);
 	if (str[i] == '=')
 		new_env->var_value = extract_var_value(&str[i]);
 	return (var);
@@ -82,7 +84,7 @@ static t_env	*ft_new_env(char **envp, int i)
 		free(new_env);
 		return (NULL);
 	}
-	ft_strlcpy(new_env->value, envp[i], env_len + 1);
+	ft_strlcpy2(new_env->value, envp[i], env_len + 1);
 	new_env->index = i;
 	new_env->next = NULL;
 	new_env->var = NULL;
