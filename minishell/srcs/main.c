@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:42:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/11 13:42:42 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/11 19:09:31 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ static void	repl(t_main *main_s, char **envp)
 	{
 		// get_input(main_s);
 		main_s->user_input = readline("minishell-> ");
-		if (g_signal == 1)
-			break;
 		if (!main_s->user_input)
 			break ;
 		input_process(main_s, main_s->user_input);
