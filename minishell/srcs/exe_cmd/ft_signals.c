@@ -5,10 +5,11 @@ void handle_sigint(int sig)
     (void)sig;
     // printf("ctl-c activated in child\n");
     g_signal = 1;
-    // rl_on_new_line();
-    // rl_replace_line("X", 1);
-    rl_point = 0;
+    printf("^C\n");
+    rl_replace_line("", 0);
+    rl_on_new_line();
     rl_redisplay();
+    // rl_point = 0;
     // rl_done = 1;
     // exit(0);
 }
@@ -18,6 +19,7 @@ void handle_sigquit(int sig)
 {
     (void)sig;
     g_signal = 2;
+    printf("this is an forced core dump\n");
     abort();
 }
 
@@ -30,7 +32,7 @@ int set_sig_handlers(int signal, void (*func_name)(int))
     sigemptyset(&sa.sa_mask); //block all signals while handling SIGINT
     if (sigaction(signal, &sa, NULL) == -1)
     {
-        perror("sigaction ctl-c");
+        perror("sigaction failed");
         return(1);
     }
     return (0);

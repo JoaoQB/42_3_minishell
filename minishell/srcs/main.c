@@ -45,7 +45,7 @@ int get_input(t_main *main_s)
 
 static void	repl(t_main *main_s, char **envp)
 {
-	rl_catch_signals = 0;
+	// rl_catch_signals = 0;
 	init_main(main_s, envp);
 	while (1)
 	{
@@ -70,8 +70,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc != 1)
 		return (1);
-	// if (set_sig_handlers(SIGINT, handle_sigint) != 0)
-    //     return (1);
+	if (set_sig_handlers(SIGINT, handle_sigint) != 0)
+        return (1);
 	if (set_sig_handlers(SIGQUIT, handle_sigquit) != 0)
         return (1);
 	repl(&main_s, envp);
