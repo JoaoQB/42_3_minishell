@@ -70,7 +70,7 @@ void	free_main_input(t_main *main_s)
 	if (main_s->input_reorg)
 		ft_free(&main_s->input_reorg);
 	if (main_s->pipex) //fandre-b free
-		free_pipex_s(main_s->pipex);
+		free_pipex_s(&main_s->pipex);
 	main_s->tokens = NULL;
 	main_s->user_input = NULL;
 	main_s->input_trim = NULL;
