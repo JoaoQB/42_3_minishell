@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:14:31 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/11 13:56:21 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:04:05 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_env	*get_env(char **envp)
 		if (!new_env)
 		{
 			if (first)
-				free_env(first);
+				free_env(&first);
 			return (NULL);
 		}
 		append_env_back(&first, new_env);

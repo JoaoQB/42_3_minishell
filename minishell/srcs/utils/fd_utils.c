@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   fd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/08 16:49:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/17 13:11:32 by jqueijo-         ###   ########.fr       */
+/*   Created: 2024/09/13 10:46:30 by jqueijo-          #+#    #+#             */
+/*   Updated: 2024/09/13 10:48:20 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	init_main(t_main *main_s, char **envp)
+void	ft_putchar_fd(char c, int fd)
 {
-	main_s->env = get_env(envp);
-	main_s->menv = envp;
-	// print_env(main_s->env);
-	// print_menv(main_s->menv);
-	main_s->tokens = NULL;
-	main_s->user_input = NULL;
-	main_s->input_trim = NULL;
-	main_s->input_reorg = NULL;
-	main_s->pipex = NULL;
-	main_s->silence_info = false;
-	main_s->history = NULL;
-	main_s->pipex = ft_init_pipex_s(main_s);
+	write(fd, &c, sizeof(char));
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	while (*s)
+		ft_putchar_fd(*s++, fd);
+}
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }

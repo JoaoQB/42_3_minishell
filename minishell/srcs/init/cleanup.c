@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/11 18:19:10 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:50:54 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	cleanup_main(t_main *main_s)
 	// if (main_s->menv)
 	// 	free_double_array(main_s->menv);
 	if (main_s->env)
-		free_env(main_s->env);
+		free_env(&main_s->env);
 	free_history(main_s->history);
 }
 
@@ -63,11 +63,11 @@ void	free_main_input(t_main *main_s)
 	if (main_s->tokens)
 		free_tokens(&main_s->tokens);
 	if (main_s->user_input)
-		free(main_s->user_input);
+		ft_free(&main_s->user_input);
 	if (main_s->input_trim)
-		free(main_s->input_trim);
+		ft_free(&main_s->input_trim);
 	if (main_s->input_reorg)
-		free(main_s->input_reorg);
+		ft_free(&main_s->input_reorg);
 	if (main_s->pipex) //fandre-b free
 		free_pipex_s(main_s->pipex);
 	main_s->tokens = NULL;

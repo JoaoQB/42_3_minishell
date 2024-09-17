@@ -59,7 +59,7 @@ int run_echo(t_pipex *pipex_s)
 	int i;
 	int nl;
 	char *input;
-	
+
 	nl = 0;
 	i = 1;
 	if (!pipex_s->cmd[i])
@@ -104,13 +104,13 @@ int	edge_cases(t_pipex *pipex_s)
 	// char *prefix;
 	// char *sufix;
 	// int	i;
-// 
+//
 	// if(!pipex_s->cmd[1])
 		// return;
 	// i = 0;
 	// while ((pipex_s->cmd[1])[i] && (pipex_s->cmd[1])[i] != '=')
 		// i++;
-// 
+//
 	// prefix = ft_strnjoin(NULL, pipex_s->cmd[1], i++);
 	// sufix = ft_strnjoin(NULL, &pipex_s->cmd[1][i], -1);
 	// i = 0;
@@ -173,7 +173,7 @@ int special_edge_cases(t_pipex *pipex_s)
 	if(ft_strcmp(pipex_s->cmd[0], "cd") == 0)
 		pipex_s->status = run_cd(pipex_s);
 	else if(ft_strcmp(pipex_s->cmd[0], "exit") == 0)
-		printf("run exit\n"); //TODO exit
+		ft_exit(pipex_s);
 	else if(ft_strcmp(pipex_s->cmd[0], "unset") == 0)
 		run_unset(pipex_s);
 	else if(ft_strcmp(pipex_s->cmd[0], "export") == 0)
