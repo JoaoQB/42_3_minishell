@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/13 16:54:12 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:28:35 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,7 @@ bool	find_quotes(char *str);
 
 int	ft_shell_pipex(t_main *main_s);
 void	process_child_pipes(t_pipex *pipex_s);
-void free_pipex_s(t_pipex *pipex_s);
+void free_pipex_s(t_pipex **pipex_s);
 void	close_all_fd(t_pipex *pipex_s);
 
 //Create pipex_s structure
