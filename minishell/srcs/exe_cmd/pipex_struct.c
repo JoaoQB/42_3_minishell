@@ -58,7 +58,7 @@ int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s)
 }
 
 int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
-{	
+{
 	int count;
 
 	count = 0;
@@ -138,7 +138,8 @@ int ft_create_pipeline(t_main *main_s)
 	t_token *tokens_s;
 	int	piper[2];
 
-	main_s->pipex = ft_init_pipex_s(main_s);
+	if (!main_s->pipex)
+		main_s->pipex = ft_init_pipex_s(main_s);
 	tokens_s = main_s->tokens;
 	pipex_s = main_s->pipex;
 	pipex_s->pipe_fd[0] = STDIN_FILENO;

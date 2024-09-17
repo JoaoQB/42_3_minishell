@@ -6,7 +6,7 @@
 #    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/09/11 13:33:54 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/09/16 18:03:28 by jqueijo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/utils/var_utils.c \
 	$(SRC_PATH)/utils/token_utils.c \
 	$(SRC_PATH)/utils/token_utils2.c \
+	$(SRC_PATH)/utils/fd_utils.c \
+	$(SRC_PATH)/utils/to_utils.c \
 	$(SRC_PATH)/processing/input_process.c \
 	$(SRC_PATH)/processing/input_trim_and_tokenize.c \
 	$(SRC_PATH)/processing/split_into_words.c \
@@ -54,6 +56,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/exe_cmd/built_in_cmds.c \
 	$(SRC_PATH)/exe_cmd/env.c \
 	$(SRC_PATH)/exe_cmd/ft_signals.c \
+	$(SRC_PATH)/exe_cmd/built_ins/ft_exit.c \
 
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)

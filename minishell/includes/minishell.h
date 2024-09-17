@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/11 13:43:47 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/13 16:54:12 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	ft_free(char **str);
 
 /* cleanup_struct.c */
 void	free_tokens(t_token **first);
-void	free_env(t_env *first);
+void	free_env(t_env **first);
 
 /* env.c */
 t_env	*get_env(char **envp);
@@ -187,6 +187,15 @@ int		ft_isvarchar(int c);
 char	*var_extract_before(t_token **first, t_token *current, int i);
 char	*var_extract_after(t_token *current, int i);
 char	*extract_inside_quotes(char *str);
+
+/* fd_utils.c */
+void	ft_putendl_fd(char *s, int fd);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putchar_fd(char c, int fd);
+
+/* to_utils.c */
+int		ft_atoi(const char *nptr);
+double	ft_atoi_dbl(const char *nptr);
 
 /************************/
 /****** PROCESSING ******/
@@ -310,6 +319,11 @@ void run_pwd(void);
 int run_cd(t_pipex *pipex_s);
 int run_echo(t_pipex *pipex_s);
 int special_edge_cases(t_pipex *pipex_s);
+
+/************************/
+/****** BUILT INS *******/
+/************************/
+void	ft_exit(t_pipex *pipex);
 
 /************************/
 /***** ENV FUNCTIONS ****/
