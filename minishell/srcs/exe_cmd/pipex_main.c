@@ -32,18 +32,21 @@ void	close_all_fd(t_pipex *pipex_s)
 	}
 }
 
-void free_pipex_s(t_pipex *pipex_s)
+void free_pipex_s(t_pipex **pipex_s)
 {
 	t_pipex *temp;
 
-	close_all_fd(pipex_s);
-	while(pipex_s)
+	close_all_fd((* pipex_s));
+	while((* pipex_s))
 	{
-		free(pipex_s->path);
-		free_double_array(pipex_s->cmd);
-		temp = pipex_s;
-		pipex_s = pipex_s->next;
+		free((* pipex_s)->path);
+		(* pipex_s)->path = NULL;
+		free_double_array((* pipex_s)->cmd);
+		(* pipex_s)->cmd = NULL;
+		temp = (* pipex_s);
+		(* pipex_s) = (* pipex_s)->next;
 		free(temp);
+		temp = NULL;
 	}
 }
 

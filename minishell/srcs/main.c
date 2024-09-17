@@ -14,35 +14,6 @@
 
 volatile sig_atomic_t g_signal; // Definition
 
-int get_input(t_main *main_s)
-{
-	int pid;
-	int status;
-	char	*input;
-
-	input = NULL;
-	pid = fork();
-	if (pid == -1)
-		return (perror("fork failed"), errno); //TODOfunction for errors
-	else if (pid == 0)
-	{
-		if (set_sig_handlers(SIGINT, handle_sigint) != 0)
-			return (1);
-		input = readline("minishell-> ");
-	}
-	else
-	{
-        if (wait(&status) == -1)
-        {
-            perror("wait failed");
-            return errno; // Return the error number
-        }
-	}
-	main_s->user_input = input;
-	return(0);
-}
-
-
 static void	repl(t_main *main_s, char **envp)
 {
 	// rl_catch_signals = 0;

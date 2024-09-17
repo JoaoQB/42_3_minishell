@@ -91,19 +91,12 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 		dup2(pipex_s->pipe_fd[1], STDOUT_FILENO);
 	close_all_fd(pipex_s);
 	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
-	{
-		free_main_input(main_s);
-		cleanup_main(main_s);
-		exit(0);
-	}
+		exit(pipex_s->status);
 	else if (!pipex_s->path && pipex_s->cmd[0])
 		printf("%s: command not found\n", pipex_s->cmd[0]); //TODO err 127
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
-		status = errno;
-	pipex_s->status = status;
-	free_main_input(main_s);
-	cleanup_main(main_s);
-	exit (status);
+		pipex_s->status = errno;
+	exit(pipex_s->status);
 }
 
 char	*get_cmd_path(char *cmd, char **envp)

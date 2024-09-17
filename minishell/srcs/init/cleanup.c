@@ -46,6 +46,7 @@ void	free_double_array(char **array)
 		free(array[i]);
 		i++;
 	}
+	free (array[i]);
 	free(array);
 }
 

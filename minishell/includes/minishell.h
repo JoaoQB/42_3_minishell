@@ -315,7 +315,7 @@ void free_history(t_hist *hist_s);
 /****** EDGE CASES ******/
 /************************/
 
-void run_pwd(void);
+char *run_pwd(bool print);
 int run_cd(t_pipex *pipex_s);
 int run_echo(t_pipex *pipex_s);
 int special_edge_cases(t_pipex *pipex_s);

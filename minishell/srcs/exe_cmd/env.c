@@ -7,7 +7,7 @@ char *ft_getenv(t_main *main_s, char *var_name) //TODO
 	menv_s = main_s->env;
 	while(menv_s && ft_strcmp(menv_s->var, var_name) != 0)
 		menv_s = menv_s->next;
-	return(menv_s->var_value);
+	return(ft_strdup(menv_s->var_value));
 }
 
 void ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite) //TODO
@@ -20,17 +20,17 @@ void ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite) /
 	if (!menv_s->next)
 	{
 		menv_s->next = new_menv_s();
-		menv_s->next->var = var_name;
+		menv_s->next->var = ft_strdup(var_name);
 		menv_s->next->var_value = var_value;
 		menv_s->next->index = menv_s->index + 1;
 	}
 	else if(overwrite == 1)
 	{
-		// free(menv_s->var_value);
+		free(menv_s->var_value);
 		menv_s->var_value = var_value;
 	}
-	// else
-		// free(var_value);
+	else
+		free(var_value);
 }
 
 t_env *new_menv_s(void)

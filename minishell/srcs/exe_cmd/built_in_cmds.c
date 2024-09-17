@@ -12,40 +12,42 @@
 
 #include "../../includes/minishell.h"
 
-void run_pwd(void)
+char *run_pwd(bool print)
 {
 	char cwd[PATH_MAX];
 
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		return(perror("getcwd() error"), NULL);
+	if (print == true)
 		printf("%s\n", cwd);
-	else
-		perror("getcwd() error");
+	return (ft_strdup((char *)cwd));
 }
 
 int run_cd(t_pipex *pipex_s)
-{//TODO
+{ //TODO
 	t_main	*main_s;
 	char *new_dir;
 	char **cmd;
 
 	main_s = pipex_s->main_s;
 	cmd = pipex_s->cmd;
+	if (cmd[1] && cmd[2])
+		return (printf("%s: %s\n", cmd[0], "too many arguments"), 1);
     if (!cmd[1] || strcmp(cmd[1], "~") == 0)
         new_dir = ft_getenv(main_s, "HOME");
     else if (strcmp(cmd[1], "-") == 0)
 	{
         new_dir = ft_getenv(main_s, "OLDPWD");
-		printf("%s\n", new_dir);
+        printf("%s\n", new_dir);
 	}
     else
-		new_dir = cmd[1];
-	ft_setenv(main_s, "OLDPWD", ft_getenv(main_s, "PWD"), 1);
-	if (cmd[2])
-		return (printf("%s: %s\n", cmd[0], "too many arguments"), 1);
-    else if (!(chdir(new_dir) == 0))
-        return (printf("%s: %s: %s\n", cmd[0], cmd[1], strerror(errno)), 1);
-    ft_setenv(main_s, "PWD", new_dir, 1);
-    return (0);
+		new_dir = ft_strdup(cmd[1]);
+	ft_setenv(main_s, "OLDPWD", run_pwd(false), 1);
+    if (!(chdir(new_dir) == 0))
+        return (free(new_dir), printf("%s: %s: %s\n", cmd[0], cmd[1], strerror(errno)), 1);
+    ft_setenv(main_s, "PWD", run_pwd(false), 1);
+	free (new_dir);
+	return (0);
 }
 
 // void here_doc(int fd)
@@ -89,7 +91,7 @@ int	edge_cases(t_pipex *pipex_s)
 	if(ft_strcmp(pipex_s->cmd[0], "history") == 0)
 		get_history(pipex_s->main_s->history, -1);
 	else if(ft_strcmp(pipex_s->cmd[0], "pwd") == 0)
-		run_pwd();
+		free(run_pwd(true));
 	else if(ft_strcmp(pipex_s->cmd[0], "echo") == 0)
 		run_echo(pipex_s);
 	else if (ft_strcmp(pipex_s->cmd[0], "env") == 0)
