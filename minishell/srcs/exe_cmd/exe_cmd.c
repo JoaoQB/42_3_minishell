@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/11 15:49:16 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:27:37 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,6 @@ int	execute_command(t_pipex *pipex_s, char **envp) //temp
 
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
-	int	status;
-	t_main *main_s;
-
-	main_s = pipex_s->main_s;
-    //signal(SIGPIPE, handle_sigpipe);//TODO signal in child?
-	status = 0;
 	if(pipex_s->status != 0)
 		exit(pipex_s->status);
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
