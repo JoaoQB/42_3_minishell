@@ -5,7 +5,7 @@ void handle_sigint(int sig)
     (void)sig;
     // printf("ctl-c activated in child\n");
     g_signal = 1;
-    printf("^C\n");
+    printf("\n");
     rl_replace_line("", 0);
     rl_on_new_line();
     rl_redisplay();
