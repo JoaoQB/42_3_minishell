@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 10:58:30 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:02:48 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ static bool	is_valid_status(char *str)
 	return (true);
 }
 
-void	ft_exit(t_main *main_s, t_pipex *pipex)
+void	ft_exit(t_pipex *pipex)
 {
 	int		status;
 	char	**cmd;
+	t_main	*main_s;
 
+	main_s = pipex->main_s;
 	if (!pipex || !pipex->cmd)
 		return ;
 	cmd = pipex->cmd;
@@ -69,10 +71,7 @@ void	ft_exit(t_main *main_s, t_pipex *pipex)
 	else if (cmd[1])
 	{
 		if (cmd[2])
-		{
-			invalid_exit(pipex, 2);
-			return ;
-		}
+			return (invalid_exit(pipex, 2));
 		pipex->status = ft_atoi(cmd[1]);
 		if (pipex->status < 0 || pipex->status > 255)
 			pipex->status = (pipex->status % 256 + 256) % 256;

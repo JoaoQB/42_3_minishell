@@ -3,7 +3,6 @@
 void handle_sigint(int sig) 
 {
     (void)sig;
-    // printf("ctl-c activated in child\n");
     g_signal = 1;
     printf("\n");
     rl_replace_line("", 0);
@@ -20,7 +19,8 @@ void handle_sigquit(int sig)
     (void)sig;
     g_signal = 2;
     printf("this is an forced core dump\n");
-    abort();
+    abort(); //TODO is this forbidden? if so i have to pass signals
+
 }
 
 int set_sig_handlers(int signal, void (*func_name)(int)) 
@@ -37,25 +37,3 @@ int set_sig_handlers(int signal, void (*func_name)(int))
     }
     return (0);
 }
-
-// int setup_signal_handlers(int process_type) 
-// {
-//     struct sigaction sa_int;
-//     struct sigaction sa_quit;
-
-//     if (process_type == 0)
-//         sa_int.sa_handler = handle_sigint; //handle_sigint;
-//     if (process_type == 1)
-//         sa_int.sa_handler = handle_sigint_child; //handle_sigint;
-//     sa_int.sa_flags = 0;  //teels the karnel no flags no to restart system calls
-//     sigemptyset(&sa_int.sa_mask); //block all signals while handling SIGINT
-//     if (sigaction(SIGINT, &sa_int, NULL) == -1)
-//         return(perror("sigaction ctl-c"), 1);
-//     sa_quit.sa_handler = handle_sigquit;
-//     sa_quit.sa_flags = 0;
-//     sigemptyset(&sa_quit.sa_mask);
-//     if (sigaction(SIGQUIT, &sa_quit, NULL) == -1) 
-//         return(perror("sigaction ctl-\\"), 1);
-//     return (0);
-// }
-

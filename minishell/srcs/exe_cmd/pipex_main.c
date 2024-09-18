@@ -50,7 +50,7 @@ void free_pipex_s(t_pipex **pipex_s)
 	}
 }
 
-void	process_child_pipes(t_pipex *pipex_s)//TODO to many lines
+int	process_child_pipes(t_pipex *pipex_s)//TODO to many lines
 {
 	t_pipex	*curr_pipex_s;
 	int 	rep;
@@ -67,9 +67,9 @@ void	process_child_pipes(t_pipex *pipex_s)//TODO to many lines
 		{
 			if (curr_pipex_s->pid > 0)
 			{
+				rep = 1;
 				if (waitpid(curr_pipex_s->pid, &status, WNOHANG))
 				{
-					rep = 1;
 					curr_pipex_s->pid = -1;
 					pipex_s->status = status;
 					if (curr_pipex_s->pipe_fd[0] > 2)
@@ -83,18 +83,19 @@ void	process_child_pipes(t_pipex *pipex_s)//TODO to many lines
 					if (WIFEXITED(status))
 						status = WEXITSTATUS(status);
 				}
-				else
-					rep = 1;
 			}
 			curr_pipex_s = curr_pipex_s->prev;
 		}
 		if (rep == 1)
 			curr_pipex_s = pipex_s;
 	}
+	return (pipex_s->status);
 }
 
 int	ft_shell_pipex(t_main *main_s)
 {
+	int status;
+
 	if (main_s->silence_info == true)
 	{
 		printf("silencer activated as %d\n", main_s->silence_info);
@@ -105,10 +106,11 @@ int	ft_shell_pipex(t_main *main_s)
 	add_to_history(main_s);
 	// print_struct(main_s);
 	ft_exe_pipex_s(main_s, main_s->menv);
-	process_child_pipes(main_s->pipex); //manage_pid
+	status = process_child_pipes(main_s->pipex); //manage_pid
+	printf("this is the process status: %d\n", status);
 	//print_check_processes(main_s->pipex);
 	// free_pipex_s(main_s->pipex); //temp free
 	//recieve signal when i do exit, so i can properly free it and pass responsability
-	return (0);
+	return (status);
 }
 

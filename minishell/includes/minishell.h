@@ -274,7 +274,7 @@ bool	find_quotes(char *str);
 /************************/
 
 int	ft_shell_pipex(t_main *main_s);
-void	process_child_pipes(t_pipex *pipex_s);
+int	process_child_pipes(t_pipex *pipex_s);
 void free_pipex_s(t_pipex **pipex_s);
 void	close_all_fd(t_pipex *pipex_s);
 
@@ -288,11 +288,11 @@ int read_heredoc(t_token *tokens_s);
 t_pipex *ft_init_pipex_s(t_main *mains_s);
 
 //Execute pipex cmds
-int		edge_cases(t_pipex *pipex_s);
-void	ft_exe_pipex_s(t_main *main_s, char **envp);
-int		execute_command(t_main *main_s, t_pipex *pipex_s, char **envp);
+int	edge_cases(t_pipex *pipex_s);
+void ft_exe_pipex_s(t_main *main_s, char **envp);
+int	execute_command(t_pipex *pipex_s, char **envp);
 char	*get_cmd_path(char *cmd, char **envp);
-void	exe_cmd_child(t_main *main_s, t_pipex *pipex_s, char **envp);
+void	exe_cmd_child(t_pipex *pipex_s, char **envp);
 
 //pipex_utils
 char	*ft_strnjoin(char *old_str, char *str_add, int size);
@@ -318,12 +318,12 @@ void free_history(t_hist *hist_s);
 char *run_pwd(bool print);
 int run_cd(t_pipex *pipex_s);
 int run_echo(t_pipex *pipex_s);
-int special_edge_cases(t_main *main_s, t_pipex *pipex_s);
+int special_edge_cases(t_pipex *pipex_s);
 
 /************************/
 /****** BUILT INS *******/
 /************************/
-void	ft_exit(t_main *main_s, t_pipex *pipex);
+void	ft_exit(t_pipex *pipex);
 
 /************************/
 /***** ENV FUNCTIONS ****/
