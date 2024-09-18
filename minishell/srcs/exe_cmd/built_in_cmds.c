@@ -34,10 +34,10 @@ int run_cd(t_pipex *pipex_s)
 	if (cmd[1] && cmd[2])
 		return (printf("%s: %s\n", cmd[0], "too many arguments"), 1);
     if (!cmd[1] || strcmp(cmd[1], "~") == 0)
-        new_dir = ft_getenv(main_s, "HOME");
+        new_dir = strdup(ft_getenv(main_s, "HOME"));
     else if (strcmp(cmd[1], "-") == 0)
 	{
-        new_dir = ft_getenv(main_s, "OLDPWD");
+        new_dir = strdup(ft_getenv(main_s, "OLDPWD"));
         printf("%s\n", new_dir);
 	}
     else
