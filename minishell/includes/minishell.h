@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 13:48:25 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:36:58 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_token
 typedef struct s_pipex  //mine2
 {
 	pid_t		pid;
-	int		status;
 	char	*path;
 	char	**cmd;
 	int		pipe_fd[2]; //restruct in case of *
@@ -104,6 +103,7 @@ typedef struct s_main
 	char	*input_trim;
 	char	*input_reorg;
 	bool	silence_info;
+	int		status;
 	t_env	*env;
 	t_token	*tokens;
 	t_pipex	*pipex; //fandre-b added
@@ -196,6 +196,7 @@ void	ft_putchar_fd(char c, int fd);
 /* to_utils.c */
 int		ft_atoi(const char *nptr);
 double	ft_atoi_dbl(const char *nptr);
+char	*ft_itoa(int n);
 
 /************************/
 /****** PROCESSING ******/
@@ -240,9 +241,6 @@ void	tokenize_smarter(t_token *first);
 /* var_swap.c */
 void	var_swap(t_main *main_s, t_token **first);
 
-// /* var_divide.c */
-// void	var_divide(t_main *main_s, t_token **first, t_token *current);
-
 /* var_conc.c */
 t_token	*var_conc(t_token *target, t_token **first);
 
@@ -253,6 +251,7 @@ char	*var_extract_after(t_token *current, int i);
 
 /* var_replace.c */
 t_token	*var_replace(t_main *main_s, t_token *current, int i);
+char	*var_replace_qstnmrk(t_main *main_s);
 
 /************************/
 /******* PARSING ********/

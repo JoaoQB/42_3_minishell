@@ -12,6 +12,16 @@
 
 #include "../../includes/minishell.h"
 
+char	*var_replace_qstnmrk(t_main *main_s)
+{
+	char	*new_value;
+	int		status;
+
+	status = main_s->status;
+	new_value = ft_itoa(status);
+	return (new_value);
+}
+
 static char	*var_check_env(t_env *env, char *str)
 {
 	t_env	*current;
@@ -53,15 +63,10 @@ static char	*var_change(t_main *main_s, t_token *current)
 	if (str[i + 1] == '\0' || ft_isquotes(str[i + 1]))
 	{
 		str[i] = NEG_VAR;
-		new_value = extract_from_i(str, 0);
-		return (new_value);
+		return (extract_from_i(str, 0));
 	}
 	else if (str[i + 1] == '?')
-	{
-		// replace_question_mark(main_s, current); TODO
-		new_value = extract_from_i(str, 1);
-		return (new_value);
-	}
+		return (var_replace_qstnmrk(main_s));
 	else if (!ft_isvar1stchar(str[i + 1]))
 		return (NULL);
 	var_value = extract_from_i(str, 1);
@@ -84,13 +89,12 @@ static char	*var_check_after_var(t_token *current)
 	if (str[i] == '\0')
 		return (str);
 	else if (str[i] == '$' || str[i] == '"')
-	{
 		return (var_extract_after(current, i));
-	}
 	else if (!ft_isvar1stchar(str[i]))
 	{
 		if (str[i + 1] != '\0')
 			return (var_extract_after(current, i + 1));
+		return (str);
 	}
 	while(ft_isvarchar(str[i]))
 		i++;

@@ -88,7 +88,7 @@ void	print_struct(t_main *main_s)
 	while(pipex_s)
 	{
 		printf("   {pipe %d}\n", j++);
-		printf("pid %d with status %d\n", pipex_s->pid, pipex_s->status);
+		printf("pid %d with status %d\n", pipex_s->pid, main_s->status);
 		printf("inout_fd are: %d / %d\n", pipex_s -> pipe_fd[0], pipex_s -> pipe_fd[1]);
 		printf(" -input name: %s\n", get_file_name_from_fd(pipex_s -> pipe_fd[0]));
 		printf(" -output name: %s\n", get_file_name_from_fd(pipex_s -> pipe_fd[1]));
