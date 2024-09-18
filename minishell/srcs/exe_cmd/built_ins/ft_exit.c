@@ -6,13 +6,13 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/17 12:57:17 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 10:58:30 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static void	invalid_exit(t_pipex *pipex, int *status, int flag)
+static void	invalid_exit(t_pipex *pipex, int flag)
 {
 	char	**cmd;
 
@@ -24,7 +24,7 @@ static void	invalid_exit(t_pipex *pipex, int *status, int flag)
 		ft_putstr_fd("exit\nminishell: ", 2);
 		ft_putstr_fd(cmd[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
-		*status = 2;
+		pipex->status = 2;
 	}
 	else if (flag == 2)
 	{
@@ -55,7 +55,7 @@ static bool	is_valid_status(char *str)
 	return (true);
 }
 
-void	ft_exit(t_pipex *pipex)
+void	ft_exit(t_main *main_s, t_pipex *pipex)
 {
 	int		status;
 	char	**cmd;
@@ -64,21 +64,21 @@ void	ft_exit(t_pipex *pipex)
 		return ;
 	cmd = pipex->cmd;
 	status = pipex->status;
-	printf("status: %d\n", pipex->status);
 	if (!is_valid_status(cmd[1]))
-		invalid_exit(pipex, &status, 1);
+		invalid_exit(pipex, 1);
 	else if (cmd[1])
 	{
 		if (cmd[2])
 		{
-			invalid_exit(pipex, &status, 2);
+			invalid_exit(pipex, 2);
 			return ;
 		}
-		status = ft_atoi(cmd[1]);
-		if (status < 0 || status > 255)
-			status = (status % 256 + 256) % 256;
+		pipex->status = ft_atoi(cmd[1]);
+		if (pipex->status < 0 || pipex->status > 255)
+			pipex->status = (pipex->status % 256 + 256) % 256;
 	}
-	free_main_input(pipex->main_s);
-	cleanup_main(pipex->main_s);
+	status = pipex->status;
+	free_main_input(main_s);
+	cleanup_main(main_s);
 	exit(status);
 }
