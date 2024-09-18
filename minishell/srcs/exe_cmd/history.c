@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/11 14:01:34 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ t_hist *ft_init_hist_s(void)
 {
     t_hist *hist_s;
 
-    hist_s = (t_hist *)malloc(sizeof(t_hist));
-    if (!hist_s)
-        return (NULL);
+    hist_s = (t_hist *)safe_malloc(sizeof(t_hist));
     hist_s->idx = 1;
     hist_s->prev = NULL;
     hist_s->next = NULL;
@@ -38,7 +36,7 @@ void add_to_history(t_main *main_s)
         return;
     // dup_input = ft_strdup();
     // if(!dup_input)
-    //     perror("malloc systeam history failled");
+    //     perror("safe_malloc systeam history failled");
     // add_history(dup_input);
     // free(dup_input);
     add_history(main_s->user_input);//TODO isto dá leaks...

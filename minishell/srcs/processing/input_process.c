@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/11 12:56:19 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ char	*concat_tokens_to_char(t_token *first)
 	}
 	if (total_len == 0)
 		return (NULL);
-	result = (char *)malloc(sizeof(char) * (total_len + 1));
-	if (!result)
-		return (NULL);
+	result = (char *)safe_malloc(sizeof(char) * (total_len + 1));
 	concatenate_tokens(result, first);
 	return (result);
 }

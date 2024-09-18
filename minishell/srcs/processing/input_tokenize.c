@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_tokenize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:11:02 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/10 15:20:13 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,9 @@ static t_token	*ft_token_new(char *str)
 	t_token	*new_token;
 	int		word_len;
 
-	new_token = (t_token *)malloc(sizeof(t_token));
-	if (!new_token)
-		return (NULL);
+	new_token = (t_token *)safe_malloc(sizeof(t_token));
 	word_len = ft_strlen(str);
-	new_token->value = (char *)malloc((word_len + 1) * sizeof(char));
-	if (!new_token->value)
-	{
-		free(new_token);
-		return (NULL);
-	}
+	new_token->value = (char *)safe_malloc((word_len + 1) * sizeof(char));
 	ft_strlcpy2(new_token->value, str, word_len + 1);
 	if (new_token->value)
 		new_token->type = token_assign(new_token->value);

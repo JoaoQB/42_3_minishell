@@ -49,9 +49,8 @@ int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s)
 			count += 1;
 		curr_token = curr_token->next;
 	}
-	pipex_s->cmd = (char **) malloc (sizeof (char *) * (count + 1));
-	if (!pipex_s->cmd)
-		return (perror("Malloc commads array"), errno);
+	pipex_s->cmd = (char **) safe_malloc (sizeof (char *) * (count + 1));
+
 	pipex_s->status = ft_update_cmds(tokens_s, pipex_s);
 	if (pipex_s->status == 0)
 		pipex_s->status = ft_update_fds(tokens_s, pipex_s);
@@ -70,8 +69,6 @@ int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
 		{
 			pipex_s->cmd[count++] = ft_strnjoin(NULL, tokens_s->value, -1);
 			pipex_s->cmd[count] = NULL;
-			if (!pipex_s->cmd[count - 1])
-				return (perror("malloc fail"), errno);
 		}
 		tokens_s = tokens_s->next;
 	}
@@ -167,10 +164,9 @@ t_pipex *ft_init_pipex_s(t_main *main_s)
 {
     t_pipex *pipex_s;
 
-    pipex_s = (t_pipex *)malloc(sizeof(t_pipex));
-    if (!pipex_s)
-        return (NULL);
+    pipex_s = (t_pipex *)safe_malloc(sizeof(t_pipex));
     pipex_s->pid = -1;
+    pipex_s->status = 0;
 	pipex_s->path = NULL;
 	pipex_s->cmd = NULL;
     pipex_s->pipe_fd[0] = -2;

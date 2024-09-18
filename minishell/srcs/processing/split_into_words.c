@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_into_words.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:28:52 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/10 16:09:37 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ static char	*fill_substr(const char *src, size_t len)
 
 	if (!src)
 		return (NULL);
-	dest = (char *)malloc(sizeof(char) * (len + 1));
-	if (!dest)
-		return (NULL);
+	dest = (char *)safe_malloc(sizeof(char) * (len + 1));
 	ft_strlcpy2(dest, src, len + 1);
 	return (dest);
 }
@@ -59,9 +57,7 @@ char	**split_into_words(char const *s)
 	int		j;
 	int		i_word;
 
-	split_strs = (char **)malloc((count_words(s) + 1) * sizeof(char *));
-	if (!split_strs || !s)
-		return (NULL);
+	split_strs = (char **)safe_malloc((count_words(s) + 1) * sizeof(char *));
 	j = 0;
 	i = 0;
 	while (*(s + i))

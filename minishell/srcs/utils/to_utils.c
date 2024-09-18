@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   to_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:11:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:20:31 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:58:39 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_itoa(int n)
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
 	count = digit_count(n);
-	result = (char *)malloc(sizeof(char) * (count + 1));
+	result = (char *)safe_malloc(sizeof(char) * (count + 1));
 	if (!result)
 		return (NULL);
 	result[count] = '\0';

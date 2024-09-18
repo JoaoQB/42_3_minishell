@@ -36,6 +36,32 @@ int	check_for_pipeline(t_main *main_s)
 	return (0);
 }
 
+bool is_directory(t_pipex *pipex_s) 
+{
+	char	*path;
+    struct stat buffer;
+	
+	path = pipex_s->cmd[0];
+    if (stat(path, &buffer) != 0) 
+        return false;
+    if (S_ISDIR(buffer.st_mode))
+	{
+		if (path[0] == '.' && !path[1])
+		{
+			printf("%s: filename argument required\n", path);
+			printf("usage: %s filename [arguments]\n", path);
+			pipex_s->status = 2;
+		}
+		else
+		{
+			printf("%s: Is a directory\n", path);
+			pipex_s->status = 126;
+		}
+		return (true);
+	}
+	return(false);
+}
+
 void ft_exe_pipex_s(t_main *main_s, char **envp)
 {//join function with execute_command
 	t_pipex *pipex_s;
@@ -47,7 +73,7 @@ void ft_exe_pipex_s(t_main *main_s, char **envp)
 	// 	return ;
 	while(pipex_s)
 	{
-		pipex_s->path = get_cmd_path(pipex_s->cmd[0], envp);
+		pipex_s->path = get_cmd_path(pipex_s);
 		execute_command(pipex_s, envp);
 		pipex_s = pipex_s->next;
 	}
@@ -67,18 +93,13 @@ int	execute_command(t_pipex *pipex_s, char **envp) //temp
 	return (0);
 }
 
-// void handle_sigpipe(int sig)
-// {//TODO signal handling for exit to. Se bem que consigo sem signals...
-//     printf("Received SIGPIPE(%d), exiting...\n", sig);
-//     exit(1);
-// }
-
-
-
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
 	if(pipex_s->status != 0)
-		exit(pipex_s->status);
+	{
+		// printf("%s: command not found error %d\n", pipex_s->cmd[0], pipex_s->status);
+		ft_exit_pid(pipex_s);
+	}
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
 	if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
@@ -86,37 +107,66 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	close_all_fd(pipex_s);
 	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
 		ft_exit_pid(pipex_s);
-	else if (!pipex_s->path && pipex_s->cmd[0])
-		printf("%s: command not found\n", pipex_s->cmd[0]); //TODO err 127 126
+	// else if (!pipex_s->path && pipex_s->cmd[0])
+	// 	printf("%s: command not found\n", pipex_s->cmd[0]); //TODO err 127 126
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
 		pipex_s->status = errno;
 	ft_exit_pid(pipex_s);
 }
 
-char	*get_cmd_path(char *cmd, char **envp)
+char	*get_cmd_path(t_pipex *pipex_s)
 {
 	char	*temp;
 	char	*paths;
 	int		i;
 
-	paths = NULL;
-	temp = NULL;
-	if(!cmd)
-		return(NULL);
-	paths = *envp;
-	paths = getenv("PATH");
-	while (paths && *paths != '\0')
+	paths = ft_getenv(pipex_s->main_s, "PATH");
+	temp = ft_strnjoin(ft_strdup("./"), pipex_s->cmd[0], -1);
+	while (!is_directory(pipex_s) && paths && *paths != '\0')
 	{
-		i = 0;
+        if (access(temp, F_OK) == 0) 
+		{
+            if (access(temp, R_OK | X_OK) == 0) 
+                return(temp);
+            pipex_s->status = 126;
+        }
 		free (temp);
+		i = 0;
 		while (paths[i] && paths[i] != ':')
 			i++;
 		temp = ft_strnjoin(ft_strnjoin(NULL, paths, i++), "/", 1);
-		temp = ft_strnjoin(temp, cmd, -1);
-		if (access(temp, R_OK | X_OK) == 0)
-			return(temp);
+		temp = ft_strnjoin(temp, pipex_s->cmd[0], -1);
 		paths += i;
 	}
+	if (pipex_s->status == 0)
+		pipex_s->status = 127;
 	return (free (temp), NULL);
 }
+
+// char	*get_cmd_path(char *cmd, char **envp)
+// {
+// 	char	*cmd;
+// 	char	*temp;
+// 	char	*paths;
+// 	int		i;
+
+// 	temp = NULL;
+// 	paths = *envp;
+// 	paths = getenv("PATH");
+// 	temp = ft_strnjoin(ft_strnjoin(NULL, ".", 1), "/", 1);
+// 	temp = ft_strnjoin(temp, cmd, -1);
+// 	while (paths && *paths != '\0')
+// 	{
+// 		if (access(temp, R_OK | X_OK) == 0)
+// 			return(temp);
+// 		free (temp);
+// 		i = 0;
+// 		while (paths[i] && paths[i] != ':')
+// 			i++;
+// 		temp = ft_strnjoin(ft_strnjoin(NULL, paths, i++), "/", 1);
+// 		temp = ft_strnjoin(temp, cmd, -1);
+// 		paths += i;
+// 	}
+// 	return (free (temp), NULL);
+// }
 

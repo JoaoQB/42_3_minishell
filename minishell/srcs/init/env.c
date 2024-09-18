@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:14:31 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/13 10:04:05 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ char	*extract_var_value(char *str)
 		i++;
 	if (i == 1)
 		return (NULL);
-	var_value = (char *)malloc(sizeof(char) * i);
-	if (!var_value)
-		return (NULL);
+	var_value = (char *)safe_malloc(sizeof(char) * i);
 	ft_strlcpy2(var_value, str + 1, i);
 	return (var_value);
 }
@@ -45,9 +43,7 @@ char	*extract_var(t_env	*new_env)
 	i = 0;
 	while (str[i] && str[i] != '=')
 		i++;
-	var = (char *)malloc(sizeof(char) * (i + 1));
-	if (!var)
-		return (NULL);
+	var = (char *)safe_malloc(sizeof(char) * (i + 1));
 	ft_strlcpy2(var, str, i + 1);
 	if (str[i] == '=')
 		new_env->var_value = extract_var_value(&str[i]);
@@ -74,16 +70,9 @@ static t_env	*ft_new_env(char **envp, int i)
 	t_env	*new_env;
 	int		env_len;
 
-	new_env = (t_env *)malloc(sizeof(t_env));
-	if (!new_env)
-		return (NULL);
+	new_env = (t_env *)safe_malloc(sizeof(t_env));
 	env_len = ft_strlen(envp[i]);
-	new_env->value = (char *)malloc((env_len + 1) * sizeof(char));
-	if (!new_env->value)
-	{
-		free(new_env);
-		return (NULL);
-	}
+	new_env->value = (char *)safe_malloc((env_len + 1) * sizeof(char));
 	ft_strlcpy2(new_env->value, envp[i], env_len + 1);
 	new_env->index = i;
 	new_env->next = NULL;

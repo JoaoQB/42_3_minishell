@@ -37,9 +37,7 @@ t_env *new_menv_s(void)
 {//deprecated
 	t_env *menv_s;
 
-	menv_s = (t_env *) malloc(sizeof(t_env));
-	if (!menv_s)
-		perror("malloc menv failed"); //TODO trigger close of everything.
+	menv_s = (t_env *) safe_malloc(sizeof(t_env));
 	menv_s->var = NULL;
 	menv_s->var_value = NULL;
 	menv_s->value = NULL;

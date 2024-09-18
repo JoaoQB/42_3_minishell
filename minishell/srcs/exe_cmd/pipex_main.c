@@ -50,11 +50,32 @@ void free_pipex_s(t_pipex **pipex_s)
 	}
 }
 
-int	process_child_pipes(t_pipex *pipex_s)//TODO to many lines
+void	process_child_pid(t_pipex *curr_pipex_s)
+{
+	int		status;
+
+	if (waitpid(curr_pipex_s->pid, &status, WNOHANG))
+	{
+		curr_pipex_s->pid = -1;
+		if (curr_pipex_s->pipe_fd[0] > 2)
+		{
+			close(curr_pipex_s->pipe_fd[0]);
+			if (curr_pipex_s->prev && curr_pipex_s->prev->pid > 0)
+				kill(curr_pipex_s->prev->pid, SIGPIPE);
+		}
+		if (curr_pipex_s->pipe_fd[1] > 2)
+			close(curr_pipex_s->pipe_fd[1]);
+		if (WIFEXITED(status))
+			curr_pipex_s->status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			curr_pipex_s->status = 128 + WTERMSIG(status);
+	}
+}
+
+int	process_child_pipes(t_pipex *pipex_s)
 {
 	t_pipex	*curr_pipex_s;
 	int 	rep;
-	int		status;
 
 	while(pipex_s->next)
 		pipex_s = pipex_s->next;
@@ -68,21 +89,7 @@ int	process_child_pipes(t_pipex *pipex_s)//TODO to many lines
 			if (curr_pipex_s->pid > 0)
 			{
 				rep = 1;
-				if (waitpid(curr_pipex_s->pid, &status, WNOHANG))
-				{
-					curr_pipex_s->pid = -1;
-					pipex_s->status = status;
-					if (curr_pipex_s->pipe_fd[0] > 2)
-					{
-						close(curr_pipex_s->pipe_fd[0]);
-						if (curr_pipex_s->prev && curr_pipex_s->prev->pid > 0)
-							kill(curr_pipex_s->prev->pid, SIGPIPE);
-					}
-					if (curr_pipex_s->pipe_fd[1] > 2)
-						close(curr_pipex_s->pipe_fd[1]);
-					if (WIFEXITED(status))
-						status = WEXITSTATUS(status);
-				}
+				process_child_pid(curr_pipex_s);
 			}
 			curr_pipex_s = curr_pipex_s->prev;
 		}

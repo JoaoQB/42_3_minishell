@@ -38,9 +38,7 @@ static char	*var_check_env(t_env *env, char *str)
 			if (!current->var_value)
 				return (NULL);
 			len = ft_strlen(current->var_value);
-			new_value = (char *)malloc(sizeof(char) * (len + 1));
-			if (!new_value)
-				return (NULL);
+			new_value = (char *)safe_malloc(sizeof(char) * (len + 1));
 			ft_strlcpy2(new_value, current->var_value, len + 1);
 			return (new_value);
 		}
@@ -63,7 +61,8 @@ static char	*var_change(t_main *main_s, t_token *current)
 	if (str[i + 1] == '\0' || ft_isquotes(str[i + 1]))
 	{
 		str[i] = NEG_VAR;
-		return (extract_from_i(str, 0));
+		new_value = extract_from_i(str, 0);
+		return (new_value);
 	}
 	else if (str[i + 1] == '?')
 		return (var_replace_qstnmrk(main_s));

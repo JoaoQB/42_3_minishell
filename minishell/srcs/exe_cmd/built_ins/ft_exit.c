@@ -55,42 +55,42 @@ static bool	is_valid_status(char *str)
 	return (true);
 }
 
-void	ft_exit(t_pipex *pipex_s)
+void	ft_exit(t_pipex *pipex)
 {
 	int		status;
 	char	**cmd;
 	t_main	*main_s;
 
-	main_s = pipex_s->main_s;
-	if (!pipex_s || !pipex_s->cmd)
+	main_s = pipex->main_s;
+	if (!pipex || !pipex->cmd)
 		return ;
-	cmd = pipex_s->cmd;
-	status = pipex_s->status;
+	cmd = pipex->cmd;
+	status = pipex->status;
 	if (!is_valid_status(cmd[1]))
-		invalid_exit(pipex_s, 1);
+		invalid_exit(pipex, 1);
 	else if (cmd[1])
 	{
 		if (cmd[2])
-			return (invalid_exit(pipex_s, 2));
-		status = ft_atoi(cmd[1]);
-		if (status < 0 || status > 255)
-			status = (status % 256 + 256) % 256;
+			return (invalid_exit(pipex, 2));
+		pipex->status = ft_atoi(cmd[1]);
+		// if (pipex->status < 0 || pipex->status > 255)
+		// 	pipex->status = (pipex->status % 256 + 256) % 256;
 	}
-	pipex_s->status = status;
+	status = pipex->status;
 	free_main_input(main_s);
 	cleanup_main(main_s);
 	exit(status);
 }
 
-void	ft_exit_pid(t_pipex *pipex_s)
+void	ft_exit_pid(t_pipex *pipex)
 {
 	int		status;
 	t_main	*main_s;
 
-	main_s = pipex_s->main_s;
-	if (!pipex_s || !pipex_s->cmd)
+	main_s = pipex->main_s;
+	if (!pipex || !pipex->cmd)
 		return ;
-	status = pipex_s->status;
+	status = pipex->status;
 	free_main_input(main_s);
 	cleanup_main(main_s);
 	exit(status);

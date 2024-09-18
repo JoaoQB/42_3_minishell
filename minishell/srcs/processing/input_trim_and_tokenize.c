@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_trim_and_tokenize.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:39:05 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/07 11:51:53 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ static char	*alloc_and_concat(char **words, int total_len, int j)
 	int		current_pos;
 	int		i;
 
-	trimmed = (char *)malloc((total_len + j) * sizeof(char));
-	if (!trimmed)
-		return (NULL);
+	trimmed = (char *)safe_malloc((total_len + j) * sizeof(char));
 	current_pos = 0;
 	i = -1;
 	while (words[++i])

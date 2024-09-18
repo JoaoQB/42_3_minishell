@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:09:06 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/11 12:15:13 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ void	token_extract_after(t_token *current, int i)
 	t_token	*new;
 	char	*new_value;
 
-	new = (t_token *)malloc(sizeof(t_token));
-	if (!new)
-		return ;
+	new = (t_token *)safe_malloc(sizeof(t_token));
 	new->value = extract_from_i(current->value, i);
 	if (!new->value)
 	{

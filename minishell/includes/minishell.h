@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:37:05 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <signal.h>
 #include <limits.h>
 
@@ -80,9 +81,9 @@ typedef struct s_token
 typedef struct s_pipex  //mine2
 {
 	pid_t		pid;
+	int		status;
 	char	*path;
 	char	**cmd;
-	int		status;
 	int		pipe_fd[2]; //restruct in case of *
 	t_pipex *prev;
 	t_pipex	*next;
@@ -291,7 +292,7 @@ t_pipex *ft_init_pipex_s(t_main *mains_s);
 int	edge_cases(t_pipex *pipex_s);
 void ft_exe_pipex_s(t_main *main_s, char **envp);
 int	execute_command(t_pipex *pipex_s, char **envp);
-char	*get_cmd_path(char *cmd, char **envp);
+char	*get_cmd_path(t_pipex *pipex_s);
 void	exe_cmd_child(t_pipex *pipex_s, char **envp);
 
 //pipex_utils
@@ -346,5 +347,7 @@ int set_sig_handlers(int signal, void (*func_name)(int));
 void handle_sigquit(int sig);
 void handle_sigint(int sig);
 void	ft_exit_pid(t_pipex *pipex);
+void *safe_malloc(size_t size);
+
 
 #endif
