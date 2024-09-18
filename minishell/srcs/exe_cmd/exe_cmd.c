@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/18 17:13:39 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:35:43 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void ft_exe_pipex_s(t_main *main_s, char **envp)
 
 int	execute_command(t_pipex *pipex_s, char **envp) //temp
 {
-	// if (pipex_s->main_s->status != 0)
+	// if (pipex_s->status != 0)
 	//  	return(-1);
 	pipex_s->pid = fork();
 	if (pipex_s->pid == -1)
@@ -77,8 +77,8 @@ int	execute_command(t_pipex *pipex_s, char **envp) //temp
 
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
-	if(pipex_s->main_s->status != 0)
-		exit(pipex_s->main_s->status);
+	if(pipex_s->status != 0)
+		exit(pipex_s->status);
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
 	if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
@@ -89,7 +89,7 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	else if (!pipex_s->path && pipex_s->cmd[0])
 		printf("%s: command not found\n", pipex_s->cmd[0]); //TODO err 127 126
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
-		pipex_s->main_s->status = errno;
+		pipex_s->status = errno;
 	ft_exit_pid(pipex_s);
 }
 

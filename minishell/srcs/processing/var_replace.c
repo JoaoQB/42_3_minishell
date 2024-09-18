@@ -17,7 +17,7 @@ char	*var_replace_qstnmrk(t_main *main_s)
 	char	*new_value;
 	int		status;
 
-	status = main_s->status;
+	status = main_s->pipex->status;
 	new_value = ft_itoa(status);
 	return (new_value);
 }

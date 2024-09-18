@@ -52,10 +52,10 @@ int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s)
 	pipex_s->cmd = (char **) malloc (sizeof (char *) * (count + 1));
 	if (!pipex_s->cmd)
 		return (perror("Malloc commads array"), errno);
-	pipex_s->main_s->status = ft_update_cmds(tokens_s, pipex_s);
-	if (pipex_s->main_s->status == 0)
-		pipex_s->main_s->status = ft_update_fds(tokens_s, pipex_s);
-	return (pipex_s->main_s->status);
+	pipex_s->status = ft_update_cmds(tokens_s, pipex_s);
+	if (pipex_s->status == 0)
+		pipex_s->status = ft_update_fds(tokens_s, pipex_s);
+	return (pipex_s->status);
 }
 
 int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)

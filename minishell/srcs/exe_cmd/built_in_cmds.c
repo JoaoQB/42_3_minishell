@@ -174,7 +174,7 @@ int special_edge_cases(t_pipex *pipex_s)
 	if (!pipex_s || !pipex_s->cmd[0])
 		return (0);
 	if(ft_strcmp(pipex_s->cmd[0], "cd") == 0)
-		pipex_s->main_s->status = run_cd(pipex_s);
+		pipex_s->status = run_cd(pipex_s);
 	else if(ft_strcmp(pipex_s->cmd[0], "exit") == 0)
 		ft_exit(pipex_s);
 	else if(ft_strcmp(pipex_s->cmd[0], "unset") == 0)
