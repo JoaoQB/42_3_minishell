@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 11:02:48 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:50:06 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,23 @@ void	ft_exit(t_pipex *pipex)
 		if (cmd[2])
 			return (invalid_exit(pipex, 2));
 		pipex->status = ft_atoi(cmd[1]);
-		if (pipex->status < 0 || pipex->status > 255)
-			pipex->status = (pipex->status % 256 + 256) % 256;
+		// if (pipex->status < 0 || pipex->status > 255)
+		// 	pipex->status = (pipex->status % 256 + 256) % 256;
 	}
+	status = pipex->status;
+	free_main_input(main_s);
+	cleanup_main(main_s);
+	exit(status);
+}
+
+void	ft_exit_pid(t_pipex *pipex)
+{
+	int		status;
+	t_main	*main_s;
+
+	main_s = pipex->main_s;
+	if (!pipex || !pipex->cmd)
+		return ;
 	status = pipex->status;
 	free_main_input(main_s);
 	cleanup_main(main_s);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 10:57:20 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:48:25 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,5 +345,6 @@ void my_print_env(t_main *main_s);
 int set_sig_handlers(int signal, void (*func_name)(int));
 void handle_sigquit(int sig);
 void handle_sigint(int sig);
+void	ft_exit_pid(t_pipex *pipex);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/18 12:56:39 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:47:35 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 		dup2(pipex_s->pipe_fd[1], STDOUT_FILENO);
 	close_all_fd(pipex_s);
 	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
-		ft_exit(pipex_s);
+		ft_exit_pid(pipex_s);
 	else if (!pipex_s->path && pipex_s->cmd[0])
-		printf("%s: command not found\n", pipex_s->cmd[0]); //TODO err 127
+		printf("%s: command not found\n", pipex_s->cmd[0]); //TODO err 127 126
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
 		pipex_s->status = errno;
-	ft_exit(pipex_s);
+	ft_exit_pid(pipex_s);
 }
 
 char	*get_cmd_path(char *cmd, char **envp)

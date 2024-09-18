@@ -64,13 +64,14 @@ int run_echo(t_pipex *pipex_s)
 
 	nl = 0;
 	i = 1;
-	if (!pipex_s->cmd[i])
-	{
-		input = readline("> ");
-		if (input)
-			printf("%s", input);
-		free(input);
-	}
+	(void) input;
+	// if (!pipex_s->cmd[i])
+	// {
+	// 	input = readline("> ");
+	// 	if (input)
+	// 		printf("%s", input);
+	// 	free(input);
+	// }
 	while(pipex_s->cmd[i])
 	{
 		if (i == 2 && ft_strcmp(pipex_s->cmd[i], "-n") == 0 && ++i)
@@ -81,7 +82,7 @@ int run_echo(t_pipex *pipex_s)
 	}
 	if (!nl)
 		printf("\n");
-	return (0);
+	return (1);
 }
 
 int	edge_cases(t_pipex *pipex_s)
