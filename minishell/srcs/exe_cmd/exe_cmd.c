@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/18 10:57:46 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:56:39 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 		dup2(pipex_s->pipe_fd[1], STDOUT_FILENO);
 	close_all_fd(pipex_s);
 	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
-		exit(pipex_s->status);
+		ft_exit(pipex_s);
 	else if (!pipex_s->path && pipex_s->cmd[0])
 		printf("%s: command not found\n", pipex_s->cmd[0]); //TODO err 127
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
 		pipex_s->status = errno;
-	exit(pipex_s->status);
+	ft_exit(pipex_s);
 }
 
 char	*get_cmd_path(char *cmd, char **envp)
