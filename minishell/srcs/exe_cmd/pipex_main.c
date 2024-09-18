@@ -71,7 +71,7 @@ int	process_child_pipes(t_pipex *pipex_s)//TODO to many lines
 				if (waitpid(curr_pipex_s->pid, &status, WNOHANG))
 				{
 					curr_pipex_s->pid = -1;
-					pipex_s->status = status;
+					pipex_s->main_s->status = status;
 					if (curr_pipex_s->pipe_fd[0] > 2)
 					{
 						close(curr_pipex_s->pipe_fd[0]);
@@ -89,7 +89,7 @@ int	process_child_pipes(t_pipex *pipex_s)//TODO to many lines
 		if (rep == 1)
 			curr_pipex_s = pipex_s;
 	}
-	return (pipex_s->status);
+	return (pipex_s->main_s->status);
 }
 
 int	ft_shell_pipex(t_main *main_s)

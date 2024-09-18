@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:49:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/17 13:11:32 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:12:26 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_main(t_main *main_s, char **envp)
 	main_s->input_reorg = NULL;
 	main_s->pipex = NULL;
 	main_s->silence_info = false;
+	main_s->status = 0;
 	main_s->history = NULL;
 	main_s->pipex = ft_init_pipex_s(main_s);
 }
