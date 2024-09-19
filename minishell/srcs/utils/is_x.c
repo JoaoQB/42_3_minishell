@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_x.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:55:50 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/08/27 13:24:59 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/19 04:59:55 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_isdigit(int c)
 
 int	ft_ischar(int c)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	if ((c >= 'a' && c <= 'z') ||(c >= 'A' && c <= 'Z'))
 		return (1);
 	else
 		return (0);

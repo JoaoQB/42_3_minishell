@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/19 04:44:33 by fandre-b          #+#    #+#             */
+/*   Updated: 2024/09/19 05:02:04 by fandre-b         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-char *ft_getenv(t_main *main_s, char *var_name) //TODO
+char *ft_getenv(t_main *main_s, char *var_name)
 {
 	t_env *menv_s;
 
 	menv_s = main_s->env;
-	while(menv_s && ft_strcmp(menv_s->var, var_name) != 0)
+	while (menv_s && ft_strcmp(menv_s->var, var_name) != 0)
 		menv_s = menv_s->next;
-	return(ft_strdup(menv_s->var_value));
+	return (menv_s->var_value);
 }
 
-void ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite) //TODO
-{//preciso de cabeça para dar handle destes frees melhor
+void ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite)
+{
 	t_env *menv_s;
 
 	menv_s = main_s->env;
-	while(menv_s->next && ft_strcmp(menv_s->var, var_name) != 0)
+	while (menv_s->next && ft_strcmp(menv_s->var, var_name) != 0)
 		menv_s = menv_s->next;
 	if (!menv_s->next)
 	{
@@ -24,7 +36,7 @@ void ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite) /
 		menv_s->next->var_value = var_value;
 		menv_s->next->index = menv_s->index + 1;
 	}
-	else if(overwrite == 1)
+	else if (overwrite == 1)
 	{
 		free(menv_s->var_value);
 		menv_s->var_value = var_value;
@@ -37,7 +49,7 @@ t_env *new_menv_s(void)
 {//deprecated
 	t_env *menv_s;
 
-	menv_s = (t_env *) safe_malloc(sizeof(t_env));
+	menv_s =(t_env *) safe_malloc(sizeof(t_env));
 	menv_s->var = NULL;
 	menv_s->var_value = NULL;
 	menv_s->value = NULL;
@@ -53,19 +65,19 @@ t_env *new_menv_s(void)
 // 	t_env	*menv_s;
 
 // 	if (main_s->env)
-// 		return;
+// 		return ;
 // 	main_s->env = new_menv_s();
 // 	menv_s = main_s->env;
 // 	envp = main_s->menv;
 //     while (*envp != NULL)
 //     {
 // 		i = 0;
-// 		while ((*envp)[i] && (*envp)[i] != '=')
+// 		while ((*envp)[i] &&(*envp)[i] != '=')
 // 			i++;
 // 		menv_s->var = ft_strnjoin(NULL, *envp, i++);
 // 		menv_s->var_value = ft_strnjoin(NULL, *envp + i, -1);
-// 		if(*(++envp) == NULL)
-// 			break;
+// 		if (*(++envp) == NULL)
+// 			break ;
 // 		menv_s->next = new_menv_s();
 //     	menv_s->next->index = menv_s->next->index + 1;
 // 		menv_s = menv_s->next;
@@ -77,7 +89,7 @@ void my_print_env(t_main *main_s)
 	t_env *menv_s;
 
 	menv_s = main_s->env;
-	while(menv_s)
+	while (menv_s)
 	{
 		printf("%s=%s\n", menv_s->var, menv_s->var_value);
 		menv_s = menv_s->next;

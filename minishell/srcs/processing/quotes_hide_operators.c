@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_hide_operators.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 02:59:39 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/09 19:06:30 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void quotes_revert_operators(t_token *first)
 	t_token *current;
 
 	if (!first)
-		return;
+		return ;
 	current = first;
 	while (current)
 	{

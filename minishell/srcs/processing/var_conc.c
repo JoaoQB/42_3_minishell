@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:39:06 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static char	*conc_values(t_token *target)
 	}
 	if (total_len == 0)
 		return (NULL);
-	result = (char *)safe_malloc(sizeof(char) * (total_len + 1));
+	result =(char *)safe_malloc(sizeof(char) *(total_len + 1));
 	copy_values(result, target);
 	return (result);
 }
@@ -86,7 +86,7 @@ t_token	*var_conc(t_token *target, t_token **first)
 
 	if (!target || !first)
 		return (NULL);
-	new = (t_token *)safe_malloc(sizeof(t_token));
+	new =(t_token *)safe_malloc(sizeof(t_token));
 	new->index = -1;
 	new->value = NULL;
 	new->next = NULL;

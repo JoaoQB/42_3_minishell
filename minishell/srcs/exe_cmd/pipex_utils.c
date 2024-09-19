@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe_cmd.c                                          :+:      :+:    :+:   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 15:51:15 by fandre-b              #+#    #+#             */
-/*   Updated: 2024/08/24 17:02:23 by fandre-b             ###   ########.fr       */
+/*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
+/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +28,7 @@ char	*ft_strnjoin(char *old_str, char *str_add, int size)
 		i++;
 	if (i < size || size == -1)
 		size = i;
-	new_str = (char *) safe_malloc (size + len + 1);
+	new_str =(char *) safe_malloc(size + len + 1);
 	i = -1;
 	while (old_str && ++i < len)
 		new_str[i] = old_str[i];
@@ -37,7 +36,7 @@ char	*ft_strnjoin(char *old_str, char *str_add, int size)
 	while (str_add && ++i < size)
 		new_str[len + i] = str_add[i];
 	new_str[len + i] = '\0';
-	return (free (old_str), new_str);
+	return (free(old_str), new_str);
 }
 
 char	*ft_strstr(const char *big, const char *little)
@@ -76,7 +75,7 @@ char* get_file_name_from_fd(int fd)
 }
 
 void	print_struct(t_main *main_s)
-{
+{//TODO delete
 	t_pipex *pipex_s;
 	int	i;
 	int j;
@@ -84,7 +83,7 @@ void	print_struct(t_main *main_s)
 	j = 0;
 	pipex_s = main_s->pipex;
 	printf("\n\n --> Printing pipe_struct an cmds<--\n\n");
-	while(pipex_s)
+	while (pipex_s)
 	{
 		printf("   {pipe %d}\n", j++);
 		printf("pid %d with status %d\n", pipex_s->pid, pipex_s->status);
@@ -104,29 +103,31 @@ void	print_struct(t_main *main_s)
 }
 
 void	print_check_processes(t_pipex *pipex_s)
-{
+{//TODO delete
 	// if (pipex_s == NULL)
-	// 	return;
+	// 	return ;
 	while (pipex_s->next)
 	{
 		if (pipex_s->pid > 0)
 		{
 			printf("\n-->process with pid: %d from cmd: %s unclosed\n", pipex_s->pid, pipex_s->cmd[0]);
-			return;
+			return ;
 		}
 		pipex_s = pipex_s->next;
 	}
 	printf("\n-->all processes have been closed\n");
 }
 
+// void *handle_error(char *err_print)
+
 void *safe_malloc(size_t size) 
 {
     void *ptr;
 
-	ptr = (void *) malloc(size);
+	ptr =(void *) malloc(size);
     if (ptr == NULL) 
 	{
-        perror("safe_malloc"); //the actuall error handle function.
+        perror("safe_malloc"); //the actuall error handlefunction.
         // exit(1); // General error
     }
     return ptr;

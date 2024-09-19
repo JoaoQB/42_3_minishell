@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:18:48 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 04:59:55 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*var_conc_quotes(t_token **first, t_token *target)
 	if (!first || !first)
 		return (NULL);
 	current = *first;
-	while(current)
+	while (current)
 	{
 		if (current->type == CONC)
 			return (var_conc(current, first));
@@ -41,7 +41,7 @@ static char	*var_delete_var_quotes(t_token *current)
 		return (NULL);
 	}
 	len = ft_strlen(current->value) - 1;
-	new_value = (char *)safe_malloc(sizeof(char) * (len + 1));
+	new_value =(char *)safe_malloc(sizeof(char) *(len + 1));
 	ft_strlcpy2(new_value, &current->value[1], len + 1);
 	return (new_value);
 }

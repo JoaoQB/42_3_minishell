@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_smarter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:28:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/10 13:46:16 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	tokenize_smarter(t_token *first)
 	while (current)
 	{
 		next = current->next;
-		if (no_cmd == true && (current->type == WORD))
+		if (no_cmd == true &&(current->type == WORD))
 		{
 			tokenize_args(current, CMD);
 			no_cmd = false;

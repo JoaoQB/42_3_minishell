@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/09 19:29:56 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/19 05:02:04 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,29 +50,29 @@ void print_tokens(t_token *tokens)
 	if (!tokens)
 	{
 		printf("no tokens\n");
-		return;
+		return ;
 	}
     t_token *current = tokens;
     while (current != NULL)
     {
         const char *type_str;
-        switch (current->type)
+        switch(current->type)
         {
-            case RED_IN: type_str = "RED_IN"; break;
-            case RED_OUT: type_str = "RED_OUT"; break;
-            case HERE_DOC: type_str = "HERE_DOC"; break;
-            case RED_OUT_APP: type_str = "RED_OUT_APP"; break;
-            case PIPE: type_str = "PIPE"; break;
-            case QUOTE: type_str = "QUOTE"; break;
-            case WORD: type_str = "WORD"; break;
-            case CMD: type_str = "CMD"; break;
-            case ARG: type_str = "ARG"; break;
-            case PATH: type_str = "PATH"; break;
-            case DELIM: type_str = "DELIM"; break;
-            case CONC: type_str = "CONC"; break;
-			case VAR: type_str = "VAR"; break;
+            case RED_IN: type_str = "RED_IN"; break ;
+            case RED_OUT: type_str = "RED_OUT"; break ;
+            case HERE_DOC: type_str = "HERE_DOC"; break ;
+            case RED_OUT_APP: type_str = "RED_OUT_APP"; break ;
+            case PIPE: type_str = "PIPE"; break ;
+            case QUOTE: type_str = "QUOTE"; break ;
+            case WORD: type_str = "WORD"; break ;
+            case CMD: type_str = "CMD"; break ;
+            case ARG: type_str = "ARG"; break ;
+            case PATH: type_str = "PATH"; break ;
+            case DELIM: type_str = "DELIM"; break ;
+            case CONC: type_str = "CONC"; break ;
+			case VAR: type_str = "VAR"; break ;
             // Add new token types here
-            // case NEW_TYPE_2: type_str = "NEW_TYPE_2"; break;
+            // case NEW_TYPE_2: type_str = "NEW_TYPE_2"; break ;
             default: type_str = "UNKNOWN";
 		}
 		if (current->value)

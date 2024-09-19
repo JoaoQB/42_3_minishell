@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:34:41 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 04:59:55 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*extract_inside_quotes(char *str)
 	}
 	if (len == 0)
 		return (NULL);
-	new_value = (char *)safe_malloc(sizeof(char) * len + 1);
+	new_value =(char *)safe_malloc(sizeof(char) * len + 1);
 	ft_strlcpy2(new_value, &str[1], len + 1);
 	return (new_value);
 }
@@ -37,7 +37,7 @@ char	*var_extract_after(t_token *current, int i)
 	t_token	*new;
 	char	*new_value;
 
-	new = (t_token *)safe_malloc(sizeof(t_token));
+	new =(t_token *)safe_malloc(sizeof(t_token));
 	new->value = extract_from_i(current->value, i);
 	if (!new->value)
 	{
@@ -63,7 +63,7 @@ char	*var_extract_before(t_token **first, t_token *current, int i)
 	t_token	*new;
 	char	*new_value;
 
-	new = (t_token *)safe_malloc(sizeof(t_token));
+	new =(t_token *)safe_malloc(sizeof(t_token));
 	new->value = extract_before_i(current->value, i);
 	if (!new->value)
 	{

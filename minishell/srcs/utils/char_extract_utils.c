@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:46:57 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 04:59:55 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*extract_from_i(char *str, int i)
 	if (!str)
 		return (NULL);
 	len = ft_strlen(str) - i;
-	new_value = (char *)safe_malloc(sizeof(char) * (len + 1));
+	new_value =(char *)safe_malloc(sizeof(char) *(len + 1));
 	ft_strlcpy2(new_value, &str[i], len + 1);
 	return (new_value);
 }
@@ -44,7 +44,7 @@ char	*extract_before_i(char *str, int i)
 
 	if (!str)
 		return (NULL);
-	new_value = (char *)safe_malloc(sizeof(char) * (i + 1));
+	new_value =(char *)safe_malloc(sizeof(char) *(i + 1));
 	ft_strlcpy2(new_value, str, i + 1);
 	return (new_value);
 }

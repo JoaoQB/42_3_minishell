@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 02:28:16 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char *change_tilde(t_main *main_s)
 			if (!current_env->var_value)
 				return (NULL);
 			new_len = ft_strlen(current_env->var_value);
-			new_value = (char *)safe_malloc(sizeof(char) * (new_len + 1));
+			new_value =(char *)safe_malloc(sizeof(char) *(new_len + 1));
 			ft_strlcpy2(new_value, current_env->var_value, new_len + 1);
 			return (new_value);
 		}
@@ -51,7 +51,7 @@ static char	*change_tilde_before(t_main *main_s, t_token *current)
 		return (NULL);
 	current_len = ft_strlen(current->value) - 1;
 	new_len = ft_strlen(tilde_value);
-	new_value = (char *)safe_malloc(sizeof(char) * (new_len + current_len + 1));
+	new_value =(char *)safe_malloc(sizeof(char) *(new_len + current_len + 1));
 	ft_strlcpy2(new_value, tilde_value, new_len + 1);
 	ft_strlcpy2(&new_value[new_len], &current->value[1], current_len + 1);
 	ft_free(&tilde_value);

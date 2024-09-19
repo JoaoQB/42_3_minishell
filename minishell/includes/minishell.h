@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 04:58:50 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,7 +343,7 @@ void my_print_env(t_main *main_s);
 /************************/
 
 // int setup_signal_handlers(int process_type);
-int set_sig_handlers(int signal, void (*func_name)(int));
+int set_sig_handlers(int signal, void(*func_name)(int));
 void handle_sigquit(int sig);
 void handle_sigint(int sig);
 void	ft_exit_pid(t_pipex *pipex);

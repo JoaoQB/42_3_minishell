@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:28:52 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:58:36 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 04:59:55 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*fill_substr(const char *src, size_t len)
 
 	if (!src)
 		return (NULL);
-	dest = (char *)safe_malloc(sizeof(char) * (len + 1));
+	dest =(char *)safe_malloc(sizeof(char) *(len + 1));
 	ft_strlcpy2(dest, src, len + 1);
 	return (dest);
 }
@@ -57,7 +57,7 @@ char	**split_into_words(char const *s)
 	int		j;
 	int		i_word;
 
-	split_strs = (char **)safe_malloc((count_words(s) + 1) * sizeof(char *));
+	split_strs =(char **)safe_malloc((count_words(s) + 1) * sizeof(char *));
 	j = 0;
 	i = 0;
 	while (*(s + i))
@@ -68,7 +68,7 @@ char	**split_into_words(char const *s)
 		i = iterate_i(s, i);
 		if (i_word < i)
 		{
-			*(split_strs + j++) = fill_substr(&s[i_word], (i - i_word));
+			*(split_strs + j++) = fill_substr(&s[i_word],(i - i_word));
 			if (!(*(split_strs + j - 1)))
 				return (ft_free_array(split_strs, j));
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_swap.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:34:27 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/11 13:07:35 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_token	*var_check_quote(t_main *main_s, t_token **first, t_token *curren
 		return (current->next);
 	i = 0;
 	is_quote = false;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '"')
 			is_quote = !is_quote;
@@ -50,7 +50,7 @@ void	var_swap(t_main *main_s, t_token **first)
 	if (!first)
 		return ;
 	current = *first;
-	while(current)
+	while (current)
 	{
 		next = current->next;
 		if (current->type == HERE_DOC)

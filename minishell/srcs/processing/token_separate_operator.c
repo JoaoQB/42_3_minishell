@@ -20,7 +20,7 @@ static bool	check_after_operator(char *string)
 		return (true);
 	else if (!ft_strncmp(string, ">>", 2) && string[2] != '\0')
 		return (true);
-	else if (string[1] != '\0' && (ft_strncmp(string, ">>", 2)
+	else if (string[1] != '\0' &&(ft_strncmp(string, ">>", 2)
 			&& ft_strncmp(string, "<<", 2)))
 		return (true);
 	return (false);

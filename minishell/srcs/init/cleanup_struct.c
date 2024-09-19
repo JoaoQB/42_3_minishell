@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:41:15 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/13 10:02:50 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_env(t_env **first)
 			ft_free(&temp->var);
 		if (temp->var_value)
 			ft_free(&temp->var_value);
-		free (temp);
+		free(temp);
 		current = next;
 	}
 	*first = NULL;
@@ -52,7 +52,7 @@ void	free_tokens(t_token **first)
 		temp = current;
 		if (temp->value)
 			ft_free(&temp->value);
-		free (temp);
+		free(temp);
 		current = next;
 	}
 	*first = NULL;

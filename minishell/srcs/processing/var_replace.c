@@ -38,7 +38,7 @@ static char	*var_check_env(t_env *env, char *str)
 			if (!current->var_value)
 				return (NULL);
 			len = ft_strlen(current->var_value);
-			new_value = (char *)safe_malloc(sizeof(char) * (len + 1));
+			new_value =(char *)safe_malloc(sizeof(char) *(len + 1));
 			ft_strlcpy2(new_value, current->var_value, len + 1);
 			return (new_value);
 		}
@@ -72,7 +72,7 @@ static char	*var_change(t_main *main_s, t_token *current)
 	if (!var_value)
 		return (NULL);
 	new_value = var_check_env(main_s->env, var_value);
-	free (var_value);
+	free(var_value);
 	return (new_value);
 }
 
@@ -95,10 +95,10 @@ static char	*var_check_after_var(t_token *current)
 			return (var_extract_after(current, i + 1));
 		return (str);
 	}
-	while(ft_isvarchar(str[i]))
+	while (ft_isvarchar(str[i]))
 		i++;
 	if (str[i] != '\0')
-		return(var_extract_after(current, i));
+		return (var_extract_after(current, i));
 	return (str);
 }
 

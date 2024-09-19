@@ -2,7 +2,7 @@
 
 void handle_sigint(int sig) 
 {
-    (void)sig;
+   (void)sig;
     g_signal = 1;
     printf("\n");
     rl_replace_line("", 0);
@@ -16,14 +16,13 @@ void handle_sigint(int sig)
 
 void handle_sigquit(int sig) 
 {
-    (void)sig;
+   (void)sig;
     g_signal = 2;
     printf("this is an forced core dump\n");
-    abort(); //TODO is this forbidden? if so i have to pass signals
-
+    abort(); //TODO exit with abort value or free and core dump
 }
 
-int set_sig_handlers(int signal, void (*func_name)(int)) 
+int set_sig_handlers(int signal, void(*func_name)(int)) 
 {
     struct sigaction sa;
 
@@ -33,7 +32,7 @@ int set_sig_handlers(int signal, void (*func_name)(int))
     if (sigaction(signal, &sa, NULL) == -1)
     {
         perror("sigaction failed");
-        return(1);
+        return (1);
     }
     return (0);
 }

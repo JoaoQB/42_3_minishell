@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/17 12:50:54 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	ft_free(char **str)
 {
 	if (str && *str)
-		free (*str);
+		free(*str);
 	else
 	*str = NULL;
 }
 
 void	free_triple_array(char ***array)
-{
+{//TODO delete
 	int	i;
 	i = 0;
 	if (array != NULL)
@@ -44,10 +44,13 @@ void	free_double_array(char **array)
 	while (array[i])
 	{
 		free(array[i]);
+		array[i] = NULL;
 		i++;
 	}
-	free (array[i]);
+	free(array[i]);
+	array[i] = NULL;
 	free(array);
+	array = NULL;
 }
 
 void	cleanup_main(t_main *main_s)
@@ -55,8 +58,13 @@ void	cleanup_main(t_main *main_s)
 	// if (main_s->menv)
 	// 	free_double_array(main_s->menv);
 	if (main_s->env)
+	{
 		free_env(&main_s->env);
+		main_s->env = NULL;
+	}
+	if (main_s->history)
 	free_history(main_s->history);
+	main_s->history = NULL;
 }
 
 void	free_main_input(t_main *main_s)

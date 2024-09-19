@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 15:51:15 by fandre-b              #+#    #+#             */
-/*   Updated: 2024/08/25 10:20:03 by fandre-b             ###   ########.fr       */
+/*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
+/*   Updated: 2024/09/19 05:02:04 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		ft_process_tokens_s(t_main *main_s)
 		tokens_s = tokens_s->next;
 	while (pipex_s->next != NULL)
 		pipex_s = pipex_s->next;
-	while(tokens_s != NULL)
+	while (tokens_s != NULL)
 	{
 		if (tokens_s->prev == NULL || tokens_s->prev->type == PIPE)
 		{
@@ -49,7 +49,7 @@ int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s)
 			count += 1;
 		curr_token = curr_token->next;
 	}
-	pipex_s->cmd = (char **) safe_malloc (sizeof (char *) * (count + 1));
+	pipex_s->cmd =(char **) safe_malloc(sizeof(char *) *(count + 1));
 
 	pipex_s->status = ft_update_cmds(tokens_s, pipex_s);
 	if (pipex_s->status == 0)
@@ -85,19 +85,19 @@ int read_heredoc(t_token *tokens_s)
 
 	delim = tokens_s->value;
 	if (pipe(piper) == -1)
-		return(perror("failed pipe"), 0);
-	while(1)
+		return (perror("failed pipe"), 0);
+	while (1)
 	{
 		input = readline("> ");
 		if (!input)
-			break;
-		if(ft_strcmp(input, delim) == 0)
+			break ;
+		if (ft_strcmp(input, delim) == 0)
 		{
 			free(input);
-			break;
+			break ;
 		}
 		write(piper[1], input, ft_strlen(input));
-		write (piper[1], "\n", 1);
+		write(piper[1], "\n", 1);
 		free(input);
 	}
 	close(piper[1]);
@@ -107,24 +107,28 @@ int read_heredoc(t_token *tokens_s)
 int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s)
 {
 	int		*io_fd;
+	char	*value;
+	int		type;
 
 	io_fd = pipex_s->pipe_fd;
 	while (tokens_s && tokens_s->type != PIPE)
 	{
-		if ((tokens_s->type == RED_IN || tokens_s->type == HERE_DOC) && io_fd[0] > 2)
-			close (io_fd[0]);
-		if ((tokens_s->type == RED_OUT || tokens_s->type == RED_OUT_APP) && io_fd[1] > 2)
-			close (io_fd[1]);
-		if(tokens_s->type == DELIM)
+		type = tokens_s->type;
+		value = tokens_s->next->value;
+		if ((type == RED_IN || type == HERE_DOC) && io_fd[0] > 2)
+			close(io_fd[0]);
+		if ((type == RED_OUT || type == RED_OUT_APP) && io_fd[1] > 2)
+			close(io_fd[1]);
+		if (type == DELIM)
 			io_fd[0] = read_heredoc(tokens_s);
-		else if (tokens_s->type == RED_IN)
-			io_fd[0] = open(tokens_s->next->value, O_RDONLY, 0666);
-		else if (tokens_s->type == RED_OUT)
-			io_fd[1] = open(tokens_s->next->value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-		else if (tokens_s->type == RED_OUT_APP)
-			io_fd[1] = open(tokens_s->next->value, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		else if (type == RED_IN)
+			io_fd[0] = open(value, O_RDONLY, 0666);
+		else if (type == RED_OUT)
+			io_fd[1] = open(value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		else if (type == RED_OUT_APP)
+			io_fd[1] = open(value, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (io_fd[0] ==-1 || io_fd[1] == -1)
-			return(printf("%s: No such file or directory\n", tokens_s->next->value), errno); //TODO return function error
+			return (printf("%s: %s\n", value, strerror(errno)), errno); //TODO Handle error s
 		tokens_s = tokens_s->next;
 	}
 	return (0);
@@ -144,12 +148,12 @@ int ft_create_pipeline(t_main *main_s)
 	pipex_s->pipe_fd[1] = STDOUT_FILENO;
 	while (tokens_s != NULL)
 	{
-		if(tokens_s->type == PIPE)
+		if (tokens_s->type == PIPE)
 		{
 			pipex_s->next = ft_init_pipex_s(main_s);
 			pipex_s->next->prev = pipex_s;
 			if (pipe(piper) == -1)
-				return(perror ("pipe"), errno);
+				return (perror("pipe"), errno);
 			pipex_s->next->pipe_fd[1] = pipex_s->pipe_fd[1];
 			pipex_s->pipe_fd[1] = piper[1];
 			pipex_s->next->pipe_fd[0] = piper[0];
@@ -164,7 +168,7 @@ t_pipex *ft_init_pipex_s(t_main *main_s)
 {
     t_pipex *pipex_s;
 
-    pipex_s = (t_pipex *)safe_malloc(sizeof(t_pipex));
+    pipex_s =(t_pipex *)safe_malloc(sizeof(t_pipex));
     pipex_s->pid = -1;
     pipex_s->status = 0;
 	pipex_s->path = NULL;
@@ -176,12 +180,3 @@ t_pipex *ft_init_pipex_s(t_main *main_s)
 	pipex_s->main_s = main_s;
     return (pipex_s);
 }
-
-// int read_heredoc(t_token *tokens_s)
-// {
-// 	if (!tokens_s->next || tokens_s->next->type != DELIM || tokens_s->value == NULL)
-// 		return (perror("Delimiter not found or invalid"), -1);
-// 	printf("to read until: %s\n", tokens_s->value);
-// 	printf("here_doc still not working: \n");
-// 	return (-1);
-// }
