@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 05:02:04 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 05:08:59 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,28 +107,24 @@ int read_heredoc(t_token *tokens_s)
 int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s)
 {
 	int		*io_fd;
-	char	*value;
-	int		type;
 
 	io_fd = pipex_s->pipe_fd;
 	while (tokens_s && tokens_s->type != PIPE)
 	{
-		type = tokens_s->type;
-		value = tokens_s->next->value;
-		if ((type == RED_IN || type == HERE_DOC) && io_fd[0] > 2)
-			close(io_fd[0]);
-		if ((type == RED_OUT || type == RED_OUT_APP) && io_fd[1] > 2)
-			close(io_fd[1]);
-		if (type == DELIM)
+		if ((tokens_s->type == RED_IN || tokens_s->type == HERE_DOC) && io_fd[0] > 2)
+			close (io_fd[0]);
+		if ((tokens_s->type == RED_OUT || tokens_s->type == RED_OUT_APP) && io_fd[1] > 2)
+			close (io_fd[1]);
+		if(tokens_s->type == DELIM)
 			io_fd[0] = read_heredoc(tokens_s);
-		else if (type == RED_IN)
-			io_fd[0] = open(value, O_RDONLY, 0666);
-		else if (type == RED_OUT)
-			io_fd[1] = open(value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-		else if (type == RED_OUT_APP)
-			io_fd[1] = open(value, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		else if (tokens_s->type == RED_IN)
+			io_fd[0] = open(tokens_s->next->value, O_RDONLY, 0666);
+		else if (tokens_s->type == RED_OUT)
+			io_fd[1] = open(tokens_s->next->value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		else if (tokens_s->type == RED_OUT_APP)
+			io_fd[1] = open(tokens_s->next->value, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (io_fd[0] ==-1 || io_fd[1] == -1)
-			return (printf("%s: %s\n", value, strerror(errno)), errno); //TODO Handle error s
+			return(printf("%s: No such file or directory\n", tokens_s->next->value), errno); //TODO Handle error s
 		tokens_s = tokens_s->next;
 	}
 	return (0);

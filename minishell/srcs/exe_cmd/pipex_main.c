@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 04:59:55 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 05:55:03 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	ft_shell_pipex(t_main *main_s)
 	// print_struct(main_s);
 	ft_exe_pipex_s(main_s, main_s->menv);
 	status = process_child_pipes(main_s->pipex); //manage_pid
-	printf("this is the process status: %d\n", status);
+	printf("\n	COMMAND ERR: %d\n", status);
 	//print_check_processes(main_s->pipex);
 	// free_pipex_s(main_s->pipex); //temp free
 	//recieve signal when i do exit, so i can properly free it and pass responsability
