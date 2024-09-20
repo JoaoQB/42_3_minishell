@@ -65,3 +65,23 @@ echo 'foo $BAR' 		N/A 		 ❌ 		 inside contextual quotes ' -> no expansion 			 f
 echo foo$USER$HOME 		✅ ✅		 ✅ ✅ 	  the second $ is not an allowed char of a key			  fooastein/home/astein
 											therfore it terminates the first key.
 echo foo $NOTEXIST bar 	✅ 			✅ 		the key doesn't exist; expands to NULL 					a b
+
+------------------------------------------------------------
+
+EXPORT
+
+export VAR, actualiza export mas nao env.
+export VAR= actualiza ambos
+
+env imprime main_s.env
+export imprime main_s.export
+
+main_s começa como env_sorted
+
+Quando se actualiza export é por ordem alfabetica,
+quando se actualiza env é cronologica.
+
+Quando se faz export pode dar erro:
+bash: export: `string': not a valid identifier
+
+Se houver mais que um var ele faz set a todos.

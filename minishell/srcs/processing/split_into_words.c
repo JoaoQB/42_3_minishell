@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_into_words.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 15:28:52 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 04:59:55 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*fill_substr(const char *src, size_t len)
 	if (!src)
 		return (NULL);
 	dest =(char *)safe_malloc(sizeof(char) *(len + 1));
-	ft_strlcpy2(dest, src, len + 1);
+	ft_strlcpy(dest, src, len + 1);
 	return (dest);
 }
 

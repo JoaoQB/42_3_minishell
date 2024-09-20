@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:34:41 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 04:59:55 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,24 @@
 char	*extract_inside_quotes(char *str)
 {
 	char	*new_value;
+	char	qt_char;
 	int		i;
 	int		len;
 
-	i = 1;
+	if (!str)
+		return (NULL);
+	i = 0;
 	len = 0;
-	while (str[i] && str[i] != '"')
+	qt_char = str[i++];
+	while (str[i] && str[i] != qt_char)
 	{
 		i++;
 		len++;
 	}
 	if (len == 0)
 		return (NULL);
-	new_value =(char *)safe_malloc(sizeof(char) * len + 1);
-	ft_strlcpy2(new_value, &str[1], len + 1);
+	new_value = (char *)safe_malloc(sizeof(char) * len + 1);
+	ft_strlcpy(new_value, &str[1], len + 1);
 	return (new_value);
 }
 

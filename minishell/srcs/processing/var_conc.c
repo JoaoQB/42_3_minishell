@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_conc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:39:06 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	copy_values(char *result, t_token *target)
 	{
 		if (current->value)
 		{
-			ft_strlcpy2(result + len, current->value, ft_strlen(current->value) + 1);
+			ft_strlcpy(result + len, current->value, ft_strlen(current->value) + 1);
 			len += ft_strlen(current->value);
 		}
 		current = current->next;

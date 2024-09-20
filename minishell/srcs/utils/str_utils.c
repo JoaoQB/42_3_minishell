@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:35:30 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 04:59:55 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
 
+	if (!dst || !src || size == 0)
+		return (0);
 	i = 0;
-	while (src[i] && size && i < size - 1)
+	while (src[i] && i < size - 1)
 	{
 		dst[i] = src[i];
 		i++;
 	}
-	if (size - i != 0)
-		dst[i] = '\0';
+	dst[i] = '\0';
 	return (ft_strlen(src));
 }
 

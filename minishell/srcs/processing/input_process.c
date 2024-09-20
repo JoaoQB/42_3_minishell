@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 04:59:55 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	concatenate_tokens(char *result, t_token *first)
 		if (current->value)
 		{
 			len = ft_strlen(result);
-			ft_strlcpy2(result + len, current->value, ft_strlen(current->value) + 1);
+			ft_strlcpy(result + len, current->value, ft_strlen(current->value) + 1);
 			len += ft_strlen(current->value);
 			if (current->next)
 			{

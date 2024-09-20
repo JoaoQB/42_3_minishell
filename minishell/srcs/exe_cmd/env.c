@@ -3,16 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:33 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 05:02:04 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:40:03 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char *ft_getenv(t_main *main_s, char *var_name)
+char	*env_get_value(char *var_name, char *var_value)
+{
+	char	*new_value;
+	int		len;
+
+	if (!var_name)
+		return (NULL);
+	len = ft_strlen(var_name) + 1;
+	if (var_value)
+		len += ft_strlen(var_value);
+	new_value = (char *)safe_malloc(sizeof(char) * (len + 1));
+	if (new_value)
+	{
+		ft_strlcpy(new_value, var_name, ft_strlen(var_name) + 1);
+		ft_strcat(new_value, "=");
+		if (var_value)
+			ft_strcat(new_value, var_value);
+	}
+	return (new_value);
+}
+
+char	*ft_getenv(t_main *main_s, char *var_name)
 {
 	t_env *menv_s;
 
@@ -22,38 +43,45 @@ char *ft_getenv(t_main *main_s, char *var_name)
 	return (menv_s->var_value);
 }
 
-void ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite)
+void	ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite)
 {
-	t_env *menv_s;
+	t_env	*menv_s;
+	t_env	*new;
+	char	*value;
 
 	menv_s = main_s->env;
-	while (menv_s->next && ft_strcmp(menv_s->var, var_name) != 0)
+	while (menv_s && ft_strcmp(menv_s->var, var_name) != 0)
 		menv_s = menv_s->next;
-	if (!menv_s->next)
+	value = env_get_value(var_name, var_value);
+	if (!menv_s)
 	{
-		menv_s->next = new_menv_s();
-		menv_s->next->var = ft_strdup(var_name);
-		menv_s->next->var_value = var_value;
-		menv_s->next->index = menv_s->index + 1;
+		new = ft_export_new(value);
+		append_env_back(&main_s->env, new);
+		free(value);
+		free(var_value);
 	}
 	else if (overwrite == 1)
 	{
-		free(menv_s->var_value);
+		ft_free(&menv_s->value);
+		menv_s->value = value;
+		ft_free(&menv_s->var_value);
 		menv_s->var_value = var_value;
 	}
 	else
-		free(var_value);
+		ft_free(&var_value);
 }
 
-t_env *new_menv_s(void)
+t_env	*new_menv_s(void)
 {//deprecated
 	t_env *menv_s;
 
-	menv_s =(t_env *) safe_malloc(sizeof(t_env));
+	menv_s = (t_env *)safe_malloc(sizeof(t_env));
+	if (!menv_s)
+		return (NULL);
 	menv_s->var = NULL;
 	menv_s->var_value = NULL;
 	menv_s->value = NULL;
-	menv_s->index = 1;
+	// menv_s->index = 1;
 	menv_s->next = NULL;
 	return (menv_s);
 }
@@ -84,14 +112,22 @@ t_env *new_menv_s(void)
 //     }
 // }
 
-void my_print_env(t_main *main_s)
+void	my_print_env(t_main *main_s)
 {
 	t_env *menv_s;
 
 	menv_s = main_s->env;
 	while (menv_s)
 	{
-		printf("%s=%s\n", menv_s->var, menv_s->var_value);
+		if(menv_s->var)
+		{
+			ft_putstr_fd(menv_s->var, 1);
+			ft_putstr_fd("=", 1);
+			if (menv_s->var_value)
+				ft_putstr_fd(menv_s->var_value, 1);
+			ft_putstr_fd("\n", 1);
+		}
+		// printf("%s=%s\n", menv_s->var, menv_s->var_value);
 		menv_s = menv_s->next;
 	}
 }

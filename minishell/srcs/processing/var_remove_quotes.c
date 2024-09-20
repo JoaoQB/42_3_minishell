@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_remove_quotes.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:18:48 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 04:59:55 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*var_delete_var_quotes(t_token *current)
 	}
 	len = ft_strlen(current->value) - 1;
 	new_value =(char *)safe_malloc(sizeof(char) *(len + 1));
-	ft_strlcpy2(new_value, &current->value[1], len + 1);
+	ft_strlcpy(new_value, &current->value[1], len + 1);
 	return (new_value);
 }
 
