@@ -39,7 +39,7 @@ static char	*var_check_env(t_env *env, char *str)
 				return (NULL);
 			len = ft_strlen(current->var_value);
 			new_value =(char *)safe_malloc(sizeof(char) *(len + 1));
-			ft_strlcpy2(new_value, current->var_value, len + 1);
+			ft_strlcpy(new_value, current->var_value, len + 1);
 			return (new_value);
 		}
 		current = current->next;

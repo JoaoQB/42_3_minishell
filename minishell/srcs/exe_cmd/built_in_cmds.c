@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:16:23 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,21 +130,48 @@ int	edge_cases(t_pipex *pipex_s)
 
 void run_export(t_pipex *pipex_s)
 {
-	char *prefix;
-	char *sufix;
-	int	i;
+	t_main	*main_s;
+	t_env	*new;
+	int		i;
 
-	if (!pipex_s->cmd[1])
+	if (!pipex_s)
 		return ;
-	i = 0;
-	while ((pipex_s->cmd[1])[i] &&(pipex_s->cmd[1])[i] != '=')
+	if (!pipex_s->cmd[1])
+	{
+		print_export(pipex_s->main_s->export);
+		return ;
+	}
+	main_s = pipex_s->main_s;
+	i = 1;
+	while (pipex_s->cmd[i])
+	{
+		new = ft_export_new(pipex_s->cmd[i]);
+		if (new)
+			export_check(main_s, new);
 		i++;
-	prefix = ft_strnjoin(NULL, pipex_s->cmd[1], i++);
-	sufix = ft_strnjoin(NULL, &pipex_s->cmd[1][i], -1);
-	i = 0;
-	if (sufix)
-		ft_setenv(pipex_s->main_s, prefix, sufix, 1);
+	}
 }
+
+// void run_export(t_pipex *pipex_s)
+// {
+// 	char *prefix;
+// 	char *sufix;
+// 	int	i;
+
+// 	if (!pipex_s->cmd[1])
+// 	{
+// 		print_export(pipex_s->main_s->env);
+// 		return ;
+// 	}
+// 	i = 0;
+// 	while ((pipex_s->cmd[1])[i] &&(pipex_s->cmd[1])[i] != '=')
+// 		i++;
+// 	prefix = ft_strnjoin(NULL, pipex_s->cmd[1], i++);
+// 	sufix = ft_strnjoin(NULL, &pipex_s->cmd[1][i], -1);
+// 	i = 0;
+// 	if (sufix)
+// 		ft_setenv(pipex_s->main_s, prefix, sufix, 1);
+// }
 
 void run_unset(t_pipex *pipex_s)
 {

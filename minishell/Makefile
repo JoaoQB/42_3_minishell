@@ -6,7 +6,7 @@
 #    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/09/18 17:36:41 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/09/19 16:54:54 by jqueijo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ OBJ_DIR = ./obj
 
 SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/init/init.c \
-	$(SRC_PATH)/init/env.c \
+	$(SRC_PATH)/init/env_init.c \
+	$(SRC_PATH)/init/export_init.c \
 	$(SRC_PATH)/init/cleanup.c \
 	$(SRC_PATH)/init/cleanup_struct.c \
 	$(SRC_PATH)/utils/len_utils.c \
@@ -25,6 +26,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/utils/str_utils2.c \
 	$(SRC_PATH)/utils/char_extract_utils.c \
 	$(SRC_PATH)/utils/is_x.c \
+	$(SRC_PATH)/utils/find_x_utils.c \
 	$(SRC_PATH)/utils/print_utils.c \
 	$(SRC_PATH)/utils/var_utils.c \
 	$(SRC_PATH)/utils/token_utils.c \
@@ -47,7 +49,6 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/processing/var_replace.c \
 	$(SRC_PATH)/parsing/first_pars.c \
 	$(SRC_PATH)/parsing/error_msg.c \
-	$(SRC_PATH)/parsing/find_quotes.c \
 	$(SRC_PATH)/exe_cmd/exe_cmd.c \
 	$(SRC_PATH)/exe_cmd/pipex_main.c \
 	$(SRC_PATH)/exe_cmd/pipex_struct.c \
@@ -57,6 +58,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/exe_cmd/env.c \
 	$(SRC_PATH)/exe_cmd/ft_signals.c \
 	$(SRC_PATH)/exe_cmd/built_ins/ft_exit.c \
+	$(SRC_PATH)/exe_cmd/built_ins/ft_export.c \
 
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)

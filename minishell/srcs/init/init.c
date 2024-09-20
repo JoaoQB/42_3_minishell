@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:49:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:36:20 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:15:19 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 void	init_main(t_main *main_s, char **envp)
 {
 	main_s->env = get_env(envp);
-	main_s->menv = envp;
 	// print_env(main_s->env);
+	main_s->export = sort_env(main_s);
+	// main_s->export = NULL;
+	main_s->menv = envp;
 	// print_menv(main_s->menv);
 	main_s->tokens = NULL;
 	main_s->user_input = NULL;

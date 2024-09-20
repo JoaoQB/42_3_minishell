@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 05:48:14 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:30:44 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_env
 	char	*value;
 	char	*var;
 	char	*var_value;
-	int		index;
 	t_env	*next;
 }	t_env;
 
@@ -107,6 +106,7 @@ typedef struct s_main
 	bool	silence_info;
 	int		status;
 	t_env	*env;
+	t_env	*export;
 	t_token	*tokens;
 	t_pipex	*pipex; //fandre-b added
 	t_hist	*history; //fandre-b added
@@ -130,8 +130,17 @@ void	ft_free(char **str);
 void	free_tokens(t_token **first);
 void	free_env(t_env **first);
 
-/* env.c */
+/* env_init.c */
 t_env	*get_env(char **envp);
+void	append_env_back(t_env **first, t_env *new_env);
+char	*env_extract_var(t_env	*new_env);
+char	*env_extract_var_value(char *str);
+
+/* export_init.c */
+t_env	*sort_env(t_main *main_s);
+t_env	*ft_export_new(char *str);
+char	*env_check_name(char *str);
+void	export_set_ordered(t_env **first, t_env *new);
 
 /************************/
 /********* UTILS ********/
@@ -151,7 +160,6 @@ char	*ft_strcat(char *dest, const char *src);
 
 /* str_utils2.c */
 int		ft_strcmp(const char *s1, const char *s2);
-size_t	ft_strlcpy2(char *dst, const char *src, size_t size);
 
 /* char_extract_utils.c */
 char	*extract_before_i(char *str, int i);
@@ -164,6 +172,10 @@ int		ft_isoperator(int c);
 int		ft_isquotes(int c);
 int		ft_ischar(int c);
 int		ft_isdigit(int c);
+
+/* find_x_utils.c */
+bool	find_quotes(char *str);
+bool	find_equal(char *str);
 
 /* print_utils.c */
 void	print_tokens(t_token *tokens);
@@ -267,9 +279,6 @@ bool	parse_quotes(t_main *main_s, char *input);
 void	syntax_error_msg(t_main *main_s);
 void	syntax_error_pipe(t_main *main_s);
 
-/* find_quotes.c */
-bool	find_quotes(char *str);
-
 /************************/
 /******** PIPEX *********/
 /************************/
@@ -324,7 +333,13 @@ int special_edge_cases(t_pipex *pipex_s);
 /************************/
 /****** BUILT INS *******/
 /************************/
+
+/* ft_exit.c */
 void	ft_exit(t_pipex *pipex);
+
+/* ft_export.c */
+void	print_export(t_env *first);
+void	export_check(t_main *main_s, t_env *new);
 
 /************************/
 /***** ENV FUNCTIONS ****/
@@ -332,11 +347,12 @@ void	ft_exit(t_pipex *pipex);
 
 // ft_getenv(char *var_name); TODO
 // ft_setenv(char *var_name, char *var_value, int overwrite); TODO
-char *ft_getenv(t_main *main_s, char *var_name); //TODO
-void ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite); //TODO
-t_env *new_menv_s(void);
-void export_env(t_main *main_s);
-void my_print_env(t_main *main_s);
+char	*ft_getenv(t_main *main_s, char *var_name); //TODO
+void	ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite); //TODO
+t_env	*new_menv_s(void);
+char	*env_get_value(char *var_name, char *var_value);
+// void export_env(t_main *main_s);
+void	my_print_env(t_main *main_s);
 
 /************************/
 /*** SIGNAL HANDLERS ****/

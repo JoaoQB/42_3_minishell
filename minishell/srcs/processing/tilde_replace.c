@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tilde_replace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 02:28:16 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char *change_tilde(t_main *main_s)
 				return (NULL);
 			new_len = ft_strlen(current_env->var_value);
 			new_value =(char *)safe_malloc(sizeof(char) *(new_len + 1));
-			ft_strlcpy2(new_value, current_env->var_value, new_len + 1);
+			ft_strlcpy(new_value, current_env->var_value, new_len + 1);
 			return (new_value);
 		}
 		current_env = current_env->next;
@@ -52,8 +52,8 @@ static char	*change_tilde_before(t_main *main_s, t_token *current)
 	current_len = ft_strlen(current->value) - 1;
 	new_len = ft_strlen(tilde_value);
 	new_value =(char *)safe_malloc(sizeof(char) *(new_len + current_len + 1));
-	ft_strlcpy2(new_value, tilde_value, new_len + 1);
-	ft_strlcpy2(&new_value[new_len], &current->value[1], current_len + 1);
+	ft_strlcpy(new_value, tilde_value, new_len + 1);
+	ft_strlcpy(&new_value[new_len], &current->value[1], current_len + 1);
 	ft_free(&tilde_value);
 	return (new_value);
 }
