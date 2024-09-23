@@ -6,11 +6,20 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:51:31 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 16:03:19 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:57:36 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+static char	*export_append_values(t_env *new, t_env *current)
+{
+	char	*new_value;
+
+	if (!new || !new->value || !current)
+		return (NULL);
+
+}
 
 static void	handle_not_found(t_main *main_s, t_env *new)
 {
@@ -34,12 +43,17 @@ static void	handle_found(t_main *main_s, t_env *new, t_env *current)
 
 	if (!main_s || !new || !new->value || !current)
 		return ;
+	var_value = NULL;
 	if (!find_equal(new->value))
 		return ;
-	var_value = NULL;
+	else if (find_plus(new->value))
+	{
+		var_value = export_append_values(new, current);
+		ft_setenv(main_s, new->var, var_value, 1);
+		return ;
+	}
 	ft_free(&current->value);
-	if (new->value)
-		current->value = extract_from_i(new->value, 0);
+	current->value = extract_from_i(new->value, 0);
 	ft_free(&current->var_value);
 	if (new->var_value)
 	{

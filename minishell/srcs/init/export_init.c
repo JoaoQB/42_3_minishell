@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:54:23 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 16:26:42 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:32:27 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,15 @@ char	*env_check_name(char *str)
 
 	if (!str)
 		return (NULL);
-	valid = true;
 	i = 0;
-	if (!ft_isvar1stchar(str[i]))
-		valid = false;
-	i++;
-	while (str[i] && str[i] != '=')
+	valid = ft_isvar1stchar(str[i++]);
+	while (str[i] && str[i] != '+' && str[i] != '=')
 	{
-		if (!ft_isvarchar(str[i]))
+		if (!ft_isvarchar(str[i++]))
 			valid = false;
-		i++;
 	}
+	if (str[i] == '+' && str[i + 1] != '=')
+		valid = false;
 	if (valid == false)
 	{
 		ft_putstr_fd("minishell: export: `", 2);

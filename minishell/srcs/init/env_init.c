@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:14:31 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 16:30:21 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:36:51 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ char	*env_extract_var(t_env	*new_env)
 	if (!str)
 		return (NULL);
 	i = 0;
-	while (str[i] && str[i] != '=')
+	while (str[i] && str[i] != '=' && str[i] != '+')
 		i++;
 	var = extract_before_i(str, i);
+	if (str[i] == '+')
+		i++;
 	if (str[i] == '=')
 		i++;
 	if (str[i] != '\0')
