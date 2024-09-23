@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:49:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/18 17:36:20 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 21:34:19 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_main(t_main *main_s, char **envp)
 {
+	// main_s = (t_main *) safe_malloc (sizeof(t_main));
 	main_s->env = get_env(envp);
 	main_s->menv = envp;
 	// print_env(main_s->env);

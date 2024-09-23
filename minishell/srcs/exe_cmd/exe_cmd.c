@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 05:53:36 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 21:25:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ bool is_directory(t_pipex *pipex_s)
 	{
 		if (path[0] == '.' && !path[1])
 		{
-			printf("%s: filename argument required\n", path); //TODO Handle error s
-			printf("usage: %s filename [arguments]\n", path); //TODO Handle error s
+			printf("%s: filename argument required\n", path); //TODO Handle error s/
+			printf("usage: %s filename [arguments]\n", path); //TODO Handle error s/
+			// hdl_error(pipex_s, 0, "");
 			pipex_s->status = 2;
 		}
 		else
 		{
+			// hdl_error(pipex_s, 0, path, ": ", strerror(EISDIR));
 			printf("%s: %s\n", path, strerror(EISDIR)); //TODO Handle error s
 			pipex_s->status = 126;
 		}

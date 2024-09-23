@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 05:48:14 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 21:31:49 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <limits.h>
+# include <stdarg.h>
 
 # define MAX_HIST 30
 
@@ -106,6 +107,7 @@ typedef struct s_main
 	char	*input_reorg;
 	bool	silence_info;
 	int		status;
+	pid_t	pid;
 	t_env	*env;
 	t_token	*tokens;
 	t_pipex	*pipex; //fandre-b added
@@ -343,11 +345,16 @@ void my_print_env(t_main *main_s);
 /************************/
 
 // int setup_signal_handlers(int process_type);
-int set_sig_handlers(int signal, void(*func_name)(int));
-void handle_sigquit(int sig);
-void handle_sigint(int sig);
+int set_sig_handlers(int signal, void (*handler)(int, siginfo_t *, void *), void *main_s);
+void handle_sigquit(int sig, siginfo_t *info, void *main_s);
+void handle_sigint(int sig, siginfo_t *info, void *main_s);
+
+// int set_sig_handlers(int signal, void(*func_name)(int));
+// void handle_sigquit(int sig);
+// void handle_sigint(int sig);
 void	ft_exit_pid(t_pipex *pipex);
 void *safe_malloc(size_t size);
+// void hdl_error(t_pipex *pipex_s, int n_err, const char *format, ...);
 
 
 #endif

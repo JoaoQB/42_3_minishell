@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 21:26:18 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,39 @@ void	print_check_processes(t_pipex *pipex_s)
 	printf("\n-->all processes have been closed\n");
 }
 
-// void *handle_error(char *err_print)
+// print_str(int num_args, ...)
+// {
+//     va_list args;
+// 	int i;
+// 	char *str;
+
+// 	i = -1;
+//     va_start(args, num_args);
+// 	while (i < num_args)
+// 	{
+// 		str = va_arg(args, char *);
+// 		if (str && *str)
+// 			printf("%s", str);
+// 	}
+//     va_end(args);
+// }
+
+// void hdl_error(t_pipex *pipex_s, int n_err)
+// {
+// 	char *str;
+	
+// 	if (pipex_s && errno != 0)
+// 	{
+// 		strerror(n_err);
+// 		pipex_s->status = 1;
+// 	}
+// 	else
+// 		printf("\n");
+// 	if (n_err == EINVAL || n_err == EACCES || n_err == ENOENT)
+// 		pipex_s->status = 2;
+// 	g_signal = SIGKILL;
+// 	ft_exit_pid(pipex_s);
+// }
 
 void *safe_malloc(size_t size) 
 {
@@ -127,7 +159,9 @@ void *safe_malloc(size_t size)
 	ptr =(void *) malloc(size);
     if (ptr == NULL) 
 	{
-        perror("safe_malloc"); //the actuall error handlefunction.
+        perror("malloc: "); //the actuall error handlefunction.
+		g_signal = SIGKILL;
+		// hdl_error(t_pipex *pipex_s, int n_err)
         // exit(1); // General error
     }
     return ptr;

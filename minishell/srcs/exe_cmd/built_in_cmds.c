@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/19 15:27:29 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,8 @@ int run_cd(t_pipex *pipex_s)
 	return (0);
 }
 
-// void here_doc(int fd)
-// {write into fd using readline
-// i can do an fork allowing me to do dup of stdinput
-
-// }
-
 int run_echo(t_pipex *pipex_s)
-{// read from prompt, same as here_doc with delimiter as \n
+{
 	int i;
 	int nl;
 	char *input;
@@ -65,19 +59,12 @@ int run_echo(t_pipex *pipex_s)
 	nl = 0;
 	i = 1;
 	(void) input;
-	// if (!pipex_s->cmd[i])
-	// {
-	// 	input = readline("> ");
-	// 	if (input)
-	// 		printf("%s", input);
-	// 	free(input);
-	// }
 	while (pipex_s->cmd[i])
 	{
 		if (i == 2 && ft_strcmp(pipex_s->cmd[i], "-n") == 0 && ++i)
 			nl = 1;
 		printf("%s", pipex_s->cmd[i]);
-		if (pipex_s->cmd[i++])
+		if (pipex_s->cmd[++i])
 			printf(" ");
 	}
 	if (!nl)
@@ -101,32 +88,6 @@ int	edge_cases(t_pipex *pipex_s)
 		return (0);
 	return (1);
 }
-
-// void run_export(t_pipex *pipex_s)
-// {
-	// char *prefix;
-	// char *sufix;
-	// int	i;
-//
-	// if (!pipex_s->cmd[1])
-		// return ;
-	// i = 0;
-	// while ((pipex_s->cmd[1])[i] &&(pipex_s->cmd[1])[i] != '=')
-		// i++;
-//
-	// prefix = ft_strnjoin(NULL, pipex_s->cmd[1], i++);
-	// sufix = ft_strnjoin(NULL, &pipex_s->cmd[1][i], -1);
-	// i = 0;
-	// while (prefix[i] && is_alpha(prefix[i]))
-		// i++;
-	// if (sufix && prefix[i] = '+')
-	// {
-		// prefix[i] = 0;
-		// ft_addenv(pipex_s->main_s, prefix, sufix, 1);
-	// }
-	// else if (sufix)
-		// ft_setenv(pipex_s->main_s, prefix, sufix, 1);
-// }
 
 void run_export(t_pipex *pipex_s)
 {
