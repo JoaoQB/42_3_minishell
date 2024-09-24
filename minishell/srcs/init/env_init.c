@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:14:31 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 16:30:21 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:12:23 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_env	*get_env(char **envp)
 	t_env	*new_env;
 	int		i;
 
-	if (!envp)
+	if (!envp || *envp)
 		return (NULL);
 	first = NULL;
 	i = 0;

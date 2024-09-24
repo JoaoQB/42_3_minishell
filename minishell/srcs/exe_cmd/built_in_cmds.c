@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/20 13:16:23 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:45:37 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ int run_cd(t_pipex *pipex_s)
 	if (cmd[1] && cmd[2])
 		return (printf("%s: %s\n", cmd[0], "too many arguments"), 1); //TODO Handle error s
     if (!cmd[1] || strcmp(cmd[1], "~") == 0)
-        new_dir = strdup(ft_getenv(main_s, "HOME"));
+        new_dir = ft_strdup(ft_getenv(main_s, "HOME"));
     else if (strcmp(cmd[1], "-") == 0)
 	{
-        new_dir = strdup(ft_getenv(main_s, "OLDPWD"));
-        printf("%s\n", new_dir);
+        new_dir = ft_strdup(ft_getenv(main_s, "OLDPWD"));
+		if (new_dir)
+        	printf("%s\n", new_dir);
 	}
     else
 		new_dir = ft_strdup(cmd[1]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:35:30 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:33:23 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ char	*ft_strdup(const char *s)
 	char	*dest;
 	size_t	i;
 
-	dest =(char *)safe_malloc(sizeof(char) *(ft_strlen(s) + 1));
+	if (!s)
+		return (NULL);
+	dest = (char *)safe_malloc(sizeof(char) *(ft_strlen(s) + 1));
 	i = 0;
 	while (s[i])
 	{

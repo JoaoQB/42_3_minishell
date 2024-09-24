@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 05:53:36 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:57:05 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,48 +66,50 @@ void ft_exe_pipex_s(t_main *main_s, char **envp)
 {//join function with execute_command
 	t_pipex *pipex_s;
 
+	(void) envp;
 	pipex_s = main_s->pipex;
 	if (!check_for_pipeline(main_s)) //handle no pipeline
 		return ; //this worked but i did simplier
 	while (pipex_s)
 	{
-		if (!is_directory(pipex_s))
-		{
-			pipex_s->path = get_cmd_path(pipex_s); //TODO Handle error s
-			if (pipex_s->status == 126)
-				printf("%s: %s\n", pipex_s->cmd[0], strerror(EACCES));
-			if (pipex_s->status == 127)
-				printf("%s: %s\n", pipex_s->cmd[0], strerror(ENOENT));
-		}
 		if (pipex_s->status == 0)
-			execute_command(pipex_s, envp);
+		{
+			pipex_s->pid = fork();
+			if (pipex_s->pid == -1)
+				return (perror("fork failed")); //TODO Handle error s
+			else if (pipex_s->pid == 0)
+				exe_cmd_child(pipex_s, pipex_s->main_s->menv);
+			// else <parent> change stuff here latter
+			//	exe_cmd_parent()
+		}
 		pipex_s = pipex_s->next;
 	}
 }
 
-void	execute_command(t_pipex *pipex_s, char **envp)
+void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
-	pipex_s->pid = fork();
-	if (pipex_s->pid == -1)
-		return (perror("fork failed")); //TODO Handle error s
-	else if (pipex_s->pid == 0)
-	{
-		if (pipex_s->pipe_fd[0] != STDIN_FILENO)
-			dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
-		if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
-			dup2(pipex_s->pipe_fd[1], STDOUT_FILENO);
-		close_all_fd(pipex_s);
-		if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
-			ft_exit_pid(pipex_s);
-		else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
-			pipex_s->status = errno;
+	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
+		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
+	if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
+		dup2(pipex_s->pipe_fd[1], STDOUT_FILENO);
+	close_all_fd(pipex_s);
+	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
 		ft_exit_pid(pipex_s);
+	if (!is_directory(pipex_s))
+	{
+		pipex_s->path = get_cmd_path(pipex_s); //TODO Handle error s
+		if (pipex_s->status == 126)
+			printf("%s: %s\n", pipex_s->cmd[0], strerror(EACCES));
+		if (pipex_s->status == 127)
+			printf("%s: %s\n", pipex_s->cmd[0], strerror(ENOENT));
 	}
-		// exe_cmd_child(pipex_s, envp);
-	// else <parent> change stuff here latter
-	//		exe_cmd_parent()
+	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
+		pipex_s->status = errno;
+	ft_exit_pid(pipex_s);
 }
 
+// exe_cmd_child(pipex_s, envp);
+// }
 // void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 // {
 // 	// if (pipex_s->status != 0)

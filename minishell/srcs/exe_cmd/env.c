@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:33 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/20 16:40:03 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:38:05 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,16 @@ char	*ft_getenv(t_main *main_s, char *var_name)
 {
 	t_env *menv_s;
 
+    if (!main_s || !var_name)
+		return (NULL);
 	menv_s = main_s->env;
+	if (!menv_s)
+		return (NULL);
 	while (menv_s && ft_strcmp(menv_s->var, var_name) != 0)
 		menv_s = menv_s->next;
-	return (menv_s->var_value);
+	if (menv_s)
+        return (menv_s->var_value);
+	return (NULL);
 }
 
 void	ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite)
@@ -50,6 +56,8 @@ void	ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite)
 	char	*value;
 
 	menv_s = main_s->env;
+	// if (!menv_s)
+	// 	return;
 	while (menv_s && ft_strcmp(menv_s->var, var_name) != 0)
 		menv_s = menv_s->next;
 	value = env_get_value(var_name, var_value);
