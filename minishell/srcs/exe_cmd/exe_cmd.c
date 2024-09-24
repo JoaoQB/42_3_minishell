@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/24 12:44:10 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:48:52 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	else if (!is_directory(pipex_s))
 	{
 		pipex_s->path = get_cmd_path(pipex_s); //TODO Handle error s
-		printf("pipex_s->path %s\n", pipex_s->path);
 		if (pipex_s->status == 126)
 			printf("%s: %s\n", pipex_s->cmd[0], strerror(EACCES));
 		if (pipex_s->status == 127)
@@ -117,8 +116,6 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	int		i;
 
 	paths = ft_getenv(pipex_s->main_s, "PATH");
-	if (!paths) {
-        printf("Error: PATH environment variable not found\n");}
 	temp = ft_strnjoin(ft_strdup("./"), pipex_s->cmd[0], -1);
 	while (paths && *paths != '\0')
 	{
