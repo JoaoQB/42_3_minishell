@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/24 12:35:41 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:15:01 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ int		ft_isdigit(int c);
 /* find_x_utils.c */
 bool	find_quotes(char *str);
 bool	find_equal(char *str);
+bool	find_plus(char *str);
 
 /* print_utils.c */
 void	print_tokens(t_token *tokens);
