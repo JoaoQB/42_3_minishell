@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:33 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/24 15:23:53 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:27:55 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite)
 	char	*value;
 
 	menv_s = main_s->env;
+	if (!menv_s)
+		return;
 	while (menv_s && ft_strcmp(menv_s->var, var_name) != 0)
 		menv_s = menv_s->next;
 	value = env_get_value(var_name, var_value);
