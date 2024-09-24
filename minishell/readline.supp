@@ -26,9 +26,3 @@
     fun:add_history
 }
 
-{
-    leak add_to_history
-    Memcheck:Leak
-    ...
-	fun:add_to_history
-}

@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:14:31 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/24 11:12:23 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:43:23 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ t_env	*get_env(char **envp)
 	t_env	*new_env;
 	int		i;
 
-	if (!envp || *envp)
-		return (NULL);
 	first = NULL;
 	i = 0;
 	while (envp[i])

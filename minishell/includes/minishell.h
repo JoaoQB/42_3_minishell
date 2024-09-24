@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/24 11:09:34 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:35:41 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,7 @@ t_pipex *ft_init_pipex_s(t_main *mains_s);
 
 //Execute pipex cmds
 int	edge_cases(t_pipex *pipex_s);
-void ft_exe_pipex_s(t_main *main_s, char **envp);
+void ft_exe_pipex_s(t_main *main_s);
 void	execute_command(t_pipex *pipex_s, char **envp);
 char	*get_cmd_path(t_pipex *pipex_s);
 void	exe_cmd_child(t_pipex *pipex_s, char **envp);

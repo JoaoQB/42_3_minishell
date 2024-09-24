@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/24 11:45:37 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:23:09 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int run_cd(t_pipex *pipex_s)
     else
 		new_dir = ft_strdup(cmd[1]);
 	ft_setenv(main_s, "OLDPWD", run_pwd(false), 1);
-    if (!(chdir(new_dir) == 0))
+    if (new_dir && !(chdir(new_dir) == 0))
         return (free(new_dir), printf("%s: %s: %s\n", cmd[0], cmd[1], strerror(errno)), 1);//TODO Handle error s
     ft_setenv(main_s, "PWD", run_pwd(false), 1);
 	free(new_dir);

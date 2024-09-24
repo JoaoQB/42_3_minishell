@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/24 11:57:05 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:44:10 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,10 @@ bool is_directory(t_pipex *pipex_s)
 	return (false);
 }
 
-void ft_exe_pipex_s(t_main *main_s, char **envp)
+void ft_exe_pipex_s(t_main *main_s)
 {//join function with execute_command
 	t_pipex *pipex_s;
 
-	(void) envp;
 	pipex_s = main_s->pipex;
 	if (!check_for_pipeline(main_s)) //handle no pipeline
 		return ; //this worked but i did simplier
@@ -95,36 +94,21 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	close_all_fd(pipex_s);
 	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
 		ft_exit_pid(pipex_s);
-	if (!is_directory(pipex_s))
+	else if (!is_directory(pipex_s))
 	{
 		pipex_s->path = get_cmd_path(pipex_s); //TODO Handle error s
+		printf("pipex_s->path %s\n", pipex_s->path);
 		if (pipex_s->status == 126)
 			printf("%s: %s\n", pipex_s->cmd[0], strerror(EACCES));
 		if (pipex_s->status == 127)
 			printf("%s: %s\n", pipex_s->cmd[0], strerror(ENOENT));
 	}
+	if(pipex_s->status != 0)
+		ft_exit_pid(pipex_s);
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
-		pipex_s->status = errno;
+			pipex_s->status = errno;
 	ft_exit_pid(pipex_s);
 }
-
-// exe_cmd_child(pipex_s, envp);
-// }
-// void	exe_cmd_child(t_pipex *pipex_s, char **envp)
-// {
-// 	// if (pipex_s->status != 0)
-// 	// 	ft_exit_pid(pipex_s); // safe guard
-// 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
-// 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
-// 	if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
-// 		dup2(pipex_s->pipe_fd[1], STDOUT_FILENO);
-// 	close_all_fd(pipex_s);
-// 	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
-// 		ft_exit_pid(pipex_s);
-// 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
-// 		pipex_s->status = errno;
-// 	ft_exit_pid(pipex_s);
-// }
 
 char	*get_cmd_path(t_pipex *pipex_s)
 {
@@ -133,6 +117,8 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	int		i;
 
 	paths = ft_getenv(pipex_s->main_s, "PATH");
+	if (!paths) {
+        printf("Error: PATH environment variable not found\n");}
 	temp = ft_strnjoin(ft_strdup("./"), pipex_s->cmd[0], -1);
 	while (paths && *paths != '\0')
 	{
@@ -154,3 +140,4 @@ char	*get_cmd_path(t_pipex *pipex_s)
 		pipex_s->status = 127;
 	return (free(temp), NULL);
 }
+
