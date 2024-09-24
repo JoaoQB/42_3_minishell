@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/24 12:48:52 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:17:40 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,11 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 		pipex_s->path = get_cmd_path(pipex_s); //TODO Handle error s
 		if (pipex_s->status == 126)
 			printf("%s: %s\n", pipex_s->cmd[0], strerror(EACCES));
-		if (pipex_s->status == 127)
-			printf("%s: %s\n", pipex_s->cmd[0], strerror(ENOENT));
+		else if (!pipex_s->path && pipex_s->status == 0)
+		{
+			pipex_s->status = 127;
+			printf("%s: command not found\n", pipex_s->cmd[0]);
+		}
 	}
 	if(pipex_s->status != 0)
 		ft_exit_pid(pipex_s);
@@ -131,10 +134,11 @@ char	*get_cmd_path(t_pipex *pipex_s)
 			i++;
 		temp = ft_strnjoin(ft_strnjoin(NULL, paths, i++), "/", 1);
 		temp = ft_strnjoin(temp, pipex_s->cmd[0], -1);
+		printf("%s\n", temp);
+		if (!paths[i - 1])
+			break ;
 		paths += i;
 	}
-	if (pipex_s->status == 0)
-		pipex_s->status = 127;
 	return (free(temp), NULL);
 }
 
