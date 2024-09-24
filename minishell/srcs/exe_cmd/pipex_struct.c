@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 05:08:59 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:01:54 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s)
 		else if (tokens_s->type == RED_OUT_APP)
 			io_fd[1] = open(tokens_s->next->value, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (io_fd[0] ==-1 || io_fd[1] == -1)
-			return(printf("%s: No such file or directory\n", tokens_s->next->value), errno); //TODO Handle error s
+			return(printf("%s: %s\n", tokens_s->next->value, strerror(errno)), errno); //TODO Handle error s
 		tokens_s = tokens_s->next;
 	}
 	return (0);

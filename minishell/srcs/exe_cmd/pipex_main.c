@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 05:55:03 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:01:00 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	close_all_fd(t_pipex *pipex_s)
 	while (pipex_s->next)
 	{
 		if (pipex_s != save)
-		{
-			if (pipex_s->pipe_fd[0] > 2 && close(pipex_s->pipe_fd[0] == -1))
-				perror("Error closing pipe_fd[0]"); //TODO Handle error s
-			if (pipex_s->pipe_fd[1] > 2 && close(pipex_s->pipe_fd[1] == -1))
-				perror("Error closing pipe_fd[1]"); //TODO Handle error s
+		{			
+			if (pipex_s->pipe_fd[0] > 2)
+				close(pipex_s->pipe_fd[0]);
+			if (pipex_s->pipe_fd[1] > 2)
+				close(pipex_s->pipe_fd[1]);
 		}
 		pipex_s = pipex_s->next;
 	}
