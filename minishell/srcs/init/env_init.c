@@ -93,6 +93,8 @@ t_env	*get_env(char **envp)
 	t_env	*new_env;
 	int		i;
 
+	//if (!envp)
+	//	return (NULL);
 	first = NULL;
 	i = 0;
 	while (envp[i])

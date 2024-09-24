@@ -45,7 +45,7 @@ char	*ft_getenv(t_main *main_s, char *var_name)
 	while (menv_s && ft_strcmp(menv_s->var, var_name) != 0)
 		menv_s = menv_s->next;
 	if (menv_s)
-        return (menv_s->var_value);
+		return (menv_s->var_value);
 	return (NULL);
 }
 

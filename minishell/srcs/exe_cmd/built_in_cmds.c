@@ -38,7 +38,7 @@ int run_cd(t_pipex *pipex_s)
     else if (strcmp(cmd[1], "-") == 0)
 	{
         new_dir = ft_strdup(ft_getenv(main_s, "OLDPWD"));
-		if (new_dir)
+	if (new_dir)
         	printf("%s\n", new_dir);
 	}
     else

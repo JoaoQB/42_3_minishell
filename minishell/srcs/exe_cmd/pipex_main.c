@@ -22,7 +22,7 @@ void	close_all_fd(t_pipex *pipex_s)
 	while (pipex_s->next)
 	{
 		if (pipex_s != save)
-		{			
+		{
 			if (pipex_s->pipe_fd[0] > 2)
 				close(pipex_s->pipe_fd[0]);
 			if (pipex_s->pipe_fd[1] > 2)
