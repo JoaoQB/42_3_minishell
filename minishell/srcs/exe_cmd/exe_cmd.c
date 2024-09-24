@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/24 15:17:40 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:52:27 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ char	*get_cmd_path(t_pipex *pipex_s)
 			i++;
 		temp = ft_strnjoin(ft_strnjoin(NULL, paths, i++), "/", 1);
 		temp = ft_strnjoin(temp, pipex_s->cmd[0], -1);
-		printf("%s\n", temp);
 		if (!paths[i - 1])
 			break ;
 		paths += i;

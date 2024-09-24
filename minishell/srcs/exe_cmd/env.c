@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:33 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/24 15:27:55 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:49:32 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char **get_array_env(t_main *main_s)
+{
+	t_env *env;
+	char **menvp;
+	int	i;
+
+	i = 0;
+	env = main_s->env;
+	while (env)
+	{
+		i++;
+		env = env->next;
+	}
+	menvp = (char **) safe_malloc (sizeof (char *) * (i + 1));
+	i = 0;
+	env = main_s->env;
+	while (env)
+	{
+		menvp[i++] = ft_strdup(env->value);
+		env = env->next;
+	}
+	menvp[i] = NULL;
+	return (menvp);
+}
 
 char	*env_get_value(char *var_name, char *var_value)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 13:37:40 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:31:58 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void	free_double_array(char **array)
 
 void	cleanup_main(t_main *main_s)
 {
-	// if (main_s->menv)
-	// 	free_double_array(main_s->menv);
 	if (main_s->env)
 		free_env(&main_s->env);
+	if (main_s->menv)
+		free_double_array(main_s->menv);
 	if (main_s->export)
 		free_env(&main_s->export);
 	if (main_s->history)

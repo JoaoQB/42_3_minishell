@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/24 15:15:01 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:29:21 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,6 +365,6 @@ void handle_sigquit(int sig);
 void handle_sigint(int sig);
 void	ft_exit_pid(t_pipex *pipex);
 void *safe_malloc(size_t size);
-
+char **get_array_env(t_main *main_s);
 
 #endif

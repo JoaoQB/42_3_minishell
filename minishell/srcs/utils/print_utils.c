@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 05:02:04 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:34:07 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_menv(char **menv)
 	i = 0;
 	while (menv[i])
 	{
-		printf("env: %s\n", menv[i]);
+		printf("my array env: %s\n", menv[i]);
 		i++;
 	}
 }
@@ -36,7 +36,7 @@ void	print_env(t_env *env)
 	while (current != NULL)
 	{
 		if (current->value)
-			printf("\nenv: %s\n", current->value);
+			printf("\nmy env list env: %s\n", current->value);
 		if (current->var)
 			printf("env_var: %s\n", current->var);
 		if (current->var_value)
