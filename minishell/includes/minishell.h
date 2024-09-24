@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 16:30:44 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:37:43 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ int		ft_isdigit(int c);
 /* find_x_utils.c */
 bool	find_quotes(char *str);
 bool	find_equal(char *str);
+bool	find_plus(char *str);
 
 /* print_utils.c */
 void	print_tokens(t_token *tokens);

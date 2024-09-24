@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:33 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/20 16:40:03 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:00:27 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ char	*env_get_value(char *var_name, char *var_value)
 	if (!var_name)
 		return (NULL);
 	len = ft_strlen(var_name) + 1;
-	if (var_value)
+	if (var_value && *var_value)
 		len += ft_strlen(var_value);
 	new_value = (char *)safe_malloc(sizeof(char) * (len + 1));
 	if (new_value)
 	{
 		ft_strlcpy(new_value, var_name, ft_strlen(var_name) + 1);
 		ft_strcat(new_value, "=");
-		if (var_value)
+		if (var_value && *var_value)
 			ft_strcat(new_value, var_value);
 	}
 	return (new_value);
