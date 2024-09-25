@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/25 04:35:23 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 04:45:31 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s)
 			close (io_fd[0]);
 		if ((tokens_s->type == RED_OUT || tokens_s->type == RED_OUT_APP) && io_fd[1] > 2)
 			close (io_fd[1]);
-		if(tokens_s->type == DELIM  && tokens_s->next)
-			io_fd[0] = read_heredoc(tokens_s);
+		if(tokens_s->type == HERE_DOC  && tokens_s->next)
+			io_fd[0] = read_heredoc(tokens_s->next);
 		else if (tokens_s->type == RED_IN && tokens_s->next)
 			io_fd[0] = open(tokens_s->next->value, O_RDONLY, 0666);
 		else if (tokens_s->type == RED_OUT && tokens_s->next)
