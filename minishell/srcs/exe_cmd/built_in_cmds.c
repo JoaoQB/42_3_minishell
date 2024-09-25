@@ -58,27 +58,21 @@ int run_cd(t_pipex *pipex_s)
 // }
 
 int run_echo(t_pipex *pipex_s)
-{// read from prompt, same as here_doc with delimiter as \n
+{
 	int i;
 	int nl;
-	char *input;
 
 	nl = 0;
 	i = 1;
-	(void) input;
-	// if (!pipex_s->cmd[i])
-	// {
-	// 	input = readline("> ");
-	// 	if (input)
-	// 		printf("%s", input);
-	// 	free(input);
-	// }
 	while (pipex_s->cmd[i])
 	{
-		if (i == 2 && ft_strcmp(pipex_s->cmd[i], "-n") == 0 && ++i)
+		if (i == 2 && ft_strcmp(pipex_s->cmd[i], "-n") == 0)
+		{
+			++i;
 			nl = 1;
+		}
 		printf("%s", pipex_s->cmd[i]);
-		if (pipex_s->cmd[i++])
+		if (pipex_s->cmd[++i] && *pipex_s->cmd[++i])
 			printf(" ");
 	}
 	if (!nl)
