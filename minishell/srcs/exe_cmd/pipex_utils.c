@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:58:11 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_strnjoin(char *old_str, char *str_add, int size)
 		i++;
 	if (i < size || size == -1)
 		size = i;
-	new_str =(char *) safe_malloc(size + len + 1);
+	new_str = (char *) safe_malloc(size + len + 1);
 	i = -1;
 	while (old_str && ++i < len)
 		new_str[i] = old_str[i];
@@ -124,7 +124,7 @@ void *safe_malloc(size_t size)
 {
     void *ptr;
 
-	ptr =(void *) malloc(size);
+	ptr = (void *) malloc(size);
     if (ptr == NULL) 
 	{
         perror("safe_malloc"); //the actuall error handlefunction.

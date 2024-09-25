@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/19 05:02:04 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:58:11 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_hist *ft_init_hist_s(void)
 {
     t_hist *hist_s;
 
-    hist_s =(t_hist *)safe_malloc(sizeof(t_hist));
+    hist_s = (t_hist *)safe_malloc(sizeof(t_hist));
     hist_s->idx = 1;
     hist_s->prev = NULL;
     hist_s->next = NULL;
@@ -79,11 +79,11 @@ void    ft_rm_history(t_hist **hist_s)
 
     if (!(*hist_s))
         return ;
-    temp =(*hist_s);
-   (*hist_s) =(*hist_s)->next;
+    temp = (*hist_s);
+   (*hist_s) = (*hist_s)->next;
     free(temp->usr_input);
     free(temp);
-    temp =(*hist_s);
+    temp = (*hist_s);
     while (temp)
     {
         temp->idx -= 1;

@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/24 15:53:34 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:58:11 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void free_pipex_s(t_pipex **pipex_s)
 		(* pipex_s)->path = NULL;
 		free_double_array((* pipex_s)->cmd);
 		(* pipex_s)->cmd = NULL;
-		temp =(* pipex_s);
-		(* pipex_s) =(* pipex_s)->next;
+		temp = (* pipex_s);
+		(* pipex_s) = (* pipex_s)->next;
 		free(temp);
 		temp = NULL;
 	}

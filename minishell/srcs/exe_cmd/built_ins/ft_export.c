@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:51:31 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/24 15:18:20 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:58:40 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	export_check(t_main *main_s, t_env *new)
 		if (ft_strcmp(new->var, current->var) == 0)
 		{
 			found = true;
-			break;
+			break ;
 		}
 		current = current->next;
 	}
@@ -114,7 +114,7 @@ void	print_export(t_env *first)
 	t_env	*current;
 
 	if (!first)
-		return;
+		return ;
 	current = first;
 	while (current)
 	{

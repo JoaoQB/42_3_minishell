@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:33 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/25 11:51:41 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:01:16 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_setenv(t_main *main_s, char *var_nm, char *var_vl, int ovwr)
 
 	menv_s = main_s->env;
 	if (!menv_s)
-		return;
+		return ;
 	while (menv_s && ft_strcmp(menv_s->var, var_nm) != 0)
 		menv_s = menv_s->next;
 	value = env_get_value(var_nm, var_vl);
@@ -106,7 +106,7 @@ void	ft_setenv(t_main *main_s, char *var_nm, char *var_vl, int ovwr)
 
 t_env	*new_menv_s(void)
 {//deprecated
-	t_env *menv_s;
+	t_env	*menv_s;
 
 	menv_s = (t_env *)safe_malloc(sizeof(t_env));
 	if (!menv_s)
@@ -152,7 +152,7 @@ void	my_print_env(t_main *main_s)
 	menv_s = main_s->env;
 	while (menv_s)
 	{
-		if(menv_s->var)
+		if (menv_s->var)
 		{
 			ft_putstr_fd(menv_s->var, 1);
 			ft_putstr_fd("=", 1);
