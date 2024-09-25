@@ -22,7 +22,7 @@ char	*var_replace_qstnmrk(t_main *main_s)
 	return (new_value);
 }
 
-static char	*var_check_env(t_env *env, char *str)
+char	*var_check_env(t_env *env, char *str)
 {
 	t_env	*current;
 	int		len;
