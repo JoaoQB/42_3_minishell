@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:39:06 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:22:31 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:15:25 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char	*conc_values(t_token *target)
 		current = current->next;
 	}
 	if (total_len == 0)
-		return (NULL);
+		return (ft_strdup(""));
 	result = (char *)safe_malloc(sizeof(char) *(total_len + 1));
 	copy_values(result, target);
 	return (result);

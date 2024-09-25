@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:05:50 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:40:54 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*input_and_tokens_reorg(t_main *main_s)
 	tilde_replace(main_s, main_s->tokens);
 	quotes_hide_operators(main_s->tokens);
 	var_swap(main_s, &main_s->tokens);
-	token_split_words(&main_s->tokens);
+	token_split_words(main_s, &main_s->tokens);
 	quotes_remover(main_s->tokens);
 	quotes_revert_operators(main_s->tokens);
 	clean_tokens(&main_s->tokens);

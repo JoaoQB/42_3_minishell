@@ -6,11 +6,23 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:09:06 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:24:39 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:20:39 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+bool	token_is_redirect(t_token *current)
+{
+	if (!current)
+		return (false);
+	else if (!current->type)
+		return (false);
+	else if (current->type == RED_IN || current->type == RED_OUT
+		|| current->type == RED_OUT_APP)
+		return (true);
+	return (false);
+}
 
 void	delete_token(t_token **first, t_token *current)
 {
@@ -41,7 +53,7 @@ void	clean_tokens(t_token **first)
 	{
 		next = current->next;
 		if (!current->value)
-			delete_token(first, current);
+			current->value = ft_strdup("");
 		else if (current->type == CONC
 			|| current->type == VAR || current->type == QUOTE)
 			current->type = WORD;
