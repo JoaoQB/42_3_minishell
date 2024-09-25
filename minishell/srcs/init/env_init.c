@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:14:31 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/24 12:47:01 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:55:27 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static t_env	*ft_new_env(char **envp, int i)
 	if (!new_env)
 		return (NULL);
 	env_len = ft_strlen(envp[i]);
-	new_env->value =(char *)safe_malloc((env_len + 1) * sizeof(char));
+	new_env->value = (char *)safe_malloc((env_len + 1) * sizeof(char));
 	if (!new_env->value)
 	{
 		free (new_env);

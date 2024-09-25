@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:20:48 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:24:30 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	token_extract_before(t_token **first, t_token *current, int i)
 	t_token	*new;
 	char	*new_value;
 
-	new =(t_token *)safe_malloc(sizeof(t_token));
+	new = (t_token *)safe_malloc(sizeof(t_token));
 	new->value = extract_before_i(current->value, i);
 	if (!new->value)
 	{

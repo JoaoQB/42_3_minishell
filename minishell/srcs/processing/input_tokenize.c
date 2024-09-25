@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:11:02 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:06:03 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ static t_token	*ft_token_new(char *str)
 	t_token	*new_token;
 	int		word_len;
 
-	new_token =(t_token *)safe_malloc(sizeof(t_token));
+	new_token = (t_token *)safe_malloc(sizeof(t_token));
 	word_len = ft_strlen(str);
-	new_token->value =(char *)safe_malloc((word_len + 1) * sizeof(char));
+	new_token->value = (char *)safe_malloc((word_len + 1) * sizeof(char));
 	ft_strlcpy(new_token->value, str, word_len + 1);
 	if (new_token->value)
 		new_token->type = token_assign(new_token->value);

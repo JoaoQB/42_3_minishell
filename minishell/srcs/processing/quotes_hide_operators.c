@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_hide_operators.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 02:59:39 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:06:28 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	revert_operators(char *str)
 	}
 }
 
-void quotes_revert_operators(t_token *first)
+void	quotes_revert_operators(t_token *first)
 {
-	t_token *current;
+	t_token	*current;
 
 	if (!first)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:05:50 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	concatenate_tokens(char *result, t_token *first)
 {
 	t_token	*current;
 	int		len;
+	int		value_len;
 
 	current = first;
 	*result = '\0';
@@ -24,7 +25,8 @@ static void	concatenate_tokens(char *result, t_token *first)
 		if (current->value)
 		{
 			len = ft_strlen(result);
-			ft_strlcpy(result + len, current->value, ft_strlen(current->value) + 1);
+			value_len = ft_strlen(current->value);
+			ft_strlcpy(result + len, current->value, value_len + 1);
 			len += ft_strlen(current->value);
 			if (current->next)
 			{
@@ -55,7 +57,7 @@ char	*concat_tokens_to_char(t_token *first)
 	}
 	if (total_len == 0)
 		return (NULL);
-	result =(char *)safe_malloc(sizeof(char) *(total_len + 1));
+	result = (char *)safe_malloc(sizeof(char) *(total_len + 1));
 	concatenate_tokens(result, first);
 	return (result);
 }

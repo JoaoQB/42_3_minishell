@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_separate_operator.c                             :+:      :+:    :+:   */
+/*   token_separate_operator.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:13:32 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/07 12:07:13 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:08:11 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static bool	check_after_operator(char *string)
 		return (true);
 	else if (!ft_strncmp(string, ">>", 2) && string[2] != '\0')
 		return (true);
-	else if (string[1] != '\0' &&(ft_strncmp(string, ">>", 2)
+	else if (string[1] != '\0' && (ft_strncmp(string, ">>", 2)
 			&& ft_strncmp(string, "<<", 2)))
 		return (true);
 	return (false);
@@ -28,7 +28,7 @@ static bool	check_after_operator(char *string)
 
 static void	extract_operator(t_main *main_s, t_token *current, int i)
 {
-	char *str;
+	char	*str;
 
 	if (!current || !current->value || !main_s)
 		return ;

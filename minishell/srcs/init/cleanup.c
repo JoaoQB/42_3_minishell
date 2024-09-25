@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/24 15:31:58 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:54:12 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ void	ft_free(char **str)
 	}
 }
 
+// TODO DELETE
 void	free_triple_array(char ***array)
-{//TODO delete
+{
 	int	i;
+
 	i = 0;
 	if (array != NULL)
 	{
@@ -39,6 +41,7 @@ void	free_triple_array(char ***array)
 void	free_double_array(char **array)
 {
 	int	i;
+
 	if (!array)
 		return ;
 	i = 0;
@@ -77,7 +80,7 @@ void	free_main_input(t_main *main_s)
 		ft_free(&main_s->input_trim);
 	if (main_s->input_reorg)
 		ft_free(&main_s->input_reorg);
-	if (main_s->pipex) //fandre-b free
+	if (main_s->pipex)
 		free_pipex_s(&main_s->pipex);
 	main_s->tokens = NULL;
 	main_s->user_input = NULL;

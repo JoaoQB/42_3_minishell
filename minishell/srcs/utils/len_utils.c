@@ -6,20 +6,20 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:36:22 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/24 15:15:41 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:25:47 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static const char	*iterate_quotes_str(const char *str, int *count, bool *is_word)
+static const char	*iterate_qt_str(const char *str, int *count, bool *is_w)
 {
 	char	quote_char;
 
 	quote_char = *str;
-	if (!*is_word)
+	if (!*is_w)
 	{
-		*is_word = true;
+		*is_w = true;
 		(*count)++;
 	}
 	str++;
@@ -40,7 +40,7 @@ int	count_words(const char *str)
 	while (*str)
 	{
 		if (ft_isquotes(*str))
-			str = iterate_quotes_str(str, &count, &is_word);
+			str = iterate_qt_str(str, &count, &is_word);
 		else if (!ft_isspace(*str) && !is_word)
 		{
 			count++;

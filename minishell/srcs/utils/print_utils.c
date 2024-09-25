@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/24 15:34:07 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:26:34 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	print_env(t_env *env)
 	}
 }
 
-void print_tokens(t_token *tokens)
+void	print_tokens(t_token *tokens)
 {
 	if (!tokens)
 	{
@@ -87,6 +87,7 @@ void	print_cmd_array(char ***cmd)
 {
 	int	i;
 	int	j;
+
 	if (!cmd)
 	{
 		printf("Command array is NULL\n");

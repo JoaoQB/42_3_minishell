@@ -6,13 +6,13 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 02:28:16 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:07:39 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char *change_tilde(t_main *main_s)
+static char	*change_tilde(t_main *main_s)
 {
 	t_env	*current_env;
 	char	*new_value;
@@ -28,7 +28,7 @@ static char *change_tilde(t_main *main_s)
 			if (!current_env->var_value)
 				return (NULL);
 			new_len = ft_strlen(current_env->var_value);
-			new_value =(char *)safe_malloc(sizeof(char) *(new_len + 1));
+			new_value = (char *)safe_malloc(sizeof(char) *(new_len + 1));
 			ft_strlcpy(new_value, current_env->var_value, new_len + 1);
 			return (new_value);
 		}
@@ -51,7 +51,7 @@ static char	*change_tilde_before(t_main *main_s, t_token *current)
 		return (NULL);
 	current_len = ft_strlen(current->value) - 1;
 	new_len = ft_strlen(tilde_value);
-	new_value =(char *)safe_malloc(sizeof(char) *(new_len + current_len + 1));
+	new_value = (char *)safe_malloc(sizeof(char) *(new_len + current_len + 1));
 	ft_strlcpy(new_value, tilde_value, new_len + 1);
 	ft_strlcpy(&new_value[new_len], &current->value[1], current_len + 1);
 	ft_free(&tilde_value);

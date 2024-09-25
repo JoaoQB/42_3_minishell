@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_remover.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:02:51 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:06:48 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ static char	*remove_quotes(t_token *token)
 	if (!token || !token->value)
 		return (NULL);
 	input = token->value;
-	new_len =(ft_strlen(input) - n_quotes(input));
+	new_len = (ft_strlen(input) - n_quotes(input));
 	if (new_len <= 0)
 		return (NULL);
-	result =(char *)safe_malloc(sizeof(char) *(new_len + 1));
+	result = (char *)safe_malloc(sizeof(char) *(new_len + 1));
 	copy_without_quotes(input, result);
 	return (result);
 }

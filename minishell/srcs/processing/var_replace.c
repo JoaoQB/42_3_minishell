@@ -38,7 +38,7 @@ static char	*var_check_env(t_env *env, char *str)
 			if (!current->var_value)
 				return (NULL);
 			len = ft_strlen(current->var_value);
-			new_value =(char *)safe_malloc(sizeof(char) *(len + 1));
+			new_value = (char *)safe_malloc(sizeof(char) *(len + 1));
 			ft_strlcpy(new_value, current->var_value, len + 1);
 			return (new_value);
 		}
@@ -78,7 +78,7 @@ static char	*var_change(t_main *main_s, t_token *current)
 
 static char	*var_check_after_var(t_token *current)
 {
-	char *str;
+	char	*str;
 	int		i;
 
 	if (!current || !current->value)

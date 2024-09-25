@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   var_swap.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:34:27 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:01:19 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static t_token	*var_check_quote(t_main *main_s, t_token **first, t_token *current)
+static t_token	*var_check(t_main *main_s, t_token **first, t_token *current)
 {
 	char	*str;
 	int		i;
@@ -21,8 +21,6 @@ static t_token	*var_check_quote(t_main *main_s, t_token **first, t_token *curren
 	if (!main_s || !first || !*first || !current || !current->value)
 		return (NULL);
 	str = current->value;
-	if (!str)
-		return (current->next);
 	i = 0;
 	is_quote = false;
 	while (str[i])
@@ -58,8 +56,9 @@ void	var_swap(t_main *main_s, t_token **first)
 			current = next;
 			next = current->next;
 		}
-		else if (current->type == WORD || current->type == QUOTE || current->type == CONC)
-			next = var_check_quote(main_s, first, current);
+		else if (current->type == WORD || current->type == QUOTE
+			|| current->type == CONC)
+			next = var_check(main_s, first, current);
 		current = next;
 	}
 	return ;

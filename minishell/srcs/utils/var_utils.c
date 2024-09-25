@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:34:41 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:24:51 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*var_extract_after(t_token *current, int i)
 	t_token	*new;
 	char	*new_value;
 
-	new =(t_token *)safe_malloc(sizeof(t_token));
+	new = (t_token *)safe_malloc(sizeof(t_token));
 	new->value = extract_from_i(current->value, i);
 	if (!new->value)
 	{
@@ -67,7 +67,7 @@ char	*var_extract_before(t_token **first, t_token *current, int i)
 	t_token	*new;
 	char	*new_value;
 
-	new =(t_token *)safe_malloc(sizeof(t_token));
+	new = (t_token *)safe_malloc(sizeof(t_token));
 	new->value = extract_before_i(current->value, i);
 	if (!new->value)
 	{

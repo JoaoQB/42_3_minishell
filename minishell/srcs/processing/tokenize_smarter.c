@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_smarter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:28:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:19:33 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,40 @@ static void	tokenize_args(t_token *current, int type)
 	}
 }
 
+// void	tokenize_smarter(t_token *first)
+// {
+// 	t_token	*current;
+// 	t_token	*next;
+// 	bool	no_cmd;
+// 	int		type;
+
+// 	if (!first)
+// 		return ;
+// 	no_cmd = true;
+// 	current = first;
+// 	while (current)
+// 	{
+// 		next = current->next;
+// 		type = current->type;
+// 		if (no_cmd && (type == WORD))
+// 		{
+// 			tokenize_args(current, CMD);
+// 			no_cmd = false;
+// 		}
+// 		else if (type == PIPE)
+// 			no_cmd = true;
+// 		else if ((type == RED_IN || type == RED_OUT || type == RED_OUT_APP)
+// 			&& next && next->type == WORD)
+// 			next->type = PATH;
+// 		else if (type == HERE_DOC && next && next->type == WORD)
+// 			next->type = DELIM;
+// 		current = next;
+// 	}
+// }
+
 void	tokenize_smarter(t_token *first)
 {
 	t_token	*current;
-	t_token	*next;
 	bool	no_cmd;
 
 	if (!first)
@@ -46,8 +76,7 @@ void	tokenize_smarter(t_token *first)
 	current = first;
 	while (current)
 	{
-		next = current->next;
-		if (no_cmd == true &&(current->type == WORD))
+		if (no_cmd && (current->type == WORD))
 		{
 			tokenize_args(current, CMD);
 			no_cmd = false;
@@ -58,9 +87,9 @@ void	tokenize_smarter(t_token *first)
 				|| current->type == RED_OUT_APP)
 			&& current->next && current->next->type == WORD)
 			current->next->type = PATH;
-		else if (current->type == HERE_DOC
-			&& current->next && current->next->type == WORD)
+		else if (current->type == HERE_DOC && current->next
+			&& current->next->type == WORD)
 			current->next->type = DELIM;
-		current = next;
+		current = current->next;
 	}
 }

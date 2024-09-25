@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   to_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:11:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/24 11:23:25 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:24:17 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_itoa(int n)
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
 	count = digit_count(n);
-	result =(char *)safe_malloc(sizeof(char) *(count + 1));
+	result = (char *)safe_malloc(sizeof(char) *(count + 1));
 	if (!result)
 		return (NULL);
 	result[count] = '\0';
@@ -50,7 +50,7 @@ char	*ft_itoa(int n)
 	}
 	while (count > 0)
 	{
-		result[--count] =(n % 10) + '0';
+		result[--count] = (n % 10) + '0';
 		n /= 10;
 	}
 	if (sign == -1)
@@ -74,7 +74,7 @@ double	ft_atoi_dbl(const char *nptr)
 			sign = -1;
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
-		res =(res * 10) +(nptr[i] - '0');
+		res = (res * 10) +(nptr[i] - '0');
 		i++;
 	}
 	return (res * sign);
@@ -96,7 +96,7 @@ int	ft_atoi(const char *nptr)
 			sign = -1;
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
-		res =(res * 10) + nptr[i] - '0';
+		res = (res * 10) + nptr[i] - '0';
 		i++;
 	}
 	return (res * sign);

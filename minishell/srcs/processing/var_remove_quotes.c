@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:18:48 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/20 15:25:35 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:22:13 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*var_delete_var_quotes(t_token *current)
 		return (NULL);
 	}
 	len = ft_strlen(current->value) - 1;
-	new_value =(char *)safe_malloc(sizeof(char) *(len + 1));
+	new_value = (char *)safe_malloc(sizeof(char) *(len + 1));
 	ft_strlcpy(new_value, &current->value[1], len + 1);
 	return (new_value);
 }

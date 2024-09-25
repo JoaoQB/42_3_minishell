@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/24 15:29:21 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:02:07 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@
 # include <stdbool.h>
 # include <unistd.h>
 # include <fcntl.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <signal.h>
-#include <limits.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <signal.h>
+# include <limits.h>
 
 # define MAX_HIST 30
 
-typedef struct s_env	t_env;
-typedef struct s_token	t_token;
-typedef struct s_pipex	t_pipex;
-typedef struct s_main	t_main;
-typedef struct s_hist	t_hist;
-extern volatile sig_atomic_t g_signal;
+typedef struct s_env			t_env;
+typedef struct s_token			t_token;
+typedef struct s_pipex			t_pipex;
+typedef struct s_main			t_main;
+typedef struct s_hist			t_hist;
+extern volatile sig_atomic_t	g_signal;
 
 typedef enum e_neg_operator
 {
@@ -41,7 +41,7 @@ typedef enum e_neg_operator
 	NEG_LESS = -2,
 	NEG_GREATER = -3,
 	NEG_VAR = -4
-} t_neg_operator;
+}	t_neg_operator;
 
 typedef enum e_token_type
 {
@@ -73,29 +73,29 @@ typedef struct s_token
 	int		type;
 	char	*value;
 	int		index;
-	t_token *prev;
+	t_token	*prev;
 	t_token	*next;
 }	t_token;
 
-typedef struct s_pipex  //mine2
+typedef struct s_pipex //mine2
 {
-	pid_t		pid;
+	pid_t	pid;
 	int		status;
 	char	*path;
 	char	**cmd;
 	int		pipe_fd[2]; //restruct in case of *
-	t_pipex *prev;
+	t_pipex	*prev;
 	t_pipex	*next;
 	t_main	*main_s;
 }	t_pipex;
 
 typedef struct s_hist
 {
-	int		idx;
-	char	*usr_input;
-    struct s_hist *next;
-    struct s_hist *prev;
-} t_hist;
+	int				idx;
+	char			*usr_input;
+	struct s_hist	*next;
+	struct s_hist	*prev;
+}	t_hist;
 
 typedef struct s_main
 {
@@ -284,23 +284,23 @@ void	syntax_error_pipe(t_main *main_s);
 /******** PIPEX *********/
 /************************/
 
-int	ft_shell_pipex(t_main *main_s);
-int	process_child_pipes(t_pipex *pipex_s);
-void free_pipex_s(t_pipex **pipex_s);
+int		ft_shell_pipex(t_main *main_s);
+int		process_child_pipes(t_pipex *pipex_s);
+void	free_pipex_s(t_pipex **pipex_s);
 void	close_all_fd(t_pipex *pipex_s);
 
 //Create pipex_s structure
 int		ft_process_tokens_s(t_main *main_s);
-int ft_create_pipeline(t_main *main_s);
-int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s);
-int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s);
-int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
-int read_heredoc(t_token *tokens_s);
-t_pipex *ft_init_pipex_s(t_main *mains_s);
+int		ft_create_pipeline(t_main *main_s);
+int		ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s);
+int		ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s);
+int		ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
+int		read_heredoc(t_token *tokens_s);
+t_pipex	*ft_init_pipex_s(t_main *mains_s);
 
 //Execute pipex cmds
-int	edge_cases(t_pipex *pipex_s);
-void ft_exe_pipex_s(t_main *main_s);
+int		edge_cases(t_pipex *pipex_s);
+void	ft_exe_pipex_s(t_main *main_s);
 void	execute_command(t_pipex *pipex_s, char **envp);
 char	*get_cmd_path(t_pipex *pipex_s);
 void	exe_cmd_child(t_pipex *pipex_s, char **envp);
@@ -308,7 +308,7 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp);
 //pipex_utils
 char	*ft_strnjoin(char *old_str, char *str_add, int size);
 char	*ft_strstr(const char *big, const char *little);
-char* get_file_name_from_fd(int fd);
+char	*get_file_name_from_fd(int fd);
 void	print_struct(t_main *main_s);
 void	print_check_processes(t_pipex *pipex_s);
 
@@ -316,20 +316,20 @@ void	print_check_processes(t_pipex *pipex_s);
 /******* HISTORY ********/
 /************************/
 
-t_hist *ft_init_hist_s(void);
-void add_to_history(t_main *main_s);
-void get_history(t_hist *hist_s, int index);
-void    ft_rm_history(t_hist **hist_s);
-void free_history(t_hist *hist_s);
+t_hist	*ft_init_hist_s(void);
+void	add_to_history(t_main *main_s);
+void	get_history(t_hist *hist_s, int index);
+void	ft_rm_history(t_hist **hist_s);
+void	free_history(t_hist *hist_s);
 
 /************************/
 /****** EDGE CASES ******/
 /************************/
 
-char *run_pwd(bool print);
-int run_cd(t_pipex *pipex_s);
-int run_echo(t_pipex *pipex_s);
-int special_edge_cases(t_pipex *pipex_s);
+char	*run_pwd(bool print);
+int		run_cd(t_pipex *pipex_s);
+int		run_echo(t_pipex *pipex_s);
+int		special_edge_cases(t_pipex *pipex_s);
 
 /************************/
 /****** BUILT INS *******/
@@ -337,7 +337,7 @@ int special_edge_cases(t_pipex *pipex_s);
 
 /* ft_exit.c */
 void	ft_exit(t_pipex *pipex);
-
+//TODO
 /* ft_export.c */
 void	print_export(t_env *first);
 void	export_check(t_main *main_s, t_env *new);
@@ -349,7 +349,7 @@ void	export_check(t_main *main_s, t_env *new);
 // ft_getenv(char *var_name); TODO
 // ft_setenv(char *var_name, char *var_value, int overwrite); TODO
 char	*ft_getenv(t_main *main_s, char *var_name); //TODO
-void	ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite); //TODO
+void	ft_setenv(t_main *main_s, char *var_nm, char *var_vl, int ovwr);
 t_env	*new_menv_s(void);
 char	*env_get_value(char *var_name, char *var_value);
 // void export_env(t_main *main_s);
@@ -360,11 +360,11 @@ void	my_print_env(t_main *main_s);
 /************************/
 
 // int setup_signal_handlers(int process_type);
-int set_sig_handlers(int signal, void(*func_name)(int));
-void handle_sigquit(int sig);
-void handle_sigint(int sig);
+int		set_sig_handlers(int signal, void (*func_name)(int));
+void	handle_sigquit(int sig);
+void	handle_sigint(int sig);
 void	ft_exit_pid(t_pipex *pipex);
-void *safe_malloc(size_t size);
-char **get_array_env(t_main *main_s);
+void	*safe_malloc(size_t size);
+char	**get_array_env(t_main *main_s);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:33 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/24 15:49:32 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:51:41 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_getenv(t_main *main_s, char *var_name)
 	return (NULL);
 }
 
-void	ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite)
+void	ft_setenv(t_main *main_s, char *var_nm, char *var_vl, int ovwr)
 {
 	t_env	*menv_s;
 	t_env	*new;
@@ -83,25 +83,25 @@ void	ft_setenv(t_main *main_s, char *var_name, char *var_value, int overwrite)
 	menv_s = main_s->env;
 	if (!menv_s)
 		return;
-	while (menv_s && ft_strcmp(menv_s->var, var_name) != 0)
+	while (menv_s && ft_strcmp(menv_s->var, var_nm) != 0)
 		menv_s = menv_s->next;
-	value = env_get_value(var_name, var_value);
+	value = env_get_value(var_nm, var_vl);
 	if (!menv_s)
 	{
 		new = ft_export_new(value);
 		append_env_back(&main_s->env, new);
 		free(value);
-		free(var_value);
+		free(var_vl);
 	}
-	else if (overwrite == 1)
+	else if (ovwr == 1)
 	{
 		ft_free(&menv_s->value);
 		menv_s->value = value;
 		ft_free(&menv_s->var_value);
-		menv_s->var_value = var_value;
+		menv_s->var_value = var_vl;
 	}
 	else
-		ft_free(&var_value);
+		ft_free(&var_vl);
 }
 
 t_env	*new_menv_s(void)
