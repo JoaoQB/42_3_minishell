@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:11:02 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:06:03 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:15:21 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static t_token	*ft_token_new(char *str)
 	ft_strlcpy(new_token->value, str, word_len + 1);
 	if (new_token->value)
 		new_token->type = token_assign(new_token->value);
+	else
+		new_token->type = -1;
 	new_token->index = -1;
 	new_token->prev = NULL;
 	new_token->next = NULL;

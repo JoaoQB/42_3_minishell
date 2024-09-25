@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:02:07 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:17:31 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ void	token_extract_before(t_token **first, t_token *current, int i);
 void	token_extract_after(t_token *current, int i);
 void	clean_tokens(t_token **first);
 void	delete_token(t_token **first, t_token *current);
+bool	token_is_redirect(t_token *current);
 
 /* var_utils.c */
 int		ft_isvar1stchar(int c);
@@ -245,7 +246,7 @@ void	quotes_revert_operators(t_token *first);
 void	revert_operators(char *str);
 
 /* token_split_words.c */
-void	token_split_words(t_token **first);
+void	token_split_words(t_main *main_s, t_token **first);
 
 /* quotes_remover.c */
 void	quotes_remover(t_token *first);
