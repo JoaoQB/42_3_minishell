@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:09:06 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 14:23:29 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:20:39 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	clean_tokens(t_token **first)
 	{
 		next = current->next;
 		if (!current->value)
-			delete_token(first, current);
+			current->value = ft_strdup("");
 		else if (current->type == CONC
 			|| current->type == VAR || current->type == QUOTE)
 			current->type = WORD;

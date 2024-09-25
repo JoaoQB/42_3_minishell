@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:18:48 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:49:22 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:27:08 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static char	*var_delete_var_quotes(t_token *current)
 	if (ft_strlen(current->value) == 3)
 	{
 		ft_free(&current->value);
-		return (NULL);
+		new_value = ft_strdup("");
+		return (new_value);
 	}
 	len = ft_strlen(current->value) - 1;
 	new_value = (char *)safe_malloc(sizeof(char) *(len + 1));

@@ -6,16 +6,20 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:11:37 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 14:30:32 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:35:42 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	ambiguous_redirect(t_main *main_s)
+static t_token	*ambiguous_redirect(t_main *main_s, t_token *current)
 {
-	ft_putendl_fd("minishell:ambiguous redirect", 2);
+	if (!current)
+		return (NULL);
+	if (!main_s->silence_info)
+		ft_putendl_fd("minishell: ambiguous redirect", 2);
 	main_s->silence_info = true;
+	return (current->next);
 }
 
 static t_token	*divide_words(t_token **first, t_token *current, int i)
@@ -53,21 +57,20 @@ static t_token	*check_for_space(t_main *main_s, t_token **first, t_token *curren
 
 	if (!first || !current)
 		return (NULL);
+	else if (!current->value && token_is_redirect(current->prev))
+		return (ambiguous_redirect(main_s, current));
 	else if (!current->value)
 		return (current->next);
+	else if (!*current->value && token_is_redirect(current->prev))
+		return (ambiguous_redirect(main_s, current));
 	str = current->value;
 	i = 0;
-	if (!*str && token_is_redirect(current->prev))
-		ambiguous_redirect(main_s);
 	while (str[i])
 	{
 		if (ft_isquotes(str[i]))
 			i += iterate_quotes(&str[i]);
 		else if (str[i] == ' ' && token_is_redirect(current->prev))
-		{
-			ambiguous_redirect(main_s);
-			return (current->next);
-		}
+			return (ambiguous_redirect(main_s, current));
 		else if (str[i] == ' ')
 			return (divide_words(first, current, i));
 		i++;
