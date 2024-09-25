@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 14:17:31 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/25 20:36:49 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,10 @@ char	*var_extract_after(t_token *current, int i);
 /* var_replace.c */
 t_token	*var_replace(t_main *main_s, t_token *current, int i);
 char	*var_replace_qstnmrk(t_main *main_s);
+char	*var_check_env(t_env *env, char *str);
+
+/* heredoc_expand.c */
+char	*heredoc_expand(t_main *main_s, char *str);
 
 /************************/
 /******* PARSING ********/
@@ -296,7 +300,7 @@ int		ft_create_pipeline(t_main *main_s);
 int		ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s);
 int		ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s);
 int		ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
-int		read_heredoc(t_token *tokens_s);
+int		read_heredoc(t_main *main_s, t_token *tokens_s);
 t_pipex	*ft_init_pipex_s(t_main *mains_s);
 
 //Execute pipex cmds

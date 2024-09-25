@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
+#    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/09/24 11:18:55 by fandre-b         ###   ########.fr        #
+#    Updated: 2024/09/25 20:36:44 by jqueijo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/processing/var_conc.c \
 	$(SRC_PATH)/processing/var_remove_quotes.c \
 	$(SRC_PATH)/processing/var_replace.c \
+	$(SRC_PATH)/processing/heredoc_expand.c \
 	$(SRC_PATH)/parsing/first_pars.c \
 	$(SRC_PATH)/parsing/error_msg.c \
 	$(SRC_PATH)/exe_cmd/exe_cmd.c \
