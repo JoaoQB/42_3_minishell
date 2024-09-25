@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/25 12:58:11 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:02:19 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,7 @@ int	ft_shell_pipex(t_main *main_s)
 	int status;
 
 	if (main_s->silence_info == true)
-	{
-		printf("silencer activated as %d\n", main_s->silence_info);
 		return (0);
-	}
 	//my_print_env(main_s);
 	ft_process_tokens_s(main_s);
 	add_to_history(main_s);
