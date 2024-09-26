@@ -87,7 +87,7 @@ static char	*var_check_after_var(t_token *current)
 	i = 1;
 	if (str[i] == '\0')
 		return (str);
-	else if (str[i] == '$' || str[i] == '"')
+	else if (str[i] == '$' || str[i] == '"' || str[i] == ' ')
 		return (var_extract_after(current, i));
 	else if (!ft_isvar1stchar(str[i]))
 	{

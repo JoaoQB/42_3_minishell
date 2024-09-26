@@ -5,3 +5,4 @@ libft.a
 /.vscode
 /resources/other_minishells
 *.txt
+/minishell/minishell_tester
