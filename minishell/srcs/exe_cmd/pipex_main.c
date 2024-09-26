@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jk <jk@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/25 13:02:19 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/26 23:01:46 by jk               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,15 @@ void free_pipex_s(t_pipex **pipex_s)
 {
 	t_pipex *temp;
 
-	close_all_fd((* pipex_s));
-	while ((* pipex_s))
+	close_all_fd(minishell()->pipex);
+	while (minishell()->pipex)
 	{
-		free((* pipex_s)->path);
-		(* pipex_s)->path = NULL;
-		free_double_array((* pipex_s)->cmd);
-		(* pipex_s)->cmd = NULL;
-		temp = (* pipex_s);
-		(* pipex_s) = (* pipex_s)->next;
+		temp = minishell()->pipex;
+		minishell()->pipex = temp->next;
+		ft_free(temp->cmd);
+		free(temp->path);
 		free(temp);
-		temp = NULL;
+		ft_free
 	}
 }
 

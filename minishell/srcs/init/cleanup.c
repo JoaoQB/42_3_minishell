@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jk <jk@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 11:54:12 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/26 23:02:26 by jk               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_free(char **str)
+void	ft_free(void **ptr)
 {
-	if (str && *str)
-	{
-		free(*str);
-		*str = NULL;
-	}
+    if (ptr && *ptr)
+    {
+        free(*ptr);
+        *ptr = NULL;
+    }
 }
 
 // TODO DELETE
@@ -66,7 +66,7 @@ void	cleanup_main()
 	if (minishell()->export)
 		free_env(&minishell()->export);
 	if (minishell()->history)
-		free_history(minishell()->history);
+		free_history();
 	minishell()->history = NULL;
 }
 

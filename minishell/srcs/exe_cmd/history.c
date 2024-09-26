@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jk <jk@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/25 12:58:11 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/26 23:21:21 by jk               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,81 +26,78 @@ t_hist *ft_init_hist_s()
 
 void add_to_history()
 {
-    t_hist  *hist_s;
-    t_hist  *temp;
-    // char    *dup_input;
+    t_hist  *last_s;
+    t_hist  *temp_s;
 
-    hist_s = minishell()->history;
-    while (hist_s && hist_s->next)
-        hist_s = hist_s->next;
-    if (hist_s && ft_strcmp(hist_s->usr_input, minishell()->user_input) == 0)
+    last_s = minishell()->history;
+    while (last_s && last_s->next)
+        last_s = last_s->next;
+    if (last_s && ft_strcmp(last_s->usr_input, minishell()->user_input) == 0)
         return ;
-    // dup_input = ft_strdup(minishell()->user_input);
-    // add_history(dup_input);
-    // free(dup_input);
-    add_history(minishell()->user_input);//TODO isto dá leaks its supressed tho
-    if (hist_s && hist_s->idx == MAX_HIST)
-        ft_rm_history(&minishell()->history);
-    temp = ft_init_hist_s();
-    temp->prev = hist_s;
-    temp->usr_input = minishell()->user_input;
+    add_history(minishell()->user_input);
+    if (last_s && last_s->idx == MAX_HIST)
+        rt_one_history();
+    temp_s = ft_init_hist_s();
+    temp_s->prev = last_s;
+    temp_s->usr_input = minishell()->user_input;
     minishell()->user_input = NULL;
-    if (hist_s)
+    if (last_s)
     {
-        temp->idx = hist_s->idx + 1;
-        hist_s->next = temp;
+        temp_s->idx = last_s->idx + 1;
+        last_s->next = temp_s;
     }
     else
-        minishell()->history = temp;
+        minishell()->history = temp_s;
 }
 
 void    get_history(t_hist *hist_s, int index)
 {//TODO poder receber numero de cmds para printar
     char *str_token;
-    t_hist *curr_hist_s;
+    t_hist *temp_s;
 
-    curr_hist_s = hist_s;
+    temp_s = hist_s;
     if (index == -1)
     {
-        while (curr_hist_s)
+        while (temp_s)
         {
-            str_token = curr_hist_s->usr_input;
+            str_token = temp_s->usr_input;
             if (!str_token)
                 break ;
-            printf("%d %s\n", curr_hist_s->idx, str_token);
-            curr_hist_s = curr_hist_s->next;
+            printf("%d %s\n", temp_s->idx, str_token);
+            temp_s = temp_s->next;
         }
     }
 }
 
-void    ft_rm_history(t_hist **hist_s)
+void    rt_one_history(void)
 {
-    t_hist *temp;
+    t_hist *temp_s;
 
-    if (!(*hist_s))
+    if (!minishell()->history)
         return ;
-    temp = (*hist_s);
-   (*hist_s) = (*hist_s)->next;
-    free(temp->usr_input);
-    free(temp);
-    temp = (*hist_s);
-    while (temp)
+    temp_s = minishell()->history;
+    minishell()->history = temp_s->next;
+    ft_free(temp_s->usr_input);
+    ft_free(temp_s);
+    temp_s = minishell()->history;
+    while (temp_s)
     {
-        temp->idx -= 1;
-        temp = temp->next;
+        temp_s->idx -= 1;
+        temp_s = temp_s->next;
     }
 }
 
-void free_history(t_hist *hist_s)
+void free_history()
 {
-    t_hist *temp;
+    t_hist *temp_s;
 
-    while (hist_s)
+    temp_s = minishell()->history;
+    while (minishell()->history)
     {
-        free(hist_s->usr_input);
-        temp = hist_s;
-        hist_s = hist_s->next;
-        free(temp);
+        temp_s = minishell();
+        minishell()->history = temp_s->next;
+        ft_free(temp_s->usr_input);
+        ft_free(temp_s);
     }
     rl_clear_history();
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jk <jk@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 20:36:49 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/26 23:13:01 by jk               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	free_main_input(void);
 void	cleanup_main(void);
 void	free_double_array(char **array);
 void	free_triple_array(char ***array);
-void	ft_free(char **str);
+void	ft_free(void **ptr);
 
 /* cleanup_struct.c */
 void	free_tokens(t_token **first);
@@ -324,8 +324,8 @@ void	print_check_processes(t_pipex *pipex_s);
 t_hist	*ft_init_hist_s(void);
 void	add_to_history(void);
 void	get_history(t_hist *hist_s, int index);
-void	ft_rm_history(t_hist **hist_s);
-void	free_history(t_hist *hist_s);
+void	rt_one_history(void);
+void	free_history(void);
 
 /************************/
 /****** EDGE CASES ******/
