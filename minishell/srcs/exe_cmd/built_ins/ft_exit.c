@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 13:01:18 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:33:01 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,16 @@ static void	invalid_exit(t_pipex *pipex, int flag)
 	cmd = pipex->cmd;
 	if (flag == 1)
 	{
-		ft_putstr_fd("exit\nminishell: ", 2);
+		ft_putstr_fd("exit\n", 1);
+		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(cmd[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		pipex->status = 2;
 	}
 	else if (flag == 2)
 	{
-		ft_putstr_fd("exit\nminishell: too many arguments\n", 2);
+		ft_putstr_fd("exit\n", 1);
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		pipex->status = 1;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/25 12:58:50 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:01:34 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ int	check_for_pipeline(t_main *main_s)
 	return (0);
 }
 
-bool is_directory(t_pipex *pipex_s) 
+bool is_directory(t_pipex *pipex_s)
 {
 	char	*path;
     struct stat buffer;
-	
+
 	path = pipex_s->cmd[0];
-    if (stat(path, &buffer) != 0) 
+    if (stat(path, &buffer) != 0)
         return false;
     if (S_ISDIR(buffer.st_mode))
 	{
@@ -101,8 +101,9 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 			printf("%s: %s\n", pipex_s->cmd[0], strerror(EACCES));
 		else if (!pipex_s->path && pipex_s->status == 0)
 		{
+			ft_putstr_fd(pipex_s->cmd[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
 			pipex_s->status = 127;
-			printf("%s: command not found\n", pipex_s->cmd[0]);
 		}
 	}
 	if (pipex_s->status != 0 || !pipex_s->cmd || !*pipex_s->cmd)
@@ -122,9 +123,9 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	temp = ft_strnjoin(ft_strdup("./"), pipex_s->cmd[0], -1);
 	while (paths && *paths != '\0')
 	{
-        if (access(temp, F_OK) == 0) 
+        if (access(temp, F_OK) == 0)
 		{
-            if (access(temp, R_OK | X_OK) == 0) 
+            if (access(temp, R_OK | X_OK) == 0)
                 return (temp);
             pipex_s->status = 126;
         }
