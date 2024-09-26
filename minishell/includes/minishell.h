@@ -6,7 +6,7 @@
 /*   By: jk <jk@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/26 23:13:01 by jk               ###   ########.fr       */
+/*   Updated: 2024/09/27 00:05:22 by jk               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/stat.h>
 # include <signal.h>
 # include <limits.h>
+#include <stdarg.h>
 
 # define MAX_HIST 30
 

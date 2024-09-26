@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jk <jk@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/25 12:58:11 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/27 00:11:31 by jk               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,65 @@ void *safe_malloc(size_t size)
     if (ptr == NULL) 
 	{
         perror("safe_malloc"); //the actuall error handlefunction.
-        // exit(1); // General error
+        free_main_input();
+		cleanup_main();
+		ft_exit(1); // General error
     }
     return ptr;
+}
+
+void process_err()
+{//TODO chat_gpt generated
+	//i wanto to handle errnos and convert then into the errors shell gives
+
+	if (errno == 0)
+		return ;
+	if (errno == 2)
+		ft_putstr_fd("No such file or directory\n", 2);
+	else if (errno == 13)
+		ft_putstr_fd("Permission denied\n", 2);
+	else if (errno == 21)
+		ft_putstr_fd("Is a directory\n", 2);
+	else if (errno == 126)
+		ft_putstr_fd("Permission denied\n", 2);
+	else if (errno == 127)
+		ft_putstr_fd("Command not found\n", 2);
+	else if (errno == 128)
+		ft_putstr_fd("Invalid argument\n", 2);
+	else if (errno == 130)
+		ft_putstr_fd("Terminated by Ctrl+C\n", 2);
+	else if (errno == 134)
+		ft_putstr_fd("Abort trap\n", 2);
+	else if (errno == 139)
+		ft_putstr_fd("Segmentation fault\n", 2);
+	else if (errno == 141)
+		ft_putstr_fd("Broken pipe\n", 2);
+	else if (errno == 255)
+		ft_putstr_fd("Exit status out of range\n", 2);
+	else
+		ft_putstr_fd(strerror(errno), 2);
+	else
+		ft_putstr_fd("Error\n", 2);
+}
+
+void hdl_err(int err, char *format, ...) 
+{
+    va_list args;
+
+    va_start(args, format);
+    while(*format) 
+	{
+		if(*format == '%') 
+		{
+			format++;
+			if(*format == 's') 
+				ft_putstr_fd(va_arg(args, char *), 2);
+		}
+		else 
+			write(2, format, 1);
+		format++;
+	}
+    va_end(args);
+	minishell()->status = err;
+	process_err();
 }
