@@ -26,16 +26,16 @@ static bool	check_after_operator(char *string)
 	return (false);
 }
 
-static void	extract_operator(t_main *main_s, t_token *current, int i)
+static void	extract_operator(t_token *current, int i)
 {
 	char	*str;
 
-	if (!current || !current->value || !main_s)
+	if (!current || !current->value)
 		return ;
 	str = current->value;
 	if (i > 0)
 	{
-		token_extract_before(&main_s->tokens, current, i);
+		token_extract_before(&minishell()->tokens, current, i);
 		str = current->value;
 		i = 0;
 	}
@@ -43,13 +43,13 @@ static void	extract_operator(t_main *main_s, t_token *current, int i)
 	{
 		if (!ft_strncmp(current->value, "<<", 2)
 			|| !ft_strncmp(current->value, ">>", 2))
-			token_extract_before(&main_s->tokens, current, 2);
+			token_extract_before(&minishell()->tokens, current, 2);
 		else
-			token_extract_before(&main_s->tokens, current, 1);
+			token_extract_before(&minishell()->tokens, current, 1);
 	}
 }
 
-static bool	check_token_word(t_main *main_s, t_token *current)
+static bool	check_token_word(t_token *current)
 {
 	char	*str;
 	int		i;
@@ -64,7 +64,7 @@ static bool	check_token_word(t_main *main_s, t_token *current)
 			i += iterate_quotes(&str[i]);
 		else if (ft_isoperator(str[i]))
 		{
-			extract_operator(main_s, current, i);
+			extract_operator(current, i);
 			return (true);
 		}
 		i++;
@@ -72,28 +72,26 @@ static bool	check_token_word(t_main *main_s, t_token *current)
 	return (false);
 }
 
-t_token	*token_separate_operator(t_main *main_s)
+t_token	*token_separate_operator()
 {
 	t_token	*current;
 	t_token	*next;
 
-	if (!main_s)
-		return (NULL);
-	current = main_s->tokens;
+	current = minishell()->tokens;
 	while (current)
 	{
 		next = current->next;
 		if (current->type == WORD || current->type == QUOTE)
 		{
-			if (check_token_word(main_s, current))
+			if (check_token_word(current))
 			{
-				reassign_tokens(main_s->tokens);
-				reindex_tokens(main_s->tokens);
-				next = main_s->tokens;
+				reassign_tokens(minishell()->tokens);
+				reindex_tokens(minishell()->tokens);
+				next = minishell()->tokens;
 			}
 		}
 		current = next;
 	}
-	current = main_s->tokens;
+	current = minishell()->tokens;
 	return (current);
 }

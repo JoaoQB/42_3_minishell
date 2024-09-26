@@ -25,28 +25,26 @@ char *run_pwd(bool print)
 
 int run_cd(t_pipex *pipex_s)
 {
-	t_main	*main_s;
 	char	*new_dir;
 	char	**cmd;
 
-	main_s = pipex_s->main_s;
 	cmd = pipex_s->cmd;
 	if (cmd[1] && cmd[2])
 		return (printf("%s: %s\n", cmd[0], "too many arguments"), 1); //TODO Handle error s
     if (!cmd[1] || strcmp(cmd[1], "~") == 0)
-        new_dir = ft_strdup(ft_getenv(main_s, "HOME"));
+        new_dir = ft_strdup(ft_getenv("HOME"));
     else if (strcmp(cmd[1], "-") == 0)
 	{
-        new_dir = ft_strdup(ft_getenv(main_s, "OLDPWD"));
+        new_dir = ft_strdup(ft_getenv("OLDPWD"));
 	if (new_dir)
         	printf("%s\n", new_dir);
 	}
     else
 		new_dir = ft_strdup(cmd[1]);
-	ft_setenv(main_s, "OLDPWD", run_pwd(false), 1);
+	ft_setenv("OLDPWD", run_pwd(false), 1);
     if (new_dir && !(chdir(new_dir) == 0))
         return (free(new_dir), printf("%s: %s: %s\n", cmd[0], cmd[1], strerror(errno)), 1);//TODO Handle error s
-    ft_setenv(main_s, "PWD", run_pwd(false), 1);
+    ft_setenv("PWD", run_pwd(false), 1);
 	free(new_dir);
 	return (0);
 }
@@ -85,13 +83,13 @@ int	edge_cases(t_pipex *pipex_s)
 	if (!pipex_s || !pipex_s->cmd[0])
 		return (0);
 	if (ft_strcmp(pipex_s->cmd[0], "history") == 0)
-		get_history(pipex_s->main_s->history, -1);
+		get_history(minishell()->history, -1);
 	else if (ft_strcmp(pipex_s->cmd[0], "pwd") == 0)
 		free(run_pwd(true));
 	else if (ft_strcmp(pipex_s->cmd[0], "echo") == 0)
 		run_echo(pipex_s);
 	else if (ft_strcmp(pipex_s->cmd[0], "env") == 0)
-		my_print_env(pipex_s->main_s);
+		my_print_env();
 	else
 		return (0);
 	return (1);
@@ -117,15 +115,14 @@ int	edge_cases(t_pipex *pipex_s)
 	// if (sufix && prefix[i] = '+')
 	// {
 		// prefix[i] = 0;
-		// ft_addenv(pipex_s->main_s, prefix, sufix, 1);
+		// ft_addenv(prefix, sufix, 1);
 	// }
 	// else if (sufix)
-		// ft_setenv(pipex_s->main_s, prefix, sufix, 1);
+		// ft_setenv(prefix, sufix, 1);
 // }
 
 void run_export(t_pipex *pipex_s)
 {
-	t_main	*main_s;
 	t_env	*new;
 	int		i;
 
@@ -133,16 +130,15 @@ void run_export(t_pipex *pipex_s)
 		return ;
 	if (!pipex_s->cmd[1])
 	{
-		print_export(pipex_s->main_s->export);
+		print_export(minishell()->export);
 		return ;
 	}
-	main_s = pipex_s->main_s;
 	i = 1;
 	while (pipex_s->cmd[i])
 	{
 		new = ft_export_new(pipex_s->cmd[i]);
 		if (new)
-			export_check(main_s, new);
+			export_check(new);
 		i++;
 	}
 }
@@ -155,7 +151,7 @@ void run_export(t_pipex *pipex_s)
 
 // 	if (!pipex_s->cmd[1])
 // 	{
-// 		print_export(pipex_s->main_s->env);
+// 		print_export(minishell()->env);
 // 		return ;
 // 	}
 // 	i = 0;
@@ -165,7 +161,7 @@ void run_export(t_pipex *pipex_s)
 // 	sufix = ft_strnjoin(NULL, &pipex_s->cmd[1][i], -1);
 // 	i = 0;
 // 	if (sufix)
-// 		ft_setenv(pipex_s->main_s, prefix, sufix, 1);
+// 		ft_setenv(prefix, sufix, 1);
 // }
 
 void run_unset(t_pipex *pipex_s)
@@ -173,7 +169,7 @@ void run_unset(t_pipex *pipex_s)
 	t_env *menv_s;
 	t_env *prev;
 
-	menv_s = pipex_s->main_s->env;
+	menv_s = minishell()->env;
 	if (!pipex_s->cmd[1])
 		return ;
 	while (menv_s && ft_strcmp(menv_s->var, pipex_s->cmd[1]) != 0)

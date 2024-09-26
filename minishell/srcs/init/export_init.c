@@ -90,15 +90,15 @@ t_env	*ft_export_new(char *str)
 	return (new);
 }
 
-t_env	*sort_env(t_main *main_s)
+t_env	*sort_env()
 {
 	t_env	*current_env;
 	t_env	*first_export;
 	t_env	*new_export;
 
-	if (!main_s || !main_s->env)
+	if (!minishell()->env)
 		return (NULL);
-	current_env = main_s->env;
+	current_env = minishell()->env;
 	first_export = NULL;
 	while (current_env)
 	{

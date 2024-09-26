@@ -57,35 +57,35 @@ void	free_double_array(char **array)
 	array = NULL;
 }
 
-void	cleanup_main(t_main *main_s)
+void	cleanup_main()
 {
-	if (main_s->env)
-		free_env(&main_s->env);
-	if (main_s->menv)
-		free_double_array(main_s->menv);
-	if (main_s->export)
-		free_env(&main_s->export);
-	if (main_s->history)
-		free_history(main_s->history);
-	main_s->history = NULL;
+	if (minishell()->env)
+		free_env(&minishell()->env);
+	if (minishell()->menv)
+		free_double_array(minishell()->menv);
+	if (minishell()->export)
+		free_env(&minishell()->export);
+	if (minishell()->history)
+		free_history(minishell()->history);
+	minishell()->history = NULL;
 }
 
-void	free_main_input(t_main *main_s)
+void	free_main_input()
 {
-	if (main_s->tokens)
-		free_tokens(&main_s->tokens);
-	if (main_s->user_input)
-		ft_free(&main_s->user_input);
-	if (main_s->input_trim)
-		ft_free(&main_s->input_trim);
-	if (main_s->input_reorg)
-		ft_free(&main_s->input_reorg);
-	if (main_s->pipex)
-		free_pipex_s(&main_s->pipex);
-	main_s->tokens = NULL;
-	main_s->user_input = NULL;
-	main_s->input_trim = NULL;
-	main_s->input_reorg = NULL;
-	main_s->pipex = NULL;
-	main_s->silence_info = false;
+	if (minishell()->tokens)
+		free_tokens(&minishell()->tokens);
+	if (minishell()->user_input)
+		ft_free(&minishell()->user_input);
+	if (minishell()->input_trim)
+		ft_free(&minishell()->input_trim);
+	if (minishell()->input_reorg)
+		ft_free(&minishell()->input_reorg);
+	if (minishell()->pipex)
+		free_pipex_s(&minishell()->pipex);
+	minishell()->tokens = NULL;
+	minishell()->user_input = NULL;
+	minishell()->input_trim = NULL;
+	minishell()->input_reorg = NULL;
+	minishell()->pipex = NULL;
+	minishell()->silence_info = false;
 }

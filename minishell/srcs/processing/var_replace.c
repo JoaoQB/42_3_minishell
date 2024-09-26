@@ -12,12 +12,12 @@
 
 #include "../../includes/minishell.h"
 
-char	*var_replace_qstnmrk(t_main *main_s)
+char	*var_replace_qstnmrk()
 {
 	char	*new_value;
 	int		status;
 
-	status = main_s->status;
+	status = minishell()->status;
 	new_value = ft_itoa(status);
 	return (new_value);
 }
@@ -47,14 +47,14 @@ char	*var_check_env(t_env *env, char *str)
 	return (NULL);
 }
 
-static char	*var_change(t_main *main_s, t_token *current)
+static char	*var_change(t_token *current)
 {
 	char	*str;
 	char	*var_value;
 	char	*new_value;
 	int		i;
 
-	if (!main_s || !current || !current->value)
+	if (!current || !current->value)
 		return (NULL);
 	str = current->value;
 	i = 0;
@@ -65,13 +65,13 @@ static char	*var_change(t_main *main_s, t_token *current)
 		return (new_value);
 	}
 	else if (str[i + 1] == '?')
-		return (var_replace_qstnmrk(main_s));
+		return (var_replace_qstnmrk());
 	else if (!ft_isvar1stchar(str[i + 1]))
 		return (NULL);
 	var_value = extract_from_i(str, 1);
 	if (!var_value)
 		return (NULL);
-	new_value = var_check_env(main_s->env, var_value);
+	new_value = var_check_env(minishell()->env, var_value);
 	free(var_value);
 	return (new_value);
 }
@@ -102,26 +102,26 @@ static char	*var_check_after_var(t_token *current)
 	return (str);
 }
 
-t_token	*var_replace(t_main *main_s, t_token *current, int i)
+t_token	*var_replace(t_token *current, int i)
 {
 	char	*new_value;
 
-	if (!main_s || !main_s->tokens || !current || !current->value)
+	if (!minishell()->tokens || !current || !current->value)
 		return (NULL);
 	if (i > 0)
 	{
-		current->value = var_extract_before(&main_s->tokens, current, i);
+		current->value = var_extract_before(&minishell()->tokens, current, i);
 		i = 0;
 	}
 	current->value = var_check_after_var(current);
-	new_value = var_change(main_s, current);
+	new_value = var_change(current);
 	if (current->value)
 		ft_free(&current->value);
 	if (new_value)
 		hide_operators(new_value);
 	current->value = new_value;
 	if (current->type == CONC)
-		return (var_conc_quotes(&main_s->tokens, current));
+		return (var_conc_quotes(&minishell()->tokens, current));
 	if (!current->value)
 		return (current->next);
 	return (current);

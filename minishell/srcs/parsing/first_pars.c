@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-bool	parse_quotes(t_main *main_s, char *input)
+bool	parse_quotes(char *input)
 {
 	int		i;
 	bool	in_sng_qt;
@@ -32,53 +32,53 @@ bool	parse_quotes(t_main *main_s, char *input)
 	if (!in_sng_qt && !in_dbl_qt)
 		return (true);
 	else
-		syntax_error_msg(main_s);
+		syntax_error_msg();
 	return (false);
 }
 
-static bool	pars_redirection(t_main *main_s, t_token *current)
+static bool	pars_redirection(t_token *current)
 {
 	t_token	*next;
 
 	if (!current->next)
 	{
-		syntax_error_msg(main_s);
+		syntax_error_msg();
 		return (false);
 	}
 	next = current->next;
 	if (next->type != WORD && next->type != QUOTE)
 	{
-		syntax_error_msg(main_s);
+		syntax_error_msg();
 		return (false);
 	}
 	return (true);
 }
 
-static bool	pars_pipe(t_main *main_s, t_token *current)
+static bool	pars_pipe(t_token *current)
 {
 	t_token	*next;
 
 	if (!current->prev)
 	{
-		syntax_error_pipe(main_s);
+		syntax_error_pipe();
 		return (false);
 	}
 	else if (!current->next)
 	{
-		syntax_error_pipe(main_s);
+		syntax_error_pipe();
 		return (false);
 	}
 	else
 		next = current->next;
 	if (next->type == PIPE)
 	{
-		syntax_error_pipe(main_s);
+		syntax_error_pipe();
 		return (false);
 	}
 	return (true);
 }
 
-bool	first_pars(t_main *main_s, t_token *first)
+bool	first_pars(t_token *first)
 {
 	t_token	*current;
 
@@ -87,13 +87,13 @@ bool	first_pars(t_main *main_s, t_token *first)
 	{
 		if (current->type == PIPE)
 		{
-			if (!pars_pipe(main_s, current))
+			if (!pars_pipe(current))
 				return (false);
 		}
 		else if (current->type == RED_IN || current->type == RED_OUT
 			|| current->type == RED_OUT_APP || current->type == HERE_DOC)
 		{
-			if (!pars_redirection(main_s, current))
+			if (!pars_redirection(current))
 				return (false);
 		}
 		current = current->next;

@@ -12,14 +12,14 @@
 
 #include "../../includes/minishell.h"
 
-int		ft_process_tokens_s(t_main *main_s)
+int		ft_process_tokens_s()
 {
 	t_token	*tokens_s;
 	t_pipex	*pipex_s;
 
-	tokens_s = main_s->tokens;
-	ft_create_pipeline(main_s);
-	pipex_s = main_s->pipex;
+	tokens_s = minishell()->tokens;
+	ft_create_pipeline();
+	pipex_s = minishell()->pipex;
 	while (tokens_s->next != NULL)
 		tokens_s = tokens_s->next;
 	while (pipex_s->next != NULL)
@@ -76,7 +76,7 @@ int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
 
 
 
-int	read_heredoc(t_main *main_s, t_token *tokens_s)
+int	read_heredoc(t_token *tokens_s)
 {
 	char	*input;
 	char	*delim;
@@ -96,7 +96,7 @@ int	read_heredoc(t_main *main_s, t_token *tokens_s)
 			free(input);
 			break ;
 		}
-		expanded_input = heredoc_expand(main_s, input);
+		expanded_input = heredoc_expand(input);
 		write(piper[1], expanded_input, ft_strlen(expanded_input));
 		write(piper[1], "\n", 1);
 		ft_free(&expanded_input);
@@ -117,7 +117,7 @@ int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s)
 		if ((tokens_s->type == RED_OUT || tokens_s->type == RED_OUT_APP) && io_fd[1] > 2)
 			close (io_fd[1]);
 		if (tokens_s->type == HERE_DOC && tokens_s->next && *tokens_s->next->value)
-			io_fd[0] = read_heredoc(pipex_s->main_s, tokens_s->next);
+			io_fd[0] = read_heredoc(tokens_s->next);
 		else if (tokens_s->type == RED_IN && tokens_s->next && *tokens_s->next->value)
 			io_fd[0] = open(tokens_s->next->value, O_RDONLY, 0666);
 		else if (tokens_s->type == RED_OUT && tokens_s->next && *tokens_s->next->value)
@@ -131,23 +131,23 @@ int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s)
 	return (0);
 }
 
-int ft_create_pipeline(t_main *main_s)
+int ft_create_pipeline()
 {
 	t_pipex *pipex_s;
 	t_token *tokens_s;
 	int	piper[2];
 
-	if (!main_s->pipex)
-		main_s->pipex = ft_init_pipex_s(main_s);
-	tokens_s = main_s->tokens;
-	pipex_s = main_s->pipex;
+	if (!minishell()->pipex)
+		minishell()->pipex = ft_init_pipex_s();
+	tokens_s = minishell()->tokens;
+	pipex_s = minishell()->pipex;
 	pipex_s->pipe_fd[0] = STDIN_FILENO;
 	pipex_s->pipe_fd[1] = STDOUT_FILENO;
 	while (tokens_s != NULL)
 	{
 		if (tokens_s->type == PIPE)
 		{
-			pipex_s->next = ft_init_pipex_s(main_s);
+			pipex_s->next = ft_init_pipex_s();
 			pipex_s->next->prev = pipex_s;
 			if (pipe(piper) == -1)
 				return (perror("pipe"), errno);
@@ -161,7 +161,7 @@ int ft_create_pipeline(t_main *main_s)
 	return (0);
 }
 
-t_pipex *ft_init_pipex_s(t_main *main_s)
+t_pipex *ft_init_pipex_s()
 {
     t_pipex *pipex_s;
 
@@ -174,6 +174,5 @@ t_pipex *ft_init_pipex_s(t_main *main_s)
     pipex_s->pipe_fd[1] = -2;
 	pipex_s->prev = NULL;
     pipex_s->next = NULL;
-	pipex_s->main_s = main_s;
     return (pipex_s);
 }

@@ -12,13 +12,13 @@
 
 #include "../../includes/minishell.h"
 
-int	check_for_pipeline(t_main *main_s)
+int	check_for_pipeline()
 {
 	t_token *tokens_s;
 	int		check;
 
 	check = 0;
-	tokens_s = main_s->tokens;
+	tokens_s = minishell()->tokens;
 	while (tokens_s)
 	{
 		if (tokens_s->type == PIPE)
@@ -26,12 +26,12 @@ int	check_for_pipeline(t_main *main_s)
 		else if (tokens_s->type == PATH)
 		{
 			check = 1;
-			if (!special_edge_cases(main_s->pipex))
+			if (!special_edge_cases(minishell()->pipex))
 				return (1);
 		}
 		tokens_s = tokens_s->next;
 	}
-	if (!check && !special_edge_cases(main_s->pipex))
+	if (!check && !special_edge_cases(minishell()->pipex))
 		return (1);
 	return (0);
 }
@@ -62,12 +62,12 @@ bool is_directory(t_pipex *pipex_s)
 	return (false);
 }
 
-void ft_exe_pipex_s(t_main *main_s)
+void ft_exe_pipex_s()
 {//join function with execute_command
 	t_pipex *pipex_s;
 
-	pipex_s = main_s->pipex;
-	if (!check_for_pipeline(main_s)) //handle no pipeline
+	pipex_s = minishell()->pipex;
+	if (!check_for_pipeline()) //handle no pipeline
 		return ; //this worked but i did simplier
 	while (pipex_s)
 	{
@@ -77,7 +77,7 @@ void ft_exe_pipex_s(t_main *main_s)
 			if (pipex_s->pid == -1)
 				return (perror("fork failed")); //TODO Handle error s
 			else if (pipex_s->pid == 0)
-				exe_cmd_child(pipex_s, pipex_s->main_s->menv);
+				exe_cmd_child(pipex_s, minishell()->menv);
 			// else <parent> change stuff here latter
 			//	exe_cmd_parent()
 		}
@@ -119,7 +119,7 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	char	*paths;
 	int		i;
 
-	paths = ft_getenv(pipex_s->main_s, "PATH");
+	paths = ft_getenv("PATH");
 	temp = ft_strnjoin(ft_strdup("./"), pipex_s->cmd[0], -1);
 	while (paths && *paths != '\0')
 	{

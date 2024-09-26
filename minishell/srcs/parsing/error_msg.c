@@ -12,16 +12,16 @@
 
 #include "../../includes/minishell.h"
 
-void	syntax_error_pipe(t_main *main_s)
+void	syntax_error_pipe()
 {
 	ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
-	main_s->status = 2;
-	main_s->silence_info = true;
+	minishell()->status = 2;
+	minishell()->silence_info = true;
 }
 
-void	syntax_error_msg(t_main *main_s)
+void	syntax_error_msg()
 {
 	ft_putendl_fd("minishell: syntax error", 2);
-	main_s->status = 2;
-	main_s->silence_info = true;
+	minishell()->status = 2;
+	minishell()->silence_info = true;
 }

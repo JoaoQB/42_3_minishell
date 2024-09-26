@@ -45,18 +45,18 @@ static char	*alloc_and_concat(char **words, int total_len, int j)
 	return (trimmed);
 }
 
-char	*input_trim_and_tokenize(t_main *main_s, char *user_input)
+char	*input_trim_and_tokenize(char *user_input)
 {
 	char	**words;
 	int		i;
 	int		total_len;
 
-	if (!main_s || !user_input || !parse_quotes(main_s, user_input))
+	if (!user_input || !parse_quotes(user_input))
 		return (NULL);
 	words = split_into_words(user_input);
 	if (!words)
 		return (NULL);
-	main_s->tokens = input_tokenize(words);
+	minishell()->tokens = input_tokenize(words);
 	total_len = 0;
 	i = -1;
 	while (words[++i])

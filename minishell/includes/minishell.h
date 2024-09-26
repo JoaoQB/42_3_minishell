@@ -117,11 +117,11 @@ typedef struct s_main
 /************************/
 
 /* init.c */
-void	init_main(t_main *main_s, char **envp);
+void	init_main(char **envp);
 
 /* cleanup.c */
-void	free_main_input(t_main *main_s);
-void	cleanup_main(t_main *main_struct);
+void	free_main_input(void);
+void	cleanup_main(void);
 void	free_double_array(char **array);
 void	free_triple_array(char ***array);
 void	ft_free(char **str);
@@ -137,7 +137,7 @@ char	*env_extract_var(t_env	*new_env);
 char	*env_extract_var_value(char *str);
 
 /* export_init.c */
-t_env	*sort_env(t_main *main_s);
+t_env	*sort_env(void);
 t_env	*ft_export_new(char *str);
 char	*env_check_name(char *str);
 void	export_set_ordered(t_env **first, t_env *new);
@@ -219,12 +219,12 @@ char	*ft_itoa(int n);
 /************************/
 
 /* input_process.c */
-void	input_process(t_main *main_s, char *user_input);
-char	*input_and_tokens_reorg(t_main *main_s);
+void	input_process(char *user_input);
+char	*input_and_tokens_reorg(void);
 char	*concat_tokens_to_char(t_token *first);
 
 /* input_trim_and_tokenize.c */
-char	*input_trim_and_tokenize(t_main *main_s, char *user_input);
+char	*input_trim_and_tokenize(char *user_input);
 
 /* split_into_words.c */
 char	**split_into_words(char const *s);
@@ -234,10 +234,10 @@ t_token	*input_tokenize(char **words);
 int		token_assign(char *str);
 
 /* token_separate_operator.c */
-t_token	*token_separate_operator(t_main *main_s);
+t_token	*token_separate_operator(void);
 
 /* tilde_replace.c */
-void	tilde_replace(t_main *main_s, t_token *first);
+void	tilde_replace(t_token *first);
 
 /* quotes_hide_operators.c */
 void	quotes_hide_operators(t_token *first);
@@ -246,7 +246,7 @@ void	quotes_revert_operators(t_token *first);
 void	revert_operators(char *str);
 
 /* token_split_words.c */
-void	token_split_words(t_main *main_s, t_token **first);
+void	token_split_words(t_token **first);
 
 /* quotes_remover.c */
 void	quotes_remover(t_token *first);
@@ -255,7 +255,7 @@ void	quotes_remover(t_token *first);
 void	tokenize_smarter(t_token *first);
 
 /* var_swap.c */
-void	var_swap(t_main *main_s, t_token **first);
+void	var_swap(t_token **first);
 
 /* var_conc.c */
 t_token	*var_conc(t_token *target, t_token **first);
@@ -266,46 +266,46 @@ t_token	*var_conc_quotes(t_token **first, t_token *current);
 char	*var_extract_after(t_token *current, int i);
 
 /* var_replace.c */
-t_token	*var_replace(t_main *main_s, t_token *current, int i);
-char	*var_replace_qstnmrk(t_main *main_s);
+t_token	*var_replace(t_token *current, int i);
+char	*var_replace_qstnmrk(void);
 char	*var_check_env(t_env *env, char *str);
 
 /* heredoc_expand.c */
-char	*heredoc_expand(t_main *main_s, char *str);
+char	*heredoc_expand(char *str);
 
 /************************/
 /******* PARSING ********/
 /************************/
 
 /* first_pars.c */
-bool	first_pars(t_main *main_s, t_token *first);
-bool	parse_quotes(t_main *main_s, char *input);
+bool	first_pars(t_token *first);
+bool	parse_quotes(char *input);
 
 /* error_msg.c */
-void	syntax_error_msg(t_main *main_s);
-void	syntax_error_pipe(t_main *main_s);
+void	syntax_error_msg(void);
+void	syntax_error_pipe(void);
 
 /************************/
 /******** PIPEX *********/
 /************************/
 
-int		ft_shell_pipex(t_main *main_s);
+int		ft_shell_pipex(void);
 int		process_child_pipes(t_pipex *pipex_s);
 void	free_pipex_s(t_pipex **pipex_s);
 void	close_all_fd(t_pipex *pipex_s);
 
 //Create pipex_s structure
-int		ft_process_tokens_s(t_main *main_s);
-int		ft_create_pipeline(t_main *main_s);
+int		ft_process_tokens_s(void);
+int		ft_create_pipeline(void);
 int		ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s);
 int		ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s);
 int		ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
-int		read_heredoc(t_main *main_s, t_token *tokens_s);
-t_pipex	*ft_init_pipex_s(t_main *mains_s);
+int		read_heredoc(t_token *tokens_s);
+t_pipex	*ft_init_pipex_s(void);
 
 //Execute pipex cmds
 int		edge_cases(t_pipex *pipex_s);
-void	ft_exe_pipex_s(t_main *main_s);
+void	ft_exe_pipex_s(void);
 void	execute_command(t_pipex *pipex_s, char **envp);
 char	*get_cmd_path(t_pipex *pipex_s);
 void	exe_cmd_child(t_pipex *pipex_s, char **envp);
@@ -314,7 +314,7 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp);
 char	*ft_strnjoin(char *old_str, char *str_add, int size);
 char	*ft_strstr(const char *big, const char *little);
 char	*get_file_name_from_fd(int fd);
-void	print_struct(t_main *main_s);
+void	print_struct(void);
 void	print_check_processes(t_pipex *pipex_s);
 
 /************************/
@@ -322,7 +322,7 @@ void	print_check_processes(t_pipex *pipex_s);
 /************************/
 
 t_hist	*ft_init_hist_s(void);
-void	add_to_history(t_main *main_s);
+void	add_to_history(void);
 void	get_history(t_hist *hist_s, int index);
 void	ft_rm_history(t_hist **hist_s);
 void	free_history(t_hist *hist_s);
@@ -345,7 +345,7 @@ void	ft_exit(t_pipex *pipex);
 //TODO
 /* ft_export.c */
 void	print_export(t_env *first);
-void	export_check(t_main *main_s, t_env *new);
+void	export_check(t_env *new);
 
 /************************/
 /***** ENV FUNCTIONS ****/
@@ -353,12 +353,12 @@ void	export_check(t_main *main_s, t_env *new);
 
 // ft_getenv(char *var_name); TODO
 // ft_setenv(char *var_name, char *var_value, int overwrite); TODO
-char	*ft_getenv(t_main *main_s, char *var_name); //TODO
-void	ft_setenv(t_main *main_s, char *var_nm, char *var_vl, int ovwr);
+char	*ft_getenv(char *var_name); //TODO
+void	ft_setenv(char *var_nm, char *var_vl, int ovwr);
 t_env	*new_menv_s(void);
 char	*env_get_value(char *var_name, char *var_value);
-// void export_env(t_main *main_s);
-void	my_print_env(t_main *main_s);
+// void export_env(void);
+void	my_print_env(void);
 
 /************************/
 /*** SIGNAL HANDLERS ****/
@@ -370,6 +370,7 @@ void	handle_sigquit(int sig);
 void	handle_sigint(int sig);
 void	ft_exit_pid(t_pipex *pipex);
 void	*safe_malloc(size_t size);
-char	**get_array_env(t_main *main_s);
+char	**get_array_env(void);
+t_main	*minishell(void);
 
 #endif

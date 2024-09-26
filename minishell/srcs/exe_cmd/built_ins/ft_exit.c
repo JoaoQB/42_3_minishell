@@ -61,9 +61,7 @@ void	ft_exit(t_pipex *pipex)
 {
 	int		status;
 	char	**cmd;
-	t_main	*main_s;
 
-	main_s = pipex->main_s;
 	if (!pipex || !pipex->cmd)
 		return ;
 	cmd = pipex->cmd;
@@ -79,21 +77,19 @@ void	ft_exit(t_pipex *pipex)
 		// 	pipex->status = (pipex->status % 256 + 256) % 256;
 	}
 	status = pipex->status;
-	free_main_input(main_s);
-	cleanup_main(main_s);
+	free_main_input();
+	cleanup_main();
 	exit(status);
 }
 
 void	ft_exit_pid(t_pipex *pipex)
 {
 	int		status;
-	t_main	*main_s;
 
-	main_s = pipex->main_s;
 	if (!pipex || !pipex->cmd)
 		return ;
 	status = pipex->status;
-	free_main_input(main_s);
-	cleanup_main(main_s);
+	free_main_input();
+	cleanup_main();
 	exit(status);
 }

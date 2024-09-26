@@ -12,13 +12,13 @@
 
 #include "../../includes/minishell.h"
 
-static t_token	*ambiguous_redirect(t_main *main_s, t_token *current)
+static t_token	*ambiguous_redirect(t_token *current)
 {
 	if (!current)
 		return (NULL);
-	if (!main_s->silence_info)
+	if (!minishell()->silence_info)
 		ft_putendl_fd("minishell: ambiguous redirect", 2);
-	main_s->silence_info = true;
+	minishell()->silence_info = true;
 	return (current->next);
 }
 
@@ -50,7 +50,7 @@ static t_token	*divide_words(t_token **first, t_token *current, int i)
 	return (next);
 }
 
-static t_token	*check_for_space(t_main *main_s, t_token **first, t_token *current)
+static t_token	*check_for_space(t_token **first, t_token *current)
 {
 	char	*str;
 	int		i;
@@ -58,11 +58,11 @@ static t_token	*check_for_space(t_main *main_s, t_token **first, t_token *curren
 	if (!first || !current)
 		return (NULL);
 	else if (!current->value && token_is_redirect(current->prev))
-		return (ambiguous_redirect(main_s, current));
+		return (ambiguous_redirect(current));
 	else if (!current->value)
 		return (current->next);
 	else if (!*current->value && token_is_redirect(current->prev))
-		return (ambiguous_redirect(main_s, current));
+		return (ambiguous_redirect(current));
 	str = current->value;
 	i = 0;
 	while (str[i])
@@ -70,7 +70,7 @@ static t_token	*check_for_space(t_main *main_s, t_token **first, t_token *curren
 		if (ft_isquotes(str[i]))
 			i += iterate_quotes(&str[i]);
 		else if (str[i] == ' ' && token_is_redirect(current->prev))
-			return (ambiguous_redirect(main_s, current));
+			return (ambiguous_redirect(current));
 		else if (str[i] == ' ')
 			return (divide_words(first, current, i));
 		i++;
@@ -78,7 +78,7 @@ static t_token	*check_for_space(t_main *main_s, t_token **first, t_token *curren
 	return (current->next);
 }
 
-void	token_split_words(t_main *main_s, t_token **first)
+void	token_split_words(t_token **first)
 {
 	t_token	*current;
 	t_token	*next;
@@ -90,7 +90,7 @@ void	token_split_words(t_main *main_s, t_token **first)
 	{
 		next = current->next;
 		if (current->type == WORD || current->type == QUOTE)
-			next = check_for_space(main_s, first, current);
+			next = check_for_space(first, current);
 		current = next;
 	}
 }

@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-t_hist *ft_init_hist_s(void)
+t_hist *ft_init_hist_s()
 {
     t_hist *hist_s;
 
@@ -24,34 +24,34 @@ t_hist *ft_init_hist_s(void)
     return (hist_s);
 }
 
-void add_to_history(t_main *main_s)
+void add_to_history()
 {
     t_hist  *hist_s;
     t_hist  *temp;
     // char    *dup_input;
 
-    hist_s = main_s->history;
+    hist_s = minishell()->history;
     while (hist_s && hist_s->next)
         hist_s = hist_s->next;
-    if (hist_s && ft_strcmp(hist_s->usr_input, main_s->user_input) == 0)
+    if (hist_s && ft_strcmp(hist_s->usr_input, minishell()->user_input) == 0)
         return ;
-    // dup_input = ft_strdup(main_s->user_input);
+    // dup_input = ft_strdup(minishell()->user_input);
     // add_history(dup_input);
     // free(dup_input);
-    add_history(main_s->user_input);//TODO isto dá leaks its supressed tho
+    add_history(minishell()->user_input);//TODO isto dá leaks its supressed tho
     if (hist_s && hist_s->idx == MAX_HIST)
-        ft_rm_history(&main_s->history);
+        ft_rm_history(&minishell()->history);
     temp = ft_init_hist_s();
     temp->prev = hist_s;
-    temp->usr_input = main_s->user_input;
-    main_s->user_input = NULL;
+    temp->usr_input = minishell()->user_input;
+    minishell()->user_input = NULL;
     if (hist_s)
     {
         temp->idx = hist_s->idx + 1;
         hist_s->next = temp;
     }
     else
-        main_s->history = temp;
+        minishell()->history = temp;
 }
 
 void    get_history(t_hist *hist_s, int index)

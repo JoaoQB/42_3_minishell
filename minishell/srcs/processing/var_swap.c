@@ -12,13 +12,13 @@
 
 #include "../../includes/minishell.h"
 
-static t_token	*var_check(t_main *main_s, t_token **first, t_token *current)
+static t_token	*var_check(t_token **first, t_token *current)
 {
 	char	*str;
 	int		i;
 	bool	is_quote;
 
-	if (!main_s || !first || !*first || !current || !current->value)
+	if (!first || !*first || !current || !current->value)
 		return (NULL);
 	str = current->value;
 	i = 0;
@@ -32,15 +32,15 @@ static t_token	*var_check(t_main *main_s, t_token **first, t_token *current)
 		else if (str[i] == '$' && !is_quote && ft_isquotes(str[i + 1]))
 			return (var_remove_quotes(first, current, i));
 		else if (str[i] == '$')
-			return (var_replace(main_s, current, i));
+			return (var_replace(current, i));
 		i++;
 	}
 	if (current->type == CONC)
-		return (var_conc_quotes(&main_s->tokens, current));
+		return (var_conc_quotes(&minishell()->tokens, current));
 	return (current->next);
 }
 
-void	var_swap(t_main *main_s, t_token **first)
+void	var_swap(t_token **first)
 {
 	t_token	*current;
 	t_token	*next;
@@ -58,7 +58,7 @@ void	var_swap(t_main *main_s, t_token **first)
 		}
 		else if (current->type == WORD || current->type == QUOTE
 			|| current->type == CONC)
-			next = var_check(main_s, first, current);
+			next = var_check(first, current);
 		current = next;
 	}
 	return ;

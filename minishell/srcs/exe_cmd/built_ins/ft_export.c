@@ -40,27 +40,27 @@ static char	*export_append_values(t_env *new, t_env *current)
 	return (extract_from_i(new_var_value, 0));
 }
 
-static void	handle_not_found(t_main *main_s, t_env *new)
+static void	handle_not_found(t_env *new)
 {
 	char	*var_value;
 
-	if (!main_s || !new || !new->value)
+	if (!new || !new->value)
 		return ;
 	var_value = NULL;
-	export_set_ordered(&main_s->export, new);
+	export_set_ordered(&minishell()->export, new);
 	if (find_equal(new->value))
 	{
 		if (new->var_value)
 			var_value = extract_from_i(new->var_value, 0);
-		ft_setenv(main_s, new->var, var_value, 1);
+		ft_setenv(new->var, var_value, 1);
 	}
 }
 
-static void	handle_found(t_main *main_s, t_env *new, t_env *current)
+static void	handle_found(t_env *new, t_env *current)
 {
 	char	*var_value;
 
-	if (!main_s || !new || !new->value || !current)
+	if (!new || !new->value || !current)
 		return ;
 	var_value = NULL;
 	if (!find_equal(new->value))
@@ -68,7 +68,7 @@ static void	handle_found(t_main *main_s, t_env *new, t_env *current)
 	else if (find_plus(new->value))
 	{
 		var_value = export_append_values(new, current);
-		ft_setenv(main_s, new->var, var_value, 1);
+		ft_setenv(new->var, var_value, 1);
 		return ;
 	}
 	ft_free(&current->value);
@@ -79,18 +79,18 @@ static void	handle_found(t_main *main_s, t_env *new, t_env *current)
 		current->var_value = extract_from_i(new->var_value, 0);
 		var_value = extract_from_i(new->var_value, 0);
 	}
-	ft_setenv(main_s, new->var, var_value, 1);
+	ft_setenv(new->var, var_value, 1);
 }
 
-void	export_check(t_main *main_s, t_env *new)
+void	export_check(t_env *new)
 {
 	t_env	*current;
 	bool	found;
 
-	if (!main_s || !new)
+	if (!new)
 		return ;
 	found = false;
-	current = main_s->export;
+	current = minishell()->export;
 	while (current)
 	{
 		if (ft_strcmp(new->var, current->var) == 0)
@@ -102,11 +102,11 @@ void	export_check(t_main *main_s, t_env *new)
 	}
 	if (found == true)
 	{
-		handle_found(main_s, new, current);
+		handle_found(new, current);
 		free_env(&new);
 	}
 	else
-		handle_not_found(main_s, new);
+		handle_not_found(new);
 }
 
 void	print_export(t_env *first)

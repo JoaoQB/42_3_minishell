@@ -101,22 +101,22 @@ int	process_child_pipes(t_pipex *pipex_s)
 	return (pipex_s->status);
 }
 
-int	ft_shell_pipex(t_main *main_s)
+int	ft_shell_pipex()
 {
 	int status;
 
-	if (main_s->silence_info == true)
+	if (minishell()->silence_info == true)
 		return (0);
-	//my_print_env(main_s);
-	ft_process_tokens_s(main_s);
-	add_to_history(main_s);
-	// print_struct(main_s);
-	ft_exe_pipex_s(main_s);
-	status = process_child_pipes(main_s->pipex); //manage_pid
-	main_s->status = status;
+	//my_print_env();
+	ft_process_tokens_s();
+	add_to_history();
+	// print_struct();
+	ft_exe_pipex_s();
+	status = process_child_pipes(minishell()->pipex); //manage_pid
+	minishell()->status = status;
 	// printf("\n	COMMAND ERR: %d\n", status);
-	//print_check_processes(main_s->pipex);
-	// free_pipex_s(main_s->pipex); //temp free
+	//print_check_processes(minishell()->pipex);
+	// free_pipex_s(minishell()->pipex); //temp free
 	//recieve signal when i do exit, so i can properly free it and pass responsability
 	return (status);
 }

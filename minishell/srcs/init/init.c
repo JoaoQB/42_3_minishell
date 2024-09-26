@@ -12,20 +12,20 @@
 
 #include "../../includes/minishell.h"
 
-void	init_main(t_main *main_s, char **envp)
+void	init_main(char **envp)
 {
-	main_s->env = get_env(envp);
-	// print_env(main_s->env);
-	main_s->menv = get_array_env(main_s);
-	// print_menv(main_s->menv);
-	main_s->export = sort_env(main_s);
-	main_s->tokens = NULL;
-	main_s->user_input = NULL;
-	main_s->input_trim = NULL;
-	main_s->input_reorg = NULL;
-	main_s->pipex = NULL;
-	main_s->silence_info = false;
-	main_s->status = 0;
-	main_s->history = NULL;
-	main_s->pipex = ft_init_pipex_s(main_s);
+	minishell()->env = get_env(envp);
+	// print_env(minishell()->env);
+	minishell()->menv = get_array_env();
+	// print_menv(minishell()->menv);
+	minishell()->export = sort_env();
+	minishell()->tokens = NULL;
+	minishell()->user_input = NULL;
+	minishell()->input_trim = NULL;
+	minishell()->input_reorg = NULL;
+	minishell()->pipex = NULL;
+	minishell()->silence_info = false;
+	minishell()->status = 0;
+	minishell()->history = NULL;
+	minishell()->pipex = ft_init_pipex_s();
 }

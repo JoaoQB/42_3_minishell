@@ -12,14 +12,14 @@
 
 #include "../../includes/minishell.h"
 
-char **get_array_env(t_main *main_s)
+char **get_array_env()
 {
 	t_env *env;
 	char **menvp;
 	int	i;
 
 	i = 0;
-	env = main_s->env;
+	env = minishell()->env;
 	while (env)
 	{
 		i++;
@@ -27,7 +27,7 @@ char **get_array_env(t_main *main_s)
 	}
 	menvp = (char **) safe_malloc (sizeof (char *) * (i + 1));
 	i = 0;
-	env = main_s->env;
+	env = minishell()->env;
 	while (env)
 	{
 		menvp[i++] = ft_strdup(env->value);
@@ -58,13 +58,13 @@ char	*env_get_value(char *var_name, char *var_value)
 	return (new_value);
 }
 
-char	*ft_getenv(t_main *main_s, char *var_name)
+char	*ft_getenv(char *var_name)
 {
 	t_env *menv_s;
 
-    if (!main_s || !var_name)
+    if (!var_name)
 		return (NULL);
-	menv_s = main_s->env;
+	menv_s = minishell()->env;
 	if (!menv_s)
 		return (NULL);
 	while (menv_s && ft_strcmp(menv_s->var, var_name) != 0)
@@ -74,13 +74,13 @@ char	*ft_getenv(t_main *main_s, char *var_name)
 	return (NULL);
 }
 
-void	ft_setenv(t_main *main_s, char *var_nm, char *var_vl, int ovwr)
+void	ft_setenv(char *var_nm, char *var_vl, int ovwr)
 {
 	t_env	*menv_s;
 	t_env	*new;
 	char	*value;
 
-	menv_s = main_s->env;
+	menv_s = minishell()->env;
 	if (!menv_s)
 		return ;
 	while (menv_s && ft_strcmp(menv_s->var, var_nm) != 0)
@@ -89,7 +89,7 @@ void	ft_setenv(t_main *main_s, char *var_nm, char *var_vl, int ovwr)
 	if (!menv_s)
 	{
 		new = ft_export_new(value);
-		append_env_back(&main_s->env, new);
+		append_env_back(&minishell()->env, new);
 		free(value);
 		free(var_vl);
 	}
@@ -104,7 +104,7 @@ void	ft_setenv(t_main *main_s, char *var_nm, char *var_vl, int ovwr)
 		ft_free(&var_vl);
 }
 
-t_env	*new_menv_s(void)
+t_env	*new_menv_s()
 {//deprecated
 	t_env	*menv_s;
 
@@ -119,17 +119,17 @@ t_env	*new_menv_s(void)
 	return (menv_s);
 }
 
-// void export_env(t_main *main_s)
+// void export_env()
 // {//deprecated
 // 	char	**envp;
 // 	int		i;
 // 	t_env	*menv_s;
 
-// 	if (main_s->env)
+// 	if (minishell()->env)
 // 		return ;
-// 	main_s->env = new_menv_s();
-// 	menv_s = main_s->env;
-// 	envp = main_s->menv;
+// 	minishell()->env = new_menv_s();
+// 	menv_s = minishell()->env;
+// 	envp = minishell()->menv;
 //     while (*envp != NULL)
 //     {
 // 		i = 0;
@@ -145,11 +145,11 @@ t_env	*new_menv_s(void)
 //     }
 // }
 
-void	my_print_env(t_main *main_s)
+void	my_print_env()
 {
 	t_env *menv_s;
 
-	menv_s = main_s->env;
+	menv_s = minishell()->env;
 	while (menv_s)
 	{
 		if (menv_s->var)

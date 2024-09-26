@@ -62,38 +62,38 @@ char	*concat_tokens_to_char(t_token *first)
 	return (result);
 }
 
-char	*input_and_tokens_reorg(t_main *main_s)
+char	*input_and_tokens_reorg()
 {
 	char	*input_reorg;
 
-	if (main_s->silence_info)
+	if (minishell()->silence_info)
 		return (NULL);
-	main_s->tokens = token_separate_operator(main_s);
-	if (!first_pars(main_s, main_s->tokens))
+	minishell()->tokens = token_separate_operator();
+	if (!first_pars(minishell()->tokens))
 		return (NULL);
-	tilde_replace(main_s, main_s->tokens);
-	quotes_hide_operators(main_s->tokens);
-	var_swap(main_s, &main_s->tokens);
-	token_split_words(main_s, &main_s->tokens);
-	quotes_remover(main_s->tokens);
-	quotes_revert_operators(main_s->tokens);
-	clean_tokens(&main_s->tokens);
-	if (!main_s->tokens)
+	tilde_replace(minishell()->tokens);
+	quotes_hide_operators(minishell()->tokens);
+	var_swap(&minishell()->tokens);
+	token_split_words(&minishell()->tokens);
+	quotes_remover(minishell()->tokens);
+	quotes_revert_operators(minishell()->tokens);
+	clean_tokens(&minishell()->tokens);
+	if (!minishell()->tokens)
 	{
-		main_s->silence_info = true;
+		minishell()->silence_info = true;
 		return (NULL);
 	}
-	tokenize_smarter(main_s->tokens);
-	input_reorg = concat_tokens_to_char(main_s->tokens);
+	tokenize_smarter(minishell()->tokens);
+	input_reorg = concat_tokens_to_char(minishell()->tokens);
 	if (!input_reorg)
 		return (NULL);
 	return (input_reorg);
 }
 
-void	input_process(t_main *main_s, char *user_input)
+void	input_process(char *user_input)
 {
-	main_s->input_trim = input_trim_and_tokenize(main_s, user_input);
-	if (!main_s->input_trim || !*main_s->input_trim)
-		main_s->silence_info = true;
-	main_s->input_reorg = input_and_tokens_reorg(main_s);
+	minishell()->input_trim = input_trim_and_tokenize(user_input);
+	if (!minishell()->input_trim || !*minishell()->input_trim)
+		minishell()->silence_info = true;
+	minishell()->input_reorg = input_and_tokens_reorg();
 }

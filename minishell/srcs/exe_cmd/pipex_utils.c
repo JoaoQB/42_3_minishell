@@ -74,14 +74,14 @@ char* get_file_name_from_fd(int fd)
     return filename;
 }
 
-void	print_struct(t_main *main_s)
+void	print_struct()
 {//TODO delete
 	t_pipex *pipex_s;
 	int	i;
 	int j;
 
 	j = 0;
-	pipex_s = main_s->pipex;
+	pipex_s = minishell()->pipex;
 	printf("\n\n --> Printing pipe_struct an cmds<--\n\n");
 	while (pipex_s)
 	{

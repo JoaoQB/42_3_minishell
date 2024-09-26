@@ -35,21 +35,21 @@ static char	*join_string(char *before, char *var, char *after)
 	return (new);
 }
 
-static char	*get_var(t_main *main_s, char *str)
+static char	*get_var(char *str)
 {
 	char	*var_value;
 	char	*var;
 
 	int	i;
 
-	if (!main_s || !str)
+	if (!str)
 		return (NULL);
 	i = 1;
 	if (str[i] == '\0' || str[i] == '$'
 		|| str[i] == ' ' || ft_isquotes(str[i]))
 		return (extract_before_i(str, 1));
 	else if (str[i] == '?')
-		return (var_replace_qstnmrk(main_s));
+		return (var_replace_qstnmrk());
 	else if (!ft_isvar1stchar(str[i]))
 		return (NULL);
 	while (ft_isvarchar(str[i]))
@@ -57,7 +57,7 @@ static char	*get_var(t_main *main_s, char *str)
 	var_value = extract_before_i(&str[1], i - 1);
 	if (!var_value)
 		return (NULL);
-	var = var_check_env(main_s->env, var_value);
+	var = var_check_env(minishell()->env, var_value);
 	ft_free(&var_value);
 	return (var);
 }
@@ -87,22 +87,22 @@ static char	*check_after_var(char *str)
 	return (NULL);
 }
 
-static char	*str_expand(t_main *main_s, char *str, int i)
+static char	*str_expand(char *str, int i)
 {
 	char	*var;
 	char	*before;
 	char	*after;
 	char	*new;
 
-	if (!main_s || !str)
+	if (!str)
 		return (NULL);
 	before = NULL;
 	if (i > 0)
 		before = extract_before_i(str, i);
 	after = check_after_var(&str[i]);
 	if (after)
-		after = heredoc_expand(main_s, after);
-	var = get_var(main_s, &str[i]);
+		after = heredoc_expand(after);
+	var = get_var(&str[i]);
 	new = join_string(before, var, after);
 	ft_free(&str);
 	ft_free(&before);
@@ -111,19 +111,19 @@ static char	*str_expand(t_main *main_s, char *str, int i)
 	return (new);
 }
 
-char	*heredoc_expand(t_main *main_s, char *str)
+char	*heredoc_expand(char *str)
 {
 	char	*new_input;
 	int		i;
 
-	if (!main_s || !str)
+	if (!str)
 		return (NULL);
 	new_input = NULL;
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '$')
-			return (str_expand(main_s, str, i));
+			return (str_expand(str, i));
 		i++;
 	}
 	new_input = extract_from_i(str, 0);

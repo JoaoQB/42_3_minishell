@@ -12,15 +12,15 @@
 
 #include "../../includes/minishell.h"
 
-static char	*change_tilde(t_main *main_s)
+static char	*change_tilde()
 {
 	t_env	*current_env;
 	char	*new_value;
 	int		new_len;
 
-	if (!main_s || !main_s->env)
+	if (!minishell()->env)
 		return (NULL);
-	current_env = main_s->env;
+	current_env = minishell()->env;
 	while (current_env)
 	{
 		if (!ft_strncmp("HOME\0", current_env->var, 5))
@@ -37,16 +37,16 @@ static char	*change_tilde(t_main *main_s)
 	return (NULL);
 }
 
-static char	*change_tilde_before(t_main *main_s, t_token *current)
+static char	*change_tilde_before(t_token *current)
 {
 	char	*tilde_value;
 	char	*new_value;
 	int		current_len;
 	int		new_len;
 
-	if (!main_s || !main_s->env || !current || !current->value)
+	if (!minishell()->env || !current || !current->value)
 		return (NULL);
-	tilde_value = change_tilde(main_s);
+	tilde_value = change_tilde();
 	if (!tilde_value)
 		return (NULL);
 	current_len = ft_strlen(current->value) - 1;
@@ -58,7 +58,7 @@ static char	*change_tilde_before(t_main *main_s, t_token *current)
 	return (new_value);
 }
 
-static void	replace_tilde(t_main *main_s, t_token *current)
+static void	replace_tilde(t_token *current)
 {
 	char	*str;
 	char	*new_value;
@@ -71,12 +71,12 @@ static void	replace_tilde(t_main *main_s, t_token *current)
 	if (str[i] == '~' && str[i + 1] == '\0')
 	{
 		ft_free(&current->value);
-		current->value = change_tilde(main_s);
+		current->value = change_tilde();
 		return ;
 	}
 	else if (str[i] == '~' && str[i + 1] == '/')
 	{
-		new_value = change_tilde_before(main_s, current);
+		new_value = change_tilde_before(current);
 		if (new_value)
 		{
 			ft_free(&current->value);
@@ -86,7 +86,7 @@ static void	replace_tilde(t_main *main_s, t_token *current)
 	}
 }
 
-void	tilde_replace(t_main *main_s, t_token *first)
+void	tilde_replace(t_token *first)
 {
 	t_token	*current;
 	t_token	*next;
@@ -98,7 +98,7 @@ void	tilde_replace(t_main *main_s, t_token *first)
 	{
 		next = current->next;
 		if (current->type == WORD || current->type == QUOTE)
-			replace_tilde(main_s, current);
+			replace_tilde(current);
 		current = next;
 	}
 }
