@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/25 13:01:20 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:32:13 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int run_echo(t_pipex *pipex_s)
 			nl = 1;
 		}
 		printf("%s", pipex_s->cmd[i]);
-		if (pipex_s->cmd[++i] && *pipex_s->cmd[++i])
+		if (pipex_s->cmd[++i] && *pipex_s->cmd[i])
 			printf(" ");
 	}
 	if (!nl)
