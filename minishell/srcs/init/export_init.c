@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:54:23 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/26 18:41:57 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:10:56 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*env_check_name(char *str)
 	if (!ft_isvar1stchar(str[i]))
 		valid = false;
 	i++;
-	while (str[i] && str[i] != '=' && str[i] == '+')
+	while (str[i] && str[i] != '=' && str[i] != '+')
 	{
 		if (!ft_isvarchar(str[i]))
 			valid = false;
