@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/01 18:32:12 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/01 21:48:08 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void free_pipex_s(void)
 	{
 		temp = minishell()->pipex;
 		minishell()->pipex = temp->next;
-		ft_free(temp->cmd);
+		free_double_array(temp->cmd);
 		free(temp->path);
 		free(temp);
 	}

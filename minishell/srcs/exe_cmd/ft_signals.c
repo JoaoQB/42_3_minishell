@@ -19,7 +19,10 @@ void handle_sigquit(int sig)
    (void)sig;
     g_signal = 2;
     printf("this is an forced core dump\n");
-    abort(); //TODO exit with abort value or free and core dump
+    // abort(); //TODO exit with abort value or free and core dump
+    free_main_input();
+	cleanup_main();
+	exit(1); // General error
 }
 
 int set_sig_handlers(int signal, void(*func_name)(int)) 
