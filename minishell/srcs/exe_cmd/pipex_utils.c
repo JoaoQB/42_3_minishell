@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jk <jk@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/27 00:11:31 by jk               ###   ########.fr       */
+/*   Updated: 2024/10/01 18:34:23 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void *safe_malloc(size_t size)
         perror("safe_malloc"); //the actuall error handlefunction.
         free_main_input();
 		cleanup_main();
-		ft_exit(1); // General error
+		exit(1); // General error
     }
     return ptr;
 }
@@ -165,8 +165,8 @@ void process_err()
 		ft_putstr_fd("Exit status out of range\n", 2);
 	else
 		ft_putstr_fd(strerror(errno), 2);
-	else
-		ft_putstr_fd("Error\n", 2);
+	// else
+	// 	ft_putstr_fd("Error\n", 2);
 }
 
 void hdl_err(int err, char *format, ...) 

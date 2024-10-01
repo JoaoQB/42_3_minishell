@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jk <jk@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/26 23:21:21 by jk               ###   ########.fr       */
+/*   Updated: 2024/10/01 18:36:44 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void    rt_one_history(void)
         return ;
     temp_s = minishell()->history;
     minishell()->history = temp_s->next;
-    ft_free(temp_s->usr_input);
-    ft_free(temp_s);
+    ft_free(&temp_s->usr_input);
+    free(temp_s);
     temp_s = minishell()->history;
     while (temp_s)
     {
@@ -91,13 +91,12 @@ void free_history()
 {
     t_hist *temp_s;
 
-    temp_s = minishell()->history;
     while (minishell()->history)
     {
-        temp_s = minishell();
+        temp_s = minishell()->history;
         minishell()->history = temp_s->next;
-        ft_free(temp_s->usr_input);
-        ft_free(temp_s);
+        ft_free(&temp_s->usr_input);
+        free(temp_s);
     }
     rl_clear_history();
 }

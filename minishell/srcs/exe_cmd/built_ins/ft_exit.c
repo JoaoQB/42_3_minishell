@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/26 11:33:01 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:34:30 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,3 +93,4 @@ void	ft_exit_pid(t_pipex *pipex)
 	cleanup_main();
 	exit(status);
 }
+

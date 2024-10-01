@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jk <jk@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/26 23:02:26 by jk               ###   ########.fr       */
+/*   Updated: 2024/10/01 18:32:19 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_free(void **ptr)
+void	ft_free(char **str)
 {
-    if (ptr && *ptr)
+    if (str && *str)
     {
-        free(*ptr);
-        *ptr = NULL;
+        free(*str);
+        *str = NULL;
     }
 }
 
@@ -81,7 +81,7 @@ void	free_main_input()
 	if (minishell()->input_reorg)
 		ft_free(&minishell()->input_reorg);
 	if (minishell()->pipex)
-		free_pipex_s(&minishell()->pipex);
+		free_pipex_s();
 	minishell()->tokens = NULL;
 	minishell()->user_input = NULL;
 	minishell()->input_trim = NULL;

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jk <jk@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/27 00:05:22 by jk               ###   ########.fr       */
+/*   Updated: 2024/10/01 18:31:57 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
 # include <stdlib.h>
 # include <stddef.h>
-# include <stdio.h>
 # include <stdbool.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -125,7 +125,7 @@ void	free_main_input(void);
 void	cleanup_main(void);
 void	free_double_array(char **array);
 void	free_triple_array(char ***array);
-void	ft_free(void **ptr);
+void	ft_free(char **str);
 
 /* cleanup_struct.c */
 void	free_tokens(t_token **first);
@@ -292,7 +292,7 @@ void	syntax_error_pipe(void);
 
 int		ft_shell_pipex(void);
 int		process_child_pipes(t_pipex *pipex_s);
-void	free_pipex_s(t_pipex **pipex_s);
+void	free_pipex_s(void);
 void	close_all_fd(t_pipex *pipex_s);
 
 //Create pipex_s structure
