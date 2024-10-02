@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/26 18:32:13 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:52:04 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int run_echo(t_pipex *pipex_s)
 	i = 1;
 	while (pipex_s->cmd[i])
 	{
-		if (i == 2 && ft_strcmp(pipex_s->cmd[i], "-n") == 0)
+		if (i == 1 && ft_strcmp(pipex_s->cmd[i], "-n") == 0)
 		{
 			++i;
 			nl = 1;
