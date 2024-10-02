@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/02 13:17:37 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/02 22:12:11 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	new_process_pipe();
+{
+	pipe
+}
 
 int		ft_process_tokens_s()
 {
@@ -25,7 +30,7 @@ int		ft_process_tokens_s()
 	while (pipex_s->next != NULL)
 		pipex_s = pipex_s->next;
 	while (tokens_s != NULL)
-	{
+	{//why tf i did back to front???
 		if (tokens_s->prev == NULL || tokens_s->prev->type == PIPE)
 		{
 			ft_update_pipex_s(tokens_s, pipex_s);
@@ -50,9 +55,9 @@ int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s)
 		curr_token = curr_token->next;
 	}
 	pipex_s->cmd = (char **) safe_malloc(sizeof(char *) *(count + 1));
-	pipex_s->status = ft_update_cmds(tokens_s, pipex_s);
-	if (pipex_s->status == 0)
-		pipex_s->status = ft_update_fds(tokens_s, pipex_s);
+	ft_update_cmds(tokens_s, pipex_s);
+	if (pipex_s->status == 0)//this part will be done in the child pipe executer
+		ft_update_fds(tokens_s, pipex_s); //TODO test fds
 	return (pipex_s->status);
 }
 
@@ -62,6 +67,7 @@ int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
 
 	count = 0;
 	pipex_s->cmd[0] = NULL;
+	pipex_s->token = tokens_s; //to be used 
 	while (tokens_s && tokens_s->type != PIPE) //funcao para este
 	{
 		if (tokens_s->type == CMD || tokens_s->type == ARG)
@@ -98,7 +104,7 @@ int	read_heredoc(t_token *tokens_s)
 		}
 		expanded_input = heredoc_expand(tokens_s, input);
 		write(piper[1], expanded_input, ft_strlen(expanded_input));
-		write(piper[1], "\n", 1);
+		write(piper[1], "\n", 1);//TODO check this new line
 		ft_free(&expanded_input);
 	}
 	close(piper[1]);
@@ -106,7 +112,8 @@ int	read_heredoc(t_token *tokens_s)
 }
 
 int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s)
-{
+{//i dont need to change mutch in here, maybe find a way to do here_doc anyways
+//i can try to ro return errno regarless, or just do an errorhandler, it will not exit but process will
 	int		*io_fd;
 
 	io_fd = pipex_s->pipe_fd;
@@ -132,7 +139,7 @@ int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s)
 }
 
 int ft_create_pipeline()
-{
+{//this will be deprecated
 	t_pipex *pipex_s;
 	t_token *tokens_s;
 	int	piper[2];

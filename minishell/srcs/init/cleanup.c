@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/01 18:32:19 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/02 21:17:57 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,55 @@ void	ft_free(char **str)
         free(*str);
         *str = NULL;
     }
+}
+
+void	close_all_fd(t_pipex *pipex_s)
+{
+	t_pipex *save;
+
+	save = NULL;
+	while (pipex_s->prev)
+		pipex_s = pipex_s->prev;
+	while (pipex_s->next)
+	{
+		if (pipex_s != save)
+		{
+			if (pipex_s->pipe_fd[0] > 2)
+				close(pipex_s->pipe_fd[0]);
+			if (pipex_s->pipe_fd[1] > 2)
+				close(pipex_s->pipe_fd[1]);
+		}
+		pipex_s = pipex_s->next;
+	}
+}
+
+void	free_pipex_node(t_pipex *pipex_s)
+{
+	if (pipex_s->pipe_fd[0] > 2)
+		close(pipex_s->pipe_fd[0]);
+	if (pipex_s->pipe_fd[1] > 2)
+		close(pipex_s->pipe_fd[1]);
+	if (pipex_s->prev)
+		pipex_s->prev->next = pipex_s->next;
+	free_double_array(pipex_s->cmd);
+	free(pipex_s->path);
+	free(pipex_s);
+}
+
+
+void free_pipex_s(void)
+{
+	t_pipex *temp;
+
+	close_all_fd(minishell()->pipex);
+	while (minishell()->pipex)
+	{
+		temp = minishell()->pipex;
+		minishell()->pipex = temp->next;
+		free_double_array(temp->cmd);
+		free(temp->path);
+		free(temp);
+	}
 }
 
 // TODO DELETE

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/26 12:01:34 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/02 22:10:09 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,14 @@ void ft_exe_pipex_s()
 			if (pipex_s->pid == -1)
 				return (perror("fork failed")); //TODO Handle error s
 			else if (pipex_s->pid == 0)
+			{
+				// ft_update_fds(pipex_s->token, pipex_s); //TODO TEST
+				// if (pipex_s->prev == NULL)
+				// 	pipex_s->pipe_fd[0] = STDIN_FILENO;
+				// if (pipex_s->next == NULL)
+				// 	pipex_s->next == NULL;
 				exe_cmd_child(pipex_s, minishell()->menv);
+			}
 			// else <parent> change stuff here latter
 			//	exe_cmd_parent()
 		}
@@ -95,7 +102,7 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
 		ft_exit_pid(pipex_s);
 	else if (!is_directory(pipex_s))
-	{
+	{//this will be deprecated
 		pipex_s->path = get_cmd_path(pipex_s); //TODO Handle error s
 		if (pipex_s->status == 126)
 			printf("%s: %s\n", pipex_s->cmd[0], strerror(EACCES));
@@ -127,7 +134,7 @@ char	*get_cmd_path(t_pipex *pipex_s)
 		{
             if (access(temp, R_OK | X_OK) == 0)
                 return (temp);
-            pipex_s->status = 126;
+            pipex_s->status = 126; //TODO run handle that will do this and more
         }
 		free(temp);
 		i = 0;

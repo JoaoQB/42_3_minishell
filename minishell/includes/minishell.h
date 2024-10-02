@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/02 13:16:58 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/02 21:45:47 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_pipex //mine2
 	char	*path;
 	char	**cmd;
 	int		pipe_fd[2]; //restruct in case of *
+	t_token	*token;
 	t_pipex	*prev;
 	t_pipex	*next;
 	t_main	*main_s;
