@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/25 21:00:50 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:17:37 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	read_heredoc(t_token *tokens_s)
 			free(input);
 			break ;
 		}
-		expanded_input = heredoc_expand(input);
+		expanded_input = heredoc_expand(tokens_s, input);
 		write(piper[1], expanded_input, ft_strlen(expanded_input));
 		write(piper[1], "\n", 1);
 		ft_free(&expanded_input);

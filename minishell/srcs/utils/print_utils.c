@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:26:34 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:05:19 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	print_tokens(t_token *tokens)
             case CMD: type_str = "CMD"; break ;
             case ARG: type_str = "ARG"; break ;
             case PATH: type_str = "PATH"; break ;
+			case DELIM_QUOTE: type_str = "DELIM_QUOTE"; break ;
             case DELIM: type_str = "DELIM"; break ;
             case CONC: type_str = "CONC"; break ;
 			case VAR: type_str = "VAR"; break ;

@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:28:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:19:33 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:09:54 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static void	tokenize_args(t_token *current, int type)
 			if (current->type == RED_IN || current->type == RED_OUT
 				|| current->type == RED_OUT_APP)
 				current->next->type = PATH;
-			else if (current->type == HERE_DOC)
+			else if (current->type == HERE_DOC
+				&& current->next->type != DELIM_QUOTE)
 				current->next->type = DELIM;
 			else if (current->type == WORD)
 				current->type = ARG;

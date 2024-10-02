@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/01 18:31:57 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:16:58 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef enum e_token_type
 	CMD,
 	ARG,
 	DELIM,
+	DELIM_QUOTE,
 	PATH,
 	CONC,
 	VAR
@@ -272,7 +273,7 @@ char	*var_replace_qstnmrk(void);
 char	*var_check_env(t_env *env, char *str);
 
 /* heredoc_expand.c */
-char	*heredoc_expand(char *str);
+char	*heredoc_expand(t_token *delim, char *str);
 
 /************************/
 /******* PARSING ********/

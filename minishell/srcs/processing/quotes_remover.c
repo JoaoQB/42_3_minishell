@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:02:51 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:52:20 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:06:14 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ void	quotes_remover(t_token *first)
 			ft_free(&current->value);
 			if (new_value)
 				current->value = new_value;
-			current->type = WORD;
+			if (current->prev->type == HERE_DOC)
+				current->type = DELIM_QUOTE;
+			else
+				current->type = WORD;
 		}
 		current = current->next;
 	}

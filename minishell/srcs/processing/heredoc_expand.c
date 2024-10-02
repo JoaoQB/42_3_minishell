@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:12:45 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 20:53:53 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:17:13 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static char	*check_after_var(char *str)
 	return (NULL);
 }
 
-static char	*str_expand(char *str, int i)
+static char	*str_expand(t_token *delim, char *str, int i)
 {
 	char	*var;
 	char	*before;
@@ -101,7 +101,7 @@ static char	*str_expand(char *str, int i)
 		before = extract_before_i(str, i);
 	after = check_after_var(&str[i]);
 	if (after)
-		after = heredoc_expand(after);
+		after = heredoc_expand(delim, after);
 	var = get_var(&str[i]);
 	new = join_string(before, var, after);
 	ft_free(&str);
@@ -111,7 +111,7 @@ static char	*str_expand(char *str, int i)
 	return (new);
 }
 
-char	*heredoc_expand(char *str)
+char	*heredoc_expand(t_token *delim, char *str)
 {
 	char	*new_input;
 	int		i;
@@ -122,8 +122,8 @@ char	*heredoc_expand(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$')
-			return (str_expand(str, i));
+		if (str[i] == '$' && delim->type != DELIM_QUOTE)
+			return (str_expand(delim, str, i));
 		i++;
 	}
 	new_input = extract_from_i(str, 0);
