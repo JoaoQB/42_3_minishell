@@ -21,6 +21,55 @@ void	ft_free(char **str)
     }
 }
 
+void	close_all_fd(t_pipex *pipex_s)
+{
+	t_pipex *save;
+
+	save = NULL;
+	while (pipex_s->prev)
+		pipex_s = pipex_s->prev;
+	while (pipex_s->next)
+	{
+		if (pipex_s != save)
+		{
+			if (pipex_s->pipe_fd[0] > 2)
+				close(pipex_s->pipe_fd[0]);
+			if (pipex_s->pipe_fd[1] > 2)
+				close(pipex_s->pipe_fd[1]);
+		}
+		pipex_s = pipex_s->next;
+	}
+}
+
+void	free_pipex_node(t_pipex *pipex_s)
+{
+	if (pipex_s->pipe_fd[0] > 2)
+		close(pipex_s->pipe_fd[0]);
+	if (pipex_s->pipe_fd[1] > 2)
+		close(pipex_s->pipe_fd[1]);
+	if (pipex_s->prev)
+		pipex_s->prev->next = pipex_s->next;
+	free_double_array(pipex_s->cmd);
+	free(pipex_s->path);
+	free(pipex_s);
+}
+
+
+void free_pipex_s(void)
+{
+	t_pipex *temp;
+
+	close_all_fd(minishell()->pipex);
+	while (minishell()->pipex)
+	{
+		temp = minishell()->pipex;
+		minishell()->pipex = temp->next;
+		free_double_array(temp->cmd);
+		free(temp->path);
+		free(temp);
+	}
+}
+
 // TODO DELETE
 void	free_triple_array(char ***array)
 {

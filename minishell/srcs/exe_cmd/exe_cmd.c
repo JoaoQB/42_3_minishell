@@ -127,7 +127,7 @@ char	*get_cmd_path(t_pipex *pipex_s)
 		{
             if (access(temp, R_OK | X_OK) == 0)
                 return (temp);
-            pipex_s->status = 126;
+            pipex_s->status = 126; //TODO run handle that will do this and more
         }
 		free(temp);
 		i = 0;

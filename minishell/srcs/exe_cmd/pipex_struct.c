@@ -62,6 +62,7 @@ int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
 
 	count = 0;
 	pipex_s->cmd[0] = NULL;
+	//pipex_s->token = tokens_s; //to be used 
 	while (tokens_s && tokens_s->type != PIPE) //funcao para este
 	{
 		if (tokens_s->type == CMD || tokens_s->type == ARG)
@@ -73,7 +74,6 @@ int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
 	}
 	return (0);
 }
-
 
 
 int	read_heredoc(t_token *tokens_s)
@@ -170,8 +170,10 @@ t_pipex *ft_init_pipex_s()
     pipex_s->status = 0;
 	pipex_s->path = NULL;
 	pipex_s->cmd = NULL;
-    pipex_s->pipe_fd[0] = -2;
-    pipex_s->pipe_fd[1] = -2;
+    // pipex_s->pipe_fd[0] = -2;
+    // pipex_s->pipe_fd[1] = -2;
+	pipex_s->pipe_fd[0] = STDIN_FILENO; //add ti the initer
+	pipex_s->pipe_fd[1] = STDOUT_FILENO; //add ti the initer
 	pipex_s->prev = NULL;
     pipex_s->next = NULL;
     return (pipex_s);

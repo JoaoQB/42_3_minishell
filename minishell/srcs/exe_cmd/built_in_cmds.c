@@ -90,6 +90,8 @@ int	edge_cases(t_pipex *pipex_s)
 		run_echo(pipex_s);
 	else if (ft_strcmp(pipex_s->cmd[0], "env") == 0)
 		my_print_env();
+	//else if (ft_strcmp(pipex_s->cmd[0], "cat") == 0 && !pipex_s->cmd[1])
+	//	cat_redirect(pipex_s);
 	else
 		return (0);
 	return (1);

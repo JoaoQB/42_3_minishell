@@ -12,41 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-void	close_all_fd(t_pipex *pipex_s)
-{
-	t_pipex *save;
-
-	save = NULL;
-	while (pipex_s->prev)
-		pipex_s = pipex_s->prev;
-	while (pipex_s->next)
-	{
-		if (pipex_s != save)
-		{
-			if (pipex_s->pipe_fd[0] > 2)
-				close(pipex_s->pipe_fd[0]);
-			if (pipex_s->pipe_fd[1] > 2)
-				close(pipex_s->pipe_fd[1]);
-		}
-		pipex_s = pipex_s->next;
-	}
-}
-
-void free_pipex_s(void)
-{
-	t_pipex *temp;
-
-	close_all_fd(minishell()->pipex);
-	while (minishell()->pipex)
-	{
-		temp = minishell()->pipex;
-		minishell()->pipex = temp->next;
-		free_double_array(temp->cmd);
-		free(temp->path);
-		free(temp);
-	}
-}
-
 void	process_child_pid(t_pipex *curr_pipex_s)
 {
 	int		status;
@@ -68,6 +33,7 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 			curr_pipex_s->status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			curr_pipex_s->status = 128 + WTERMSIG(status);
+		// free_pipex_node(curr_pipex_s); // TODO reddy to test
 	}
 }
 
@@ -109,6 +75,7 @@ int	ft_shell_pipex()
 	add_to_history();
 	// print_struct();
 	ft_exe_pipex_s();
+	// new_process_tokens(); //TODO test comment ft_process_tokens_s and ft_exe_pipex_s
 	status = process_child_pipes(minishell()->pipex); //manage_pid
 	minishell()->status = status;
 	// printf("\n	COMMAND ERR: %d\n", status);

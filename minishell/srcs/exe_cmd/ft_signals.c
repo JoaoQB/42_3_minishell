@@ -13,6 +13,23 @@ void handle_sigint(int sig)
     // exit(0);
 }
 
+void handle_sigchild(int sig) 
+{
+    t_pipex *pipex_s;
+    pid_t   pid;
+    int     status;
+
+    while((pid = waitpid(-1, &status, WNOHANG) > 0));
+    {
+        printf("child with PID %d terminated", pid);
+        //insted of next i can try to just run an v2 of prev
+        pipex_s = minishell()->pipex;
+        while (pipex_s && pipex_s->pid != pid)
+            ;
+        process_child_pipes(pipex_s);
+    }
+    //or i can just run the function that kills all
+}
 
 void handle_sigquit(int sig) 
 {
