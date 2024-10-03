@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jk <jk@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/02 22:10:09 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:51:05 by jk               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ void ft_exe_pipex_s()
 				return (perror("fork failed")); //TODO Handle error s
 			else if (pipex_s->pid == 0)
 			{
-				// ft_update_fds(pipex_s->token, pipex_s); //TODO TEST
-				// if (pipex_s->prev == NULL)
-				// 	pipex_s->pipe_fd[0] = STDIN_FILENO;
-				// if (pipex_s->next == NULL)
-				// 	pipex_s->next == NULL;
+				ft_update_fds(pipex_s->token, pipex_s); //TODO TEST
+				if (pipex_s->prev == NULL)
+					pipex_s->pipe_fd[0] = STDIN_FILENO;
+				if (pipex_s->next == NULL)
+					pipex_s->pipe_fd[0] = STDOUT_FILENO;
 				exe_cmd_child(pipex_s, minishell()->menv);
 			}
 			// else <parent> change stuff here latter

@@ -6,15 +6,50 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/02 22:12:11 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:09:09 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// /should i create the full struct of pipes at the start of doi it dinamicly?
+
+//run all tokens
+//while tokens != NULL
+//	if tokens->type == PIPE
+// 		tokens = tokens->next
+//  process_pipe(tokens)
+//  exe_cmd(pipe)
+//  tokens = tokens->next
+
+
+
+//process_pipe
+//pipex_s = ft_init_pipex_s
+//pipex_s->token = tokens
+//update_cmd
+	//will malloc and update the cmd array
+//if (first_pipe)
+	//fd_in = STDIN_FILENO
+//if (no_next_pipe)
+	//fd_out = STDOUT_FILENO
+//update_fds
+	//will update the fds
+
+
+
+
+
+
 #include "../../includes/minishell.h"
 
-void	new_process_pipe();
+
+new_process_pipe()
 {
-	pipe
+	t_token	*tokens_s;
+	t_pipex	*pipex_s;
+
+	tokens_s = minishell()->tokens;
+	ft_create_pipeline(); //this one will no longer open fd's will just create the structures???
+	pipex_s = minishell()->pipex;
 }
 
 int		ft_process_tokens_s()
@@ -80,7 +115,33 @@ int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
 	return (0);
 }
 
+int	ft_new_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
+{
+	int count;
 
+	pipex_s->cmd[0] = NULL; //safeguard
+	tokens_s = pipex_s->token; //to be updated out of the pipex struct
+	count = 0;
+	while (tokens_s && tokens_s->type != PIPE) //---------------
+	{
+		if (tokens_s->type == CMD || tokens_s->type == ARG)
+			count += 1;
+		tokens_s = tokens_s->next;
+	}
+	count = 0;
+	pipex_s->cmd = (char **) safe_malloc(sizeof(char *) *(count + 1)); //---------------
+	tokens_s = pipex_s->token; //to be used
+	while (tokens_s && tokens_s->type != PIPE) //funcao para este
+	{
+		if (tokens_s->type == CMD || tokens_s->type == ARG)
+		{
+			pipex_s->cmd[count++] = ft_strnjoin(NULL, tokens_s->value, -1);
+			pipex_s->cmd[count] = NULL;
+		}
+		tokens_s = tokens_s->next;
+	}
+	return (0);
+}
 
 int	read_heredoc(t_token *tokens_s)
 {
