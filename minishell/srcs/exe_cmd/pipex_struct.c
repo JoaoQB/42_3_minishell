@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/03 12:09:09 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:12:35 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,39 +115,11 @@ int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
 	return (0);
 }
 
-int	ft_new_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
-{
-	int count;
-
-	pipex_s->cmd[0] = NULL; //safeguard
-	tokens_s = pipex_s->token; //to be updated out of the pipex struct
-	count = 0;
-	while (tokens_s && tokens_s->type != PIPE) //---------------
-	{
-		if (tokens_s->type == CMD || tokens_s->type == ARG)
-			count += 1;
-		tokens_s = tokens_s->next;
-	}
-	count = 0;
-	pipex_s->cmd = (char **) safe_malloc(sizeof(char *) *(count + 1)); //---------------
-	tokens_s = pipex_s->token; //to be used
-	while (tokens_s && tokens_s->type != PIPE) //funcao para este
-	{
-		if (tokens_s->type == CMD || tokens_s->type == ARG)
-		{
-			pipex_s->cmd[count++] = ft_strnjoin(NULL, tokens_s->value, -1);
-			pipex_s->cmd[count] = NULL;
-		}
-		tokens_s = tokens_s->next;
-	}
-	return (0);
-}
 
 int	read_heredoc(t_token *tokens_s)
 {
 	char	*input;
 	char	*delim;
-	char	*expanded_input;
 	int		piper[2];
 
 	delim = tokens_s->value;
@@ -163,10 +135,10 @@ int	read_heredoc(t_token *tokens_s)
 			free(input);
 			break ;
 		}
-		expanded_input = heredoc_expand(tokens_s, input);
-		write(piper[1], expanded_input, ft_strlen(expanded_input));
+		input = heredoc_expand(tokens_s, input);
+		write(piper[1], input, ft_strlen(input));
 		write(piper[1], "\n", 1);//TODO check this new line
-		ft_free(&expanded_input);
+		ft_free(&input);
 	}
 	close(piper[1]);
 	return (piper[0]);
@@ -238,8 +210,10 @@ t_pipex *ft_init_pipex_s()
     pipex_s->status = 0;
 	pipex_s->path = NULL;
 	pipex_s->cmd = NULL;
-    pipex_s->pipe_fd[0] = -2;
-    pipex_s->pipe_fd[1] = -2;
+    // pipex_s->pipe_fd[0] = -2;
+    // pipex_s->pipe_fd[1] = -2;
+	pipex_s->pipe_fd[0] = STDIN_FILENO; //add ti the initer
+	pipex_s->pipe_fd[1] = STDOUT_FILENO; //add ti the initer
 	pipex_s->prev = NULL;
     pipex_s->next = NULL;
     return (pipex_s);

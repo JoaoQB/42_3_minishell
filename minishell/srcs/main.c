@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:42:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/02 19:54:18 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:08:27 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return (1);
 	if (set_sig_handlers(SIGINT, handle_sigint) != 0)
-        return (1);
+        return (1); //hdl err
 	if (set_sig_handlers(SIGQUIT, handle_sigquit) != 0)
         return (1);
+	if (set_sig_handlers(SIGQUIT, handle_sigchild) != 0)
+		return (1);
 	//add signal handler for child finalle detection.
 	repl(envp);
 	cleanup_main();

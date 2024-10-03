@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/02 13:52:04 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:15:12 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int	edge_cases(t_pipex *pipex_s)
 		run_echo(pipex_s);
 	else if (ft_strcmp(pipex_s->cmd[0], "env") == 0)
 		my_print_env();
+	else if (ft_strcmp(pipex_s->cmd[0], "cat") == 0 && !pipex_s->cmd[1])
+		cat_redirect(pipex_s);
 	else
 		return (0);
 	return (1);
