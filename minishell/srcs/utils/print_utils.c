@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/02 13:05:19 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:35:32 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	print_tokens(t_token *tokens)
             case DELIM: type_str = "DELIM"; break ;
             case CONC: type_str = "CONC"; break ;
 			case VAR: type_str = "VAR"; break ;
+			case EMPTY: type_str = "EMPTY"; break ;
             // Add new token types here
             // case NEW_TYPE_2: type_str = "NEW_TYPE_2"; break ;
             default: type_str = "UNKNOWN";

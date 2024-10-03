@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/02 13:16:58 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:34:14 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ typedef enum e_token_type
 	DELIM_QUOTE,
 	PATH,
 	CONC,
-	VAR
+	VAR,
+	EMPTY
 }	t_token_type;
 
 typedef struct s_env

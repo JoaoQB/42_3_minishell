@@ -6,11 +6,26 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 15:40:54 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:34:26 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	token_flag_empty(t_token *first)
+{
+	t_token	*current;
+
+	if (!first)
+		return ;
+	current = first;
+	while (current)
+	{
+		if (current->value && !*current->value)
+			current->type = EMPTY;
+		current = current->next;
+	}
+}
 
 static void	concatenate_tokens(char *result, t_token *first)
 {
@@ -84,6 +99,7 @@ char	*input_and_tokens_reorg()
 		return (NULL);
 	}
 	tokenize_smarter(minishell()->tokens);
+	token_flag_empty(minishell()->tokens);
 	input_reorg = concat_tokens_to_char(minishell()->tokens);
 	if (!input_reorg)
 		return (NULL);
