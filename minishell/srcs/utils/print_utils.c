@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:06:07 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/03 12:35:32 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:46:26 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,67 +47,20 @@ void	print_env(t_env *env)
 
 void	print_tokens(t_token *tokens)
 {
+	t_token	*current;
+
 	if (!tokens)
 	{
 		printf("no tokens\n");
 		return ;
 	}
-    t_token *current = tokens;
-    while (current != NULL)
-    {
-        const char *type_str;
-        switch(current->type)
-        {
-            case RED_IN: type_str = "RED_IN"; break ;
-            case RED_OUT: type_str = "RED_OUT"; break ;
-            case HERE_DOC: type_str = "HERE_DOC"; break ;
-            case RED_OUT_APP: type_str = "RED_OUT_APP"; break ;
-            case PIPE: type_str = "PIPE"; break ;
-            case QUOTE: type_str = "QUOTE"; break ;
-            case WORD: type_str = "WORD"; break ;
-            case CMD: type_str = "CMD"; break ;
-            case ARG: type_str = "ARG"; break ;
-            case PATH: type_str = "PATH"; break ;
-			case DELIM_QUOTE: type_str = "DELIM_QUOTE"; break ;
-            case DELIM: type_str = "DELIM"; break ;
-            case CONC: type_str = "CONC"; break ;
-			case VAR: type_str = "VAR"; break ;
-			case EMPTY: type_str = "EMPTY"; break ;
-            // Add new token types here
-            // case NEW_TYPE_2: type_str = "NEW_TYPE_2"; break ;
-            default: type_str = "UNKNOWN";
-		}
+	current = tokens;
+	while (current != NULL)
+	{
 		if (current->value)
-        	printf("Token: '%s', Type: %s, %d, Index: '%d'\n", current->value, type_str, current->type, current->index);
+			printf("Token: '%s', Type: %d\n", current->value, current->type);
 		else
-			printf("Token: 'no value', Type: %s, %d, Index: '%d'\n", type_str, current->type, current->index);
-        current = current->next;
-    }
-}
-
-void	print_cmd_array(char ***cmd)
-{
-	int	i;
-	int	j;
-
-	if (!cmd)
-	{
-		printf("Command array is NULL\n");
-		return ;
-	}
-	i = 0;
-	while (cmd[i] != NULL)
-	{
-		printf("Command %d\n", i);
-		j = 0;
-		while (cmd[i][j] != NULL)
-		{
-			if (j == 0)
-				printf("CMD: '%s'\n", cmd[i][j]);
-			else if (j > 0)
-				printf("ARG: '%s'\n", cmd[i][j]);
-			j++;
-		}
-		i++;
+			printf("Token: 'no value', Type: %d\n", current->type);
+		current = current->next;
 	}
 }

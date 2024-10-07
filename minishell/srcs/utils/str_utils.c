@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:35:30 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:23:49 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:28:29 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (ft_strlen(src));
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	size_t	i;
-	size_t	j;
-	size_t	len;
-	char	*dest;
-
-	if (!s1 || !s2)
-		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	dest = (char *)safe_malloc(sizeof(char) *(len + 1));
-	i = -1;
-	while (s1[++i])
-		dest[i] = s1[i];
-	j = -1;
-	while (s2[++j])
-		dest[i++] = s2[j];
-	*(dest + i) = '\0';
-	return (dest);
-}
-
 char	*ft_strdup(const char *s)
 {
 	char	*dest;
@@ -82,6 +61,16 @@ char	*ft_strdup(const char *s)
 	}
 	dest[i] = 0;
 	return (dest);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while ((*s1 || *s2) && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return ((*(unsigned char *)s1 - *(unsigned char *)s2));
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)

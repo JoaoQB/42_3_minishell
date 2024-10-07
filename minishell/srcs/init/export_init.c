@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:54:23 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/26 19:10:56 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:57:21 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_env	*ft_export_new(char *str)
 	return (new);
 }
 
-t_env	*sort_env()
+t_env	*sort_env(void)
 {
 	t_env	*current_env;
 	t_env	*first_export;

@@ -6,15 +6,15 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/26 12:01:34 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:01:42 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	check_for_pipeline()
+int	check_for_pipeline(void)
 {
-	t_token *tokens_s;
+	t_token	*tokens_s;
 	int		check;
 
 	check = 0;
@@ -36,25 +36,26 @@ int	check_for_pipeline()
 	return (0);
 }
 
-bool is_directory(t_pipex *pipex_s)
+//TODO Handle error s
+bool	is_directory(t_pipex *pipex_s)
 {
-	char	*path;
-    struct stat buffer;
+	char		*path;
+	struct stat	buffer;
 
 	path = pipex_s->cmd[0];
-    if (stat(path, &buffer) != 0)
-        return false;
-    if (S_ISDIR(buffer.st_mode))
+	if (stat(path, &buffer) != 0)
+		return (false);
+	if (S_ISDIR(buffer.st_mode))
 	{
 		if (path[0] == '.' && !path[1])
 		{
-			printf("%s: filename argument required\n", path); //TODO Handle error s
-			printf("usage: %s filename [arguments]\n", path); //TODO Handle error s
+			printf("%s: filename argument required\n", path);
+			printf("usage: %s filename [arguments]\n", path);
 			pipex_s->status = 2;
 		}
 		else
 		{
-			printf("%s: %s\n", path, strerror(EISDIR)); //TODO Handle error s
+			printf("%s: %s\n", path, strerror(EISDIR));
 			pipex_s->status = 126;
 		}
 		return (true);
@@ -62,9 +63,10 @@ bool is_directory(t_pipex *pipex_s)
 	return (false);
 }
 
-void ft_exe_pipex_s()
-{//join function with execute_command
-	t_pipex *pipex_s;
+//join function with execute_command
+void	ft_exe_pipex_s(void)
+{
+	t_pipex	*pipex_s;
 
 	pipex_s = minishell()->pipex;
 	if (!check_for_pipeline()) //handle no pipeline
@@ -85,6 +87,7 @@ void ft_exe_pipex_s()
 	}
 }
 
+//TODO Handle error s
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
@@ -96,7 +99,7 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 		ft_exit_pid(pipex_s);
 	else if (!is_directory(pipex_s))
 	{
-		pipex_s->path = get_cmd_path(pipex_s); //TODO Handle error s
+		pipex_s->path = get_cmd_path(pipex_s);
 		if (pipex_s->status == 126)
 			printf("%s: %s\n", pipex_s->cmd[0], strerror(EACCES));
 		else if (!pipex_s->path && pipex_s->status == 0)
@@ -109,7 +112,7 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	if (pipex_s->status != 0 || !pipex_s->cmd || !*pipex_s->cmd)
 		ft_exit_pid(pipex_s);
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
-			pipex_s->status = errno;
+		pipex_s->status = errno;
 	ft_exit_pid(pipex_s);
 }
 
@@ -123,12 +126,12 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	temp = ft_strnjoin(ft_strdup("./"), pipex_s->cmd[0], -1);
 	while (paths && *paths != '\0')
 	{
-        if (access(temp, F_OK) == 0)
+		if (access(temp, F_OK) == 0)
 		{
-            if (access(temp, R_OK | X_OK) == 0)
-                return (temp);
-            pipex_s->status = 126;
-        }
+			if (access(temp, R_OK | X_OK) == 0)
+				return (temp);
+			pipex_s->status = 126;
+		}
 		free(temp);
 		i = 0;
 		while (paths[i] && paths[i] != ':')
@@ -141,4 +144,3 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	}
 	return (free(temp), NULL);
 }
-

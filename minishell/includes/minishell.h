@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/03 12:34:14 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:09:58 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <sys/stat.h>
 # include <signal.h>
 # include <limits.h>
-#include <stdarg.h>
+# include <stdarg.h>
 
 # define MAX_HIST 30
 
@@ -80,13 +80,14 @@ typedef struct s_token
 	t_token	*next;
 }	t_token;
 
+// pipe_fd restruct in case of *
 typedef struct s_pipex //mine2
 {
 	pid_t	pid;
 	int		status;
 	char	*path;
 	char	**cmd;
-	int		pipe_fd[2]; //restruct in case of *
+	int		pipe_fd[2];
 	t_pipex	*prev;
 	t_pipex	*next;
 	t_main	*main_s;
@@ -111,8 +112,8 @@ typedef struct s_main
 	t_env	*env;
 	t_env	*export;
 	t_token	*tokens;
-	t_pipex	*pipex; //fandre-b added
-	t_hist	*history; //fandre-b added
+	t_pipex	*pipex;
+	t_hist	*history;
 }	t_main;
 
 /************************/
@@ -126,7 +127,6 @@ void	init_main(char **envp);
 void	free_main_input(void);
 void	cleanup_main(void);
 void	free_double_array(char **array);
-void	free_triple_array(char ***array);
 void	ft_free(char **str);
 
 /* cleanup_struct.c */
@@ -156,13 +156,10 @@ int		count_words(const char *str);
 
 /* str_utils.c */
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strdup(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 char	*ft_strcat(char *dest, const char *src);
-
-/* str_utils2.c */
-int		ft_strcmp(const char *s1, const char *s2);
 
 /* char_extract_utils.c */
 char	*extract_before_i(char *str, int i);
@@ -183,7 +180,6 @@ bool	find_plus(char *str);
 
 /* print_utils.c */
 void	print_tokens(t_token *tokens);
-void	print_cmd_array(char ***cmd);
 void	print_env(t_env *env);
 void	print_menv(char **menv);
 
@@ -307,18 +303,15 @@ int		read_heredoc(t_token *tokens_s);
 t_pipex	*ft_init_pipex_s(void);
 
 //Execute pipex cmds
-int		edge_cases(t_pipex *pipex_s);
 void	ft_exe_pipex_s(void);
-void	execute_command(t_pipex *pipex_s, char **envp);
+// void	execute_command(t_pipex *pipex_s, char **envp);
 char	*get_cmd_path(t_pipex *pipex_s);
 void	exe_cmd_child(t_pipex *pipex_s, char **envp);
 
 //pipex_utils
 char	*ft_strnjoin(char *old_str, char *str_add, int size);
 char	*ft_strstr(const char *big, const char *little);
-char	*get_file_name_from_fd(int fd);
-void	print_struct(void);
-void	print_check_processes(t_pipex *pipex_s);
+void	*safe_malloc(size_t size);
 
 /************************/
 /******* HISTORY ********/
@@ -334,10 +327,8 @@ void	free_history(void);
 /****** EDGE CASES ******/
 /************************/
 
-char	*run_pwd(bool print);
-int		run_cd(t_pipex *pipex_s);
-int		run_echo(t_pipex *pipex_s);
 int		special_edge_cases(t_pipex *pipex_s);
+int		edge_cases(t_pipex *pipex_s);
 
 /************************/
 /****** BUILT INS *******/
@@ -345,10 +336,17 @@ int		special_edge_cases(t_pipex *pipex_s);
 
 /* ft_exit.c */
 void	ft_exit(t_pipex *pipex);
-//TODO
+
 /* ft_export.c */
 void	print_export(t_env *first);
 void	export_check(t_env *new);
+
+/* run_built_ins.c */
+char	*run_pwd(bool print);
+int		run_cd(t_pipex *pipex_s);
+int		run_echo(t_pipex *pipex_s);
+void	run_unset(t_pipex *pipex_s);
+void	run_export(t_pipex *pipex_s);
 
 /************************/
 /***** ENV FUNCTIONS ****/
@@ -356,12 +354,11 @@ void	export_check(t_env *new);
 
 // ft_getenv(char *var_name); TODO
 // ft_setenv(char *var_name, char *var_value, int overwrite); TODO
-char	*ft_getenv(char *var_name); //TODO
-void	ft_setenv(char *var_nm, char *var_vl, int ovwr);
-t_env	*new_menv_s(void);
-char	*env_get_value(char *var_name, char *var_value);
-// void export_env(void);
 void	my_print_env(void);
+void	ft_setenv(char *var_nm, char *var_vl, int ovwr);
+char	*ft_getenv(char *var_name);
+char	*env_get_value(char *var_name, char *var_value);
+char	**get_array_env(void);
 
 /************************/
 /*** SIGNAL HANDLERS ****/
@@ -372,8 +369,6 @@ int		set_sig_handlers(int signal, void (*func_name)(int));
 void	handle_sigquit(int sig);
 void	handle_sigint(int sig);
 void	ft_exit_pid(t_pipex *pipex);
-void	*safe_malloc(size_t size);
-char	**get_array_env(void);
 t_main	*minishell(void);
 
 #endif

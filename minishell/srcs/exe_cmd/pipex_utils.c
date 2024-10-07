@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/01 18:34:23 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:27:49 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	*ft_strnjoin(char *old_str, char *str_add, int size)
 	if (i < size || size == -1)
 		size = i;
 	new_str = (char *) safe_malloc(size + len + 1);
+	if (!new_str)
+		return (NULL);
 	i = -1;
 	while (old_str && ++i < len)
 		new_str[i] = old_str[i];
@@ -59,86 +61,27 @@ char	*ft_strstr(const char *big, const char *little)
 	return (NULL);
 }
 
-char* get_file_name_from_fd(int fd) 
-{//TODO delete
-    static char filename[1024];
-    char path[64];
-
-    snprintf(path, sizeof(path), "/proc/self/fd/%d", fd);
-    ssize_t len = readlink(path, filename, sizeof(filename) - 1);
-    if (len != -1) {
-        filename[len] = '\0';
-    } else {
-        strcpy(filename, "unknown");
-    }
-    return filename;
-}
-
-void	print_struct()
-{//TODO delete
-	t_pipex *pipex_s;
-	int	i;
-	int j;
-
-	j = 0;
-	pipex_s = minishell()->pipex;
-	printf("\n\n --> Printing pipe_struct an cmds<--\n\n");
-	while (pipex_s)
-	{
-		printf("   {pipe %d}\n", j++);
-		printf("pid %d with status %d\n", pipex_s->pid, pipex_s->status);
-		printf("inout_fd are: %d / %d\n", pipex_s -> pipe_fd[0], pipex_s -> pipe_fd[1]);
-		printf(" -input name: %s\n", get_file_name_from_fd(pipex_s -> pipe_fd[0]));
-		printf(" -output name: %s\n", get_file_name_from_fd(pipex_s -> pipe_fd[1]));
-		printf("will execute:\n  --> ");
-		i = -1;
-		while (pipex_s->cmd[++i])
-			printf("%s ", pipex_s->cmd[i]);
-		if (pipex_s->cmd[i] == NULL)
-			printf("%s", pipex_s->cmd[i]);
-		printf("\n\n");
-		pipex_s = pipex_s->next;
-	}
-	return ;
-}
-
-void	print_check_processes(t_pipex *pipex_s)
-{//TODO delete
-	// if (pipex_s == NULL)
-	// 	return ;
-	while (pipex_s->next)
-	{
-		if (pipex_s->pid > 0)
-		{
-			printf("\n-->process with pid: %d from cmd: %s unclosed\n", pipex_s->pid, pipex_s->cmd[0]);
-			return ;
-		}
-		pipex_s = pipex_s->next;
-	}
-	printf("\n-->all processes have been closed\n");
-}
-
 // void *handle_error(char *err_print)
 
-void *safe_malloc(size_t size) 
+void	*safe_malloc(size_t size)
 {
-    void *ptr;
+	void	*ptr;
 
 	ptr = (void *) malloc(size);
-    if (ptr == NULL) 
+	if (ptr == NULL)
 	{
-        perror("safe_malloc"); //the actuall error handlefunction.
-        free_main_input();
+		perror("safe_malloc");
+		free_main_input();
 		cleanup_main();
-		exit(1); // General error
-    }
-    return ptr;
+		exit(1);
+	}
+	return (ptr);
 }
 
-void process_err()
-{//TODO chat_gpt generated
-	//i wanto to handle errnos and convert then into the errors shell gives
-
+//TODO chat_gpt generated
+//i wanto to handle errnos and convert then into the errors shell gives
+void	process_err(void)
+{
 	if (errno == 0)
 		return ;
 	if (errno == 2)
@@ -165,28 +108,26 @@ void process_err()
 		ft_putstr_fd("Exit status out of range\n", 2);
 	else
 		ft_putstr_fd(strerror(errno), 2);
-	// else
-	// 	ft_putstr_fd("Error\n", 2);
 }
 
-void hdl_err(int err, char *format, ...) 
+void	hdl_err(int err, char *format, ...)
 {
-    va_list args;
+	va_list	args;
 
-    va_start(args, format);
-    while(*format) 
+	va_start(args, format);
+	while (*format)
 	{
-		if(*format == '%') 
+		if (*format == '%')
 		{
 			format++;
-			if(*format == 's') 
+			if (*format == 's')
 				ft_putstr_fd(va_arg(args, char *), 2);
 		}
-		else 
+		else
 			write(2, format, 1);
 		format++;
 	}
-    va_end(args);
+	va_end(args);
 	minishell()->status = err;
 	process_err();
 }

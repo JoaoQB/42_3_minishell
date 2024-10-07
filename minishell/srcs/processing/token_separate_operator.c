@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:13:32 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:08:11 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:54:58 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static bool	check_token_word(t_token *current)
 	return (false);
 }
 
-t_token	*token_separate_operator()
+t_token	*token_separate_operator(void)
 {
 	t_token	*current;
 	t_token	*next;

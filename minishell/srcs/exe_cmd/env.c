@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:33 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/09/25 13:01:16 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:20:51 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char **get_array_env()
+char	**get_array_env(void)
 {
-	t_env *env;
-	char **menvp;
-	int	i;
+	t_env	*env;
+	char	**menvp;
+	int		i;
 
 	i = 0;
 	env = minishell()->env;
@@ -26,6 +26,8 @@ char **get_array_env()
 		env = env->next;
 	}
 	menvp = (char **) safe_malloc (sizeof (char *) * (i + 1));
+	if (!menvp)
+		return (NULL);
 	i = 0;
 	env = minishell()->env;
 	while (env)
@@ -60,9 +62,9 @@ char	*env_get_value(char *var_name, char *var_value)
 
 char	*ft_getenv(char *var_name)
 {
-	t_env *menv_s;
+	t_env	*menv_s;
 
-    if (!var_name)
+	if (!var_name)
 		return (NULL);
 	menv_s = minishell()->env;
 	if (!menv_s)
@@ -100,54 +102,11 @@ void	ft_setenv(char *var_nm, char *var_vl, int ovwr)
 		ft_free(&menv_s->var_value);
 		menv_s->var_value = var_vl;
 	}
-	else
-		ft_free(&var_vl);
 }
 
-t_env	*new_menv_s()
-{//deprecated
-	t_env	*menv_s;
-
-	menv_s = (t_env *)safe_malloc(sizeof(t_env));
-	if (!menv_s)
-		return (NULL);
-	menv_s->var = NULL;
-	menv_s->var_value = NULL;
-	menv_s->value = NULL;
-	// menv_s->index = 1;
-	menv_s->next = NULL;
-	return (menv_s);
-}
-
-// void export_env()
-// {//deprecated
-// 	char	**envp;
-// 	int		i;
-// 	t_env	*menv_s;
-
-// 	if (minishell()->env)
-// 		return ;
-// 	minishell()->env = new_menv_s();
-// 	menv_s = minishell()->env;
-// 	envp = minishell()->menv;
-//     while (*envp != NULL)
-//     {
-// 		i = 0;
-// 		while ((*envp)[i] &&(*envp)[i] != '=')
-// 			i++;
-// 		menv_s->var = ft_strnjoin(NULL, *envp, i++);
-// 		menv_s->var_value = ft_strnjoin(NULL, *envp + i, -1);
-// 		if (*(++envp) == NULL)
-// 			break ;
-// 		menv_s->next = new_menv_s();
-//     	menv_s->next->index = menv_s->next->index + 1;
-// 		menv_s = menv_s->next;
-//     }
-// }
-
-void	my_print_env()
+void	my_print_env(void)
 {
-	t_env *menv_s;
+	t_env	*menv_s;
 
 	menv_s = minishell()->env;
 	while (menv_s)
@@ -160,7 +119,6 @@ void	my_print_env()
 				ft_putstr_fd(menv_s->var_value, 1);
 			ft_putstr_fd("\n", 1);
 		}
-		// printf("%s=%s\n", menv_s->var, menv_s->var_value);
 		menv_s = menv_s->next;
 	}
 }

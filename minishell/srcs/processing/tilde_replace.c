@@ -6,13 +6,13 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 02:28:16 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:07:39 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:56:23 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*change_tilde()
+static char	*change_tilde(void)
 {
 	t_env	*current_env;
 	char	*new_value;
