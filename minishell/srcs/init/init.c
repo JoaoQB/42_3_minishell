@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:49:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 11:54:41 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:40:16 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	init_main(char **envp)
 {
 	minishell()->env = get_env(envp);
-	// print_env(minishell()->env);
 	minishell()->menv = get_array_env();
-	// print_menv(minishell()->menv);
 	minishell()->export = sort_env();
 	minishell()->tokens = NULL;
 	minishell()->user_input = NULL;

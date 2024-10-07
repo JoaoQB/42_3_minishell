@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/01 21:48:08 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:08:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	close_all_fd(t_pipex *pipex_s)
 {
-	t_pipex *save;
+	t_pipex	*save;
 
 	save = NULL;
 	while (pipex_s->prev)
@@ -32,9 +32,9 @@ void	close_all_fd(t_pipex *pipex_s)
 	}
 }
 
-void free_pipex_s(void)
+void	free_pipex_s(void)
 {
-	t_pipex *temp;
+	t_pipex	*temp;
 
 	close_all_fd(minishell()->pipex);
 	while (minishell()->pipex)
@@ -47,6 +47,7 @@ void free_pipex_s(void)
 	}
 }
 
+//TODO Handle error s
 void	process_child_pid(t_pipex *curr_pipex_s)
 {
 	int		status;
@@ -57,13 +58,13 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 		if (curr_pipex_s->pipe_fd[0] > 2)
 		{
 			if (close(curr_pipex_s->pipe_fd[0]) == -1)
-				perror("Error closing pipe_fd[0]"); //TODO Handle error s
+				perror("Error closing pipe_fd[0]");
 			if (curr_pipex_s->prev && curr_pipex_s->prev->pid > 0)
 				kill(curr_pipex_s->prev->pid, SIGPIPE);
 		}
 		if (curr_pipex_s->pipe_fd[1] > 2)
 			if (close(curr_pipex_s->pipe_fd[1]) == -1)
-				perror("Error closing pipe_fd[1]"); //TODO Handle error s
+				perror("Error closing pipe_fd[1]");
 		if (WIFEXITED(status))
 			curr_pipex_s->status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
@@ -74,7 +75,7 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 int	process_child_pipes(t_pipex *pipex_s)
 {
 	t_pipex	*curr_pipex_s;
-	int 	rep;
+	int		rep;
 
 	while (pipex_s->next)
 		pipex_s = pipex_s->next;
@@ -98,9 +99,9 @@ int	process_child_pipes(t_pipex *pipex_s)
 	return (pipex_s->status);
 }
 
-int	ft_shell_pipex()
+int	ft_shell_pipex(void)
 {
-	int status;
+	int	status;
 
 	if (minishell()->silence_info == true)
 		return (0);
@@ -114,7 +115,7 @@ int	ft_shell_pipex()
 	// printf("\n	COMMAND ERR: %d\n", status);
 	//print_check_processes(minishell()->pipex);
 	// free_pipex_s(minishell()->pipex); //temp free
-	//recieve signal when i do exit, so i can properly free it and pass responsability
+	//recieve signal when i do exit,
+	// so i can properly free it and pass responsability
 	return (status);
 }
-

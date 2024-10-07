@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-char	*var_replace_qstnmrk()
+char	*var_replace_qstnmrk(void)
 {
 	char	*new_value;
 	int		status;

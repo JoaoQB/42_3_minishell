@@ -6,7 +6,7 @@
 #    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/09/25 20:36:44 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/10/07 16:48:18 by jqueijo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/init/cleanup_struct.c \
 	$(SRC_PATH)/utils/len_utils.c \
 	$(SRC_PATH)/utils/str_utils.c \
-	$(SRC_PATH)/utils/str_utils2.c \
 	$(SRC_PATH)/utils/char_extract_utils.c \
 	$(SRC_PATH)/utils/is_x.c \
 	$(SRC_PATH)/utils/find_x_utils.c \
@@ -53,6 +52,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/exe_cmd/exe_cmd.c \
 	$(SRC_PATH)/exe_cmd/pipex_main.c \
 	$(SRC_PATH)/exe_cmd/pipex_struct.c \
+	$(SRC_PATH)/exe_cmd/pipex_struct2.c \
 	$(SRC_PATH)/exe_cmd/pipex_utils.c \
 	$(SRC_PATH)/exe_cmd/history.c \
 	$(SRC_PATH)/exe_cmd/built_in_cmds.c \
@@ -60,6 +60,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/exe_cmd/ft_signals.c \
 	$(SRC_PATH)/exe_cmd/built_ins/ft_exit.c \
 	$(SRC_PATH)/exe_cmd/built_ins/ft_export.c \
+	$(SRC_PATH)/exe_cmd/built_ins/run_built_ins.c \
 
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/01 18:32:19 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:57:55 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,10 @@
 
 void	ft_free(char **str)
 {
-    if (str && *str)
-    {
-        free(*str);
-        *str = NULL;
-    }
-}
-
-// TODO DELETE
-void	free_triple_array(char ***array)
-{
-	int	i;
-
-	i = 0;
-	if (array != NULL)
+	if (str && *str)
 	{
-		while (array[i])
-		{
-			free_double_array(array[i]);
-			i++;
-		}
-		free(array);
+		free(*str);
+		*str = NULL;
 	}
 }
 
@@ -57,7 +40,7 @@ void	free_double_array(char **array)
 	array = NULL;
 }
 
-void	cleanup_main()
+void	cleanup_main(void)
 {
 	if (minishell()->env)
 		free_env(&minishell()->env);
@@ -70,7 +53,7 @@ void	cleanup_main()
 	minishell()->history = NULL;
 }
 
-void	free_main_input()
+void	free_main_input(void)
 {
 	if (minishell()->tokens)
 		free_tokens(&minishell()->tokens);

@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 11:39:05 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:06:14 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:23:36 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static char	*alloc_and_concat(char **words, int total_len, int j)
 	int		i;
 
 	trimmed = (char *)safe_malloc((total_len + j) * sizeof(char));
+	if (!trimmed)
+		return (NULL);
 	current_pos = 0;
 	i = -1;
 	while (words[++i])

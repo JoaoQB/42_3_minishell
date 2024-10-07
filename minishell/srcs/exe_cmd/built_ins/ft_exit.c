@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/01 18:34:30 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:14:19 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	ft_exit(t_pipex *pipex)
 		if (cmd[2])
 			return (invalid_exit(pipex, 2));
 		pipex->status = ft_atoi(cmd[1]);
-		// if (pipex->status < 0 || pipex->status > 255)
-		// 	pipex->status = (pipex->status % 256 + 256) % 256;
+		if (pipex->status < 0 || pipex->status > 255)
+			pipex->status = (pipex->status % 256 + 256) % 256;
 	}
 	status = pipex->status;
 	free_main_input();
@@ -93,4 +93,3 @@ void	ft_exit_pid(t_pipex *pipex)
 	cleanup_main();
 	exit(status);
 }
-

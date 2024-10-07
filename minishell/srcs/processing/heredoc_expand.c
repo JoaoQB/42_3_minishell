@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:12:45 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/02 13:17:13 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:56:13 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static char	*get_var(char *str)
 {
 	char	*var_value;
 	char	*var;
-
-	int	i;
+	int		i;
 
 	if (!str)
 		return (NULL);
@@ -62,7 +61,6 @@ static char	*get_var(char *str)
 	return (var);
 }
 
-
 static char	*check_after_var(char *str)
 {
 	int	i;
@@ -70,7 +68,7 @@ static char	*check_after_var(char *str)
 	if (!str)
 		return (NULL);
 	i = 1;
-	if(str[i] == '\0')
+	if (str[i] == '\0')
 		return (NULL);
 	else if (str[i] == '$' || str[i] == ' ' || ft_isquotes(str[i]))
 		return (extract_from_i(str, i));
