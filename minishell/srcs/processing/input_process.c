@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/07 15:55:22 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:09:09 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ char	*input_and_tokens_reorg(void)
 		minishell()->silence_info = true;
 		return (NULL);
 	}
-	tokenize_smarter(minishell()->tokens);
 	token_flag_empty(minishell()->tokens);
+	tokenize_smarter(minishell()->tokens);
 	input_reorg = concat_tokens_to_char(minishell()->tokens);
 	if (!input_reorg)
 		return (NULL);

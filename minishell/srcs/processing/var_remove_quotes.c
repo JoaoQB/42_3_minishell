@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 16:18:48 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 15:27:08 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:13:46 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static char	*var_delete_var_quotes(t_token *current)
 	{
 		ft_free(&current->value);
 		new_value = ft_strdup("");
+		current->type = EMPTY;
 		return (new_value);
 	}
 	len = ft_strlen(current->value) - 1;
