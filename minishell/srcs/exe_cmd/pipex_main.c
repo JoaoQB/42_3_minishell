@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/03 21:38:39 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:24:20 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	ft_shell_pipex()
 	add_to_history();
 	// print_struct();
 	// ft_exe_pipex_s();
+	minishell()->pipex = NULL;
 	new_process_tokens(); //TODO test comment ft_process_tokens_s and ft_exe_pipex_s
 	status = process_child_pipes(minishell()->pipex); //manage_pid
 	minishell()->status = status;

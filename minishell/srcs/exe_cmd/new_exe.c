@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 16:05:48 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:52:12 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,20 @@ void ft_n_update_fds(t_pipex *pipex_s)
 {
     int piper[2];
     
-    if (!pipex_s->next)
-        return;
-    if (pipe(piper) == -1)
-        return (perror("pipe"));//TODO hdl err
-    pipex_s->pipe_fd[1] = piper[1];
-    pipex_s->next->pipe_fd[0] = piper[0];
+    if (pipex_s->next)
+    {
+        if (pipe(piper) == -1)
+            return (perror("pipe"));//TODO hdl err
+        pipex_s->pipe_fd[1] = piper[1];
+        pipex_s->next->pipe_fd[0] = piper[0];
+    }
     ft_update_fds(pipex_s->token, pipex_s);
 }
 
 t_pipex *add_back_pipex_s(void)
 {
     t_pipex *pipex_s;
-    t_token *token_s;
 
-    token_s = minishell()->tokens;
 	if (!minishell()->pipex)
     {
 		minishell()->pipex = ft_init_pipex_s();
@@ -75,7 +74,7 @@ t_pipex *add_back_pipex_s(void)
     pipex_s = minishell()->pipex;
     while (pipex_s->next)
         pipex_s = pipex_s->next;
-    if (find_next_pipe(pipex_s->token))
+    if (pipex_s != minishell()->pipex && find_next_pipe(pipex_s->token))
     {
         pipex_s->next = ft_init_pipex_s();
         pipex_s->next->prev = pipex_s; //TODO do i need this?
@@ -96,6 +95,7 @@ void new_process_tokens(void)
         if (token_s->type == PIPE)
             token_s = token_s->next;
         pipex_s = add_back_pipex_s();
+        pipex_s->token = token_s;
         pipex_s->pid = fork();
 		if (pipex_s->pid == -1)
 			return (perror("fork failed")); //TODO Handle error s
