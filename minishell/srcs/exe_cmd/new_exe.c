@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/04 03:12:23 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:05:48 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ void ft_n_update_fds(t_pipex *pipex_s)
 t_pipex *add_back_pipex_s(void)
 {
     t_pipex *pipex_s;
+    t_token *token_s;
 
+    token_s = minishell()->tokens;
 	if (!minishell()->pipex)
     {
 		minishell()->pipex = ft_init_pipex_s();
