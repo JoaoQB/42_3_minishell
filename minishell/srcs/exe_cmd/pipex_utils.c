@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/01 18:34:23 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 12:07:45 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,11 @@ void process_err()
 	// 	ft_putstr_fd("Error\n", 2);
 }
 
+void hdl_err2(int err, char *format, ...) 
+{
+	
+}
+
 void hdl_err(int err, char *format, ...) 
 {
     va_list args;
@@ -189,4 +194,24 @@ void hdl_err(int err, char *format, ...)
     va_end(args);
 	minishell()->status = err;
 	process_err();
+}
+
+void print_err(char *format, ...)
+{
+    va_list args;
+
+    va_start(args, format);
+    while(*format) 
+	{
+		if(*format == '%') 
+		{
+			format++;
+			if(*format == 's') 
+				ft_putstr_fd(va_arg(args, char *), 2);
+		}
+		else
+			write(2, format, 2);
+		format++;
+	}
+    va_end(args);
 }
