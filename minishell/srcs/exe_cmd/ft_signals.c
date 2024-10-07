@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/07 16:40:42 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 20:22:00 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	handle_sigquit(int sig)
 {
 	(void)sig;
 	g_signal = 2;
-	printf("this is an forced core dump\n");
+	// printf("this is an forced core dump\n");
 	// abort(); //TODO exit with abort value or free and core dump
 	free_main_input();
-	cleanup_main();
-	exit(1); // General error
+	// cleanup_main();
+	// exit(1); // General error
 }
 
 int	set_sig_handlers(int signal, void (*func_name)(int))

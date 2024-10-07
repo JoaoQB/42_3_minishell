@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 17:01:42 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 20:19:53 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ bool	is_directory(t_pipex *pipex_s)
 	{
 		if (path[0] == '.' && !path[1])
 		{
-			printf("%s: filename argument required\n", path);
-			printf("usage: %s filename [arguments]\n", path);
+			print_err("%s: filename argument required\n", path);
+			print_err("usage: %s filename [arguments]\n", path);
+			// printf("%s: filename argument required\n", path);
+			// printf("usage: %s filename [arguments]\n", path);
 			pipex_s->status = 2;
 		}
 		else

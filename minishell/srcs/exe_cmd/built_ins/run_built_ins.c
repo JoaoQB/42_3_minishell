@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_ins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/07 16:53:47 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/07 20:29:54 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ int	run_cd(t_pipex *pipex_s)
 
 	cmd = pipex_s->cmd;
 	if (cmd[1] && cmd[2])
-		return (printf("%s: %s\n", cmd[0], "too many arguments"), 1);
+		return (print_err(printf("%s: %s\n", cmd[0], "too many arguments")), 1);
+		// return (printf("%s: %s\n", cmd[0], "too many arguments"), 1);
 	if (!cmd[1] || strcmp(cmd[1], "~") == 0)
 		new_dir = ft_strdup(ft_getenv("HOME"));
 	else if (strcmp(cmd[1], "-") == 0)
@@ -90,7 +91,8 @@ int	run_cd(t_pipex *pipex_s)
 	ft_setenv("OLDPWD", run_pwd(false), 1);
 	if (new_dir && !(chdir(new_dir) == 0))
 		return (free(new_dir),
-			printf("%s: %s: %s\n", cmd[0], cmd[1], strerror(errno)), 1);
+			print_err("%s: %s: %s\n", cmd[0], cmd[1], strerror(errno)), 1);
+			// printf("%s: %s: %s\n", cmd[0], cmd[1], strerror(errno)), 1);
 	ft_setenv("PWD", run_pwd(false), 1);
 	free(new_dir);
 	return (0);
