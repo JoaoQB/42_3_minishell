@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 21:10:22 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 21:41:56 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
 	return (0);
 }
 
-// TODO Handle error s
 int	ft_update_fds(t_token *tk_s, t_pipex *pipex_s)
 {
 	int		*fd;
@@ -54,8 +53,6 @@ int	ft_update_fds(t_token *tk_s, t_pipex *pipex_s)
 					O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (fd[0] == -1 || fd[1] == -1)
 			minishell()->pipex->status = errno;
-			// printf("%s: %s\n", tk_s->next->value, strerror(errno));
-			// return (errno);
 		tk_s = tk_s->next;
 	}
 	if (minishell()->pipex->status > 0)
@@ -68,7 +65,13 @@ static int	init_next_pipex(t_pipex *pipex_s, int piper[2])
 	pipex_s->next = ft_init_pipex_s();
 	pipex_s->next->prev = pipex_s;
 	if (pipe(piper) == -1)
-		return (perror("pipe"), errno);
+	{
+		print_err("%s\n", strerror(errno));
+		free_main_input();
+		cleanup_main();
+		exit(1); // General error		
+		// return (perror("pipe"), errno); 
+	}
 	pipex_s->next->pipe_fd[1] = pipex_s->pipe_fd[1];
 	pipex_s->pipe_fd[1] = piper[1];
 	pipex_s->next->pipe_fd[0] = piper[0];

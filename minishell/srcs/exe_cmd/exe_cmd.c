@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 20:53:35 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 21:47:21 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	int		i;
 
 	paths = ft_getenv("PATH");
-	temp = ft_strnjoin(ft_strdup("./"), pipex_s->cmd[0], -1);
+	temp = ft_strnjoin(NULL, pipex_s->cmd[0], -1);
 	while (paths && *paths != '\0')
 	{
 		if (access(temp, F_OK) == 0)

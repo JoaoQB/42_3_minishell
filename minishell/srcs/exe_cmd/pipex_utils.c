@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 20:21:12 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 21:45:29 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,57 +80,57 @@ void	*safe_malloc(size_t size)
 
 //TODO chat_gpt generated
 //i wanto to handle errnos and convert then into the errors shell gives
-void	process_err(void)
-{
-	if (errno == 0)
-		return ;
-	if (errno == 2)
-		ft_putstr_fd("No such file or directory\n", 2);
-	else if (errno == 13)
-		ft_putstr_fd("Permission denied\n", 2);
-	else if (errno == 21)
-		ft_putstr_fd("Is a directory\n", 2);
-	else if (errno == 126)
-		ft_putstr_fd("Permission denied\n", 2);
-	else if (errno == 127)
-		ft_putstr_fd("Command not found\n", 2);
-	else if (errno == 128)
-		ft_putstr_fd("Invalid argument\n", 2);
-	else if (errno == 130)
-		ft_putstr_fd("Terminated by Ctrl+C\n", 2);
-	else if (errno == 134)
-		ft_putstr_fd("Abort trap\n", 2);
-	else if (errno == 139)
-		ft_putstr_fd("Segmentation fault\n", 2);
-	else if (errno == 141)
-		ft_putstr_fd("Broken pipe\n", 2);
-	else if (errno == 255)
-		ft_putstr_fd("Exit status out of range\n", 2);
-	else
-		ft_putstr_fd(strerror(errno), 2);
-}
+// void	process_err(void)
+// {
+// 	if (errno == 0)
+// 		return ;
+// 	if (errno == 2)
+// 		ft_putstr_fd("No such file or directory\n", 2);
+// 	else if (errno == 13)
+// 		ft_putstr_fd("Permission denied\n", 2);
+// 	else if (errno == 21)
+// 		ft_putstr_fd("Is a directory\n", 2);
+// 	else if (errno == 126)
+// 		ft_putstr_fd("Permission denied\n", 2);
+// 	else if (errno == 127)
+// 		ft_putstr_fd("Command not found\n", 2);
+// 	else if (errno == 128)
+// 		ft_putstr_fd("Invalid argument\n", 2);
+// 	else if (errno == 130)
+// 		ft_putstr_fd("Terminated by Ctrl+C\n", 2);
+// 	else if (errno == 134)
+// 		ft_putstr_fd("Abort trap\n", 2);
+// 	else if (errno == 139)
+// 		ft_putstr_fd("Segmentation fault\n", 2);
+// 	else if (errno == 141)
+// 		ft_putstr_fd("Broken pipe\n", 2);
+// 	else if (errno == 255)
+// 		ft_putstr_fd("Exit status out of range\n", 2);
+// 	else
+// 		ft_putstr_fd(strerror(errno), 2);
+// }
 
-void	hdl_err(int err, char *format, ...)
-{
-	va_list	args;
+// void	hdl_err(int err, char *format, ...)
+// {
+// 	va_list	args;
 
-	va_start(args, format);
-	while (*format)
-	{
-		if (*format == '%')
-		{
-			format++;
-			if (*format == 's')
-				ft_putstr_fd(va_arg(args, char *), 2);
-		}
-		else
-			write(2, format, 1);
-		format++;
-	}
-	va_end(args);
-	minishell()->status = err;
-	process_err();
-}
+// 	va_start(args, format);
+// 	while (*format)
+// 	{
+// 		if (*format == '%')
+// 		{
+// 			format++;
+// 			if (*format == 's')
+// 				ft_putstr_fd(va_arg(args, char *), 2);
+// 		}
+// 		else
+// 			write(2, format, 1);
+// 		format++;
+// 	}
+// 	va_end(args);
+// 	minishell()->status = err;
+// 	process_err();
+// }
 
 void print_err(char *format, ...)
 {
