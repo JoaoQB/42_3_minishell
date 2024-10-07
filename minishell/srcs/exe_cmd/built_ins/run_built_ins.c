@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/07 20:29:54 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 20:55:36 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	run_cd(t_pipex *pipex_s)
 
 	cmd = pipex_s->cmd;
 	if (cmd[1] && cmd[2])
-		return (print_err(printf("%s: %s\n", cmd[0], "too many arguments")), 1);
+		return (print_err("%s: %s\n", cmd[0], "too many arguments"), 1);
 		// return (printf("%s: %s\n", cmd[0], "too many arguments"), 1);
 	if (!cmd[1] || strcmp(cmd[1], "~") == 0)
 		new_dir = ft_strdup(ft_getenv("HOME"));

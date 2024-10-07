@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 20:19:53 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/07 20:53:35 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ bool	is_directory(t_pipex *pipex_s)
 		}
 		else
 		{
-			printf("%s: %s\n", path, strerror(EISDIR));
+			print_err("%s: %s\n", path, strerror(EISDIR));
+			// printf("%s: %s\n", path, strerror(EISDIR));
 			pipex_s->status = 126;
 		}
 		return (true);
