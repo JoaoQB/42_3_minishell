@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/08 17:22:47 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:23:49 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 		ft_exit_pid(pipex_s);
 	else if (!is_directory(pipex_s))
 	{
-		if (pipex_s->cmd)
+		if (pipex_s->cmd && pipex_s->cmd[0])
 			pipex_s->path = get_cmd_path(pipex_s);
 		if (pipex_s->status == 126)
 			printf("%s: %s\n", pipex_s->cmd[0], strerror(EACCES));
