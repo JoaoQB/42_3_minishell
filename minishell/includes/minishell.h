@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/07 20:18:23 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:54:52 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,7 +344,7 @@ void	export_check(t_env *new);
 /* run_built_ins.c */
 char	*run_pwd(bool print);
 int		run_cd(t_pipex *pipex_s);
-int		run_echo(t_pipex *pipex_s);
+void	run_echo(t_pipex *pipex_s);
 void	run_unset(t_pipex *pipex_s);
 void	run_export(t_pipex *pipex_s);
 

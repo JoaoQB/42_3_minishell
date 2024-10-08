@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_ins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/07 20:55:36 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:54:49 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,25 +98,29 @@ int	run_cd(t_pipex *pipex_s)
 	return (0);
 }
 
-int	run_echo(t_pipex *pipex_s)
+void	run_echo(t_pipex *pipex_s)
 {
 	int	i;
 	int	nl;
 
-	nl = 0;
+	if (!pipex_s->cmd)
+		return ;
+	nl = 1;
 	i = 1;
 	while (pipex_s->cmd[i])
 	{
 		if (i == 1 && ft_strcmp(pipex_s->cmd[i], "-n") == 0)
 		{
-			++i;
-			nl = 1;
+			i++;
+			nl = 0;
+			if (!pipex_s->cmd[i])
+				return ;
 		}
-		printf("%s", pipex_s->cmd[i]);
-		if (pipex_s->cmd[++i] && *pipex_s->cmd[i])
-			printf(" ");
+		ft_putstr_fd(pipex_s->cmd[i], 1);
+		if (pipex_s->cmd[i + 1])
+			ft_putstr_fd(" ", 1);
+		i++;
 	}
-	if (!nl)
-		printf("\n");
-	return (1);
+	if (nl)
+		ft_putstr_fd("\n", 1);
 }
