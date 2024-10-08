@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 21:47:21 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:38:58 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 			pipex_s->status = 127;
 		}
 	}
-	if (pipex_s->status != 0 || !pipex_s->cmd || !*pipex_s->cmd)
+	if (pipex_s->status != 0 || minishell()->status != 0)
 		ft_exit_pid(pipex_s);
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
 		pipex_s->status = errno;

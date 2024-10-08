@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_struct2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/07 17:25:50 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:42:06 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s)
 		return (-1);
 	pipex_s->status = ft_update_cmds(tokens_s, pipex_s);
 	if (pipex_s->status == 0)
-		pipex_s->status = ft_update_fds(tokens_s, pipex_s);
+		ft_update_fds(tokens_s, pipex_s);
 	return (pipex_s->status);
 }
 
