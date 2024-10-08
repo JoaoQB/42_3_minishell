@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/08 15:38:58 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:17:04 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,13 @@ void	ft_exe_pipex_s(void)
 		return ; //this worked but i did simplier
 	while (pipex_s)
 	{
-		if (pipex_s->status == 0)
-		{
-			pipex_s->pid = fork();
-			if (pipex_s->pid == -1)
-				return (perror("fork failed")); //TODO Handle error s
-			else if (pipex_s->pid == 0)
-				exe_cmd_child(pipex_s, minishell()->menv);
-			// else <parent> change stuff here latter
-			//	exe_cmd_parent()
-		}
+		pipex_s->pid = fork();
+		if (pipex_s->pid == -1)
+			return (perror("fork failed")); //TODO Handle error s
+		else if (pipex_s->pid == 0)
+			exe_cmd_child(pipex_s, minishell()->menv);
+		// else <parent> change stuff here latter
+		//	exe_cmd_parent()
 		pipex_s = pipex_s->next;
 	}
 }

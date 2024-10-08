@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 21:41:56 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:14:03 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ int	ft_update_fds(t_token *tk_s, t_pipex *pipex_s)
 			fd[1] = open(tk_s->next->value,
 					O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (fd[0] == -1 || fd[1] == -1)
-			minishell()->pipex->status = errno;
+			pipex_s->status = errno;
 		tk_s = tk_s->next;
 	}
-	if (minishell()->pipex->status > 0)
+	if (pipex_s->status > 0)
 		print_err(" %s\n", strerror(minishell()->pipex->status)); 
-	return (0);
+	return (pipex_s->status);
 }
 
 static int	init_next_pipex(t_pipex *pipex_s, int piper[2])
