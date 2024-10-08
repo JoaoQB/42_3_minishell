@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/08 17:23:49 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:25:33 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,9 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	close_all_fd(pipex_s);
 	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
 		ft_exit_pid(pipex_s);
-	else if (!is_directory(pipex_s))
+	else if (!is_directory(pipex_s) && pipex_s->cmd && pipex_s->cmd[0])
 	{
-		if (pipex_s->cmd && pipex_s->cmd[0])
-			pipex_s->path = get_cmd_path(pipex_s);
+		pipex_s->path = get_cmd_path(pipex_s);
 		if (pipex_s->status == 126)
 			printf("%s: %s\n", pipex_s->cmd[0], strerror(EACCES));
 		else if (!pipex_s->path && pipex_s->status == 0)
