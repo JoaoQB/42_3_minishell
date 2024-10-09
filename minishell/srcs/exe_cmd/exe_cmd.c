@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/08 18:00:34 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/09 03:13:45 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,46 @@ int	check_for_pipeline(void)
 }
 
 //TODO Handle error s
-bool	is_directory(t_pipex *pipex_s)
-{
-	char		*path;
-	struct stat	buffer;
 
-	path = pipex_s->cmd[0];
-	if (stat(path, &buffer) != 0)
-		return (false);
-	if (S_ISDIR(buffer.st_mode))
-	{
-		if (path[0] == '.' && !path[1])
-		{
-			print_err("%s: filename argument required\n", path);
-			print_err("usage: %s filename [arguments]\n", path);
-			// printf("%s: filename argument required\n", path);
-			// printf("usage: %s filename [arguments]\n", path);
-			pipex_s->status = 2;
-		}
-		else
-		{
-			print_err("%sdada: %s\n", path, strerror(EISDIR));
-			// printf("%s: %s\n", path, strerror(EISDIR));
-			pipex_s->status = 126;
-		}
-		return (true);
-	}
-	return (false);
+int is_directory(const char *path)
+{
+    struct stat buffer;
+
+    if (stat(path, &buffer) != 0)
+        return (errno);
+    else if (S_ISDIR(buffer.st_mode))
+        return (EISDIR);
+    return 0;
 }
+
+// bool	is_directory(t_pipex *pipex_s)
+// {
+// 	char		*path;
+// 	struct stat	buffer;
+
+// 	path = pipex_s->cmd[0];
+// 	if (stat(path, &buffer) != 0)
+// 		return (false);
+// 	if (S_ISDIR(buffer.st_mode))
+// 	{
+// 		if (path[0] == '.' && !path[1])
+// 		{
+// 			print_err("%s: filename argument required\n", path);
+// 			print_err("usage: %s filename [arguments]\n", path);
+// 			// printf("%s: filename argument required\n", path);
+// 			// printf("usage: %s filename [arguments]\n", path);
+// 			pipex_s->status = 2;
+// 		}
+// 		else
+// 		{
+// 			print_err("%sdada: %s\n", path, strerror(EISDIR));
+// 			// printf("%s: %s\n", path, strerror(EISDIR));
+// 			pipex_s->status = 126;
+// 		}
+// 		return (true);
+// 	}
+// 	return (false);
+// }
 
 //join function with execute_command
 void	ft_exe_pipex_s(void)
@@ -91,17 +103,17 @@ void	ft_exe_pipex_s(void)
 //TODO Handle error s
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
-	if (!is_directory(pipex_s) && pipex_s->cmd && pipex_s->cmd[0])
-	{
-		pipex_s->path = get_cmd_path(pipex_s);
-		if (pipex_s->status == 126)
-			print_err("%s", strerror(EACCES));
-		else if (!pipex_s->path && pipex_s->status == 0)
-		{
-			print_err("%s: command not found\n");
-			pipex_s->status = 127;
-		}
-	}
+	// if (!is_directory(pipex_s) && pipex_s->cmd && pipex_s->cmd[0])
+	// {//todo better is dir
+	// 	pipex_s->path = get_cmd_path(pipex_s);
+	// 	if (pipex_s->status == 126)
+	// 		print_err("%s", strerror(EACCES));
+	// 	else if (!pipex_s->path && pipex_s->status == 0)
+	// 	{
+	// 		print_err("%s: command not found\n");
+	// 		pipex_s->status = 127;
+	// 	}
+	// }
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
 	if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
@@ -116,6 +128,16 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	ft_exit_pid(pipex_s);
 }
 
+int		file_acess(char *file_path)
+{
+		if (access(file_path, F_OK) != 0)
+			return (errno); //unixistent file 13 ENOENT 
+		if (access(file_path, R_OK | X_OK) != 0)
+			return (errno); //no permitions 2 EACCES
+		else
+			return (0);
+}
+
 char	*get_cmd_path(t_pipex *pipex_s)
 {
 	char	*temp;
@@ -126,12 +148,10 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	temp = ft_strnjoin(NULL, pipex_s->cmd[0], -1);
 	while (paths && *paths != '\0')
 	{
-		if (access(temp, F_OK) == 0)
-		{
-			if (access(temp, R_OK | X_OK) == 0)
-				return (temp);
-			pipex_s->status = 126;
-		}
+		if (file_acess (temp) == EACCES)
+			pipex_s->status = EACCES;
+		else if(file_acess (temp) == 0)
+			return (temp);
 		free(temp);
 		i = 0;
 		while (paths[i] && paths[i] != ':')
@@ -142,5 +162,35 @@ char	*get_cmd_path(t_pipex *pipex_s)
 			break ;
 		paths += i;
 	}
+	if (pipex_s->status != EACCES)
+		pipex_s->status = ENOENT;
 	return (free(temp), NULL);
 }
+// char	*get_cmd_path(t_pipex *pipex_s)
+// {
+// 	char	*temp;
+// 	char	*paths;
+// 	int		i;
+
+// 	paths = ft_getenv("PATH");
+// 	temp = ft_strnjoin(NULL, pipex_s->cmd[0], -1);
+// 	while (paths && *paths != '\0')
+// 	{
+// 		if (access(temp, F_OK) == 0)
+// 		{//TODO access function
+// 			if (access(temp, R_OK | X_OK) == 0)
+// 				return (temp);
+// 			pipex_s->status = 126;
+// 		}
+// 		free(temp);
+// 		i = 0;
+// 		while (paths[i] && paths[i] != ':')
+// 			i++;
+// 		temp = ft_strnjoin(ft_strnjoin(NULL, paths, i++), "/", 1);
+// 		temp = ft_strnjoin(temp, pipex_s->cmd[0], -1);
+// 		if (!paths[i - 1])
+// 			break ;
+// 		paths += i;
+// 	}
+// 	return (free(temp), NULL);
+// }

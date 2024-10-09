@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 17:08:35 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/09 01:58:52 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ void	close_all_fd(t_pipex *pipex_s)
 {
 	t_pipex	*save;
 
-	save = NULL;
+	save = NULL; 
+	if (!pipex_s)
+		pipex_s = minishell()->pipex;
 	while (pipex_s->prev)
 		pipex_s = pipex_s->prev;
-	while (pipex_s->next)
+	while (pipex_s)
 	{
 		if (pipex_s != save)
 		{
@@ -36,7 +38,7 @@ void	free_pipex_s(void)
 {
 	t_pipex	*temp;
 
-	close_all_fd(minishell()->pipex);
+	close_all_fd(NULL);
 	while (minishell()->pipex)
 	{
 		temp = minishell()->pipex;
@@ -97,7 +99,11 @@ int	process_child_pipes(t_pipex *pipex_s)
 			curr_pipex_s = pipex_s;
 	}
 	return (pipex_s->status);
+	close_all_fd(NULL);
 }
+
+//TODO dir name
+
 
 int	ft_shell_pipex(void)
 {

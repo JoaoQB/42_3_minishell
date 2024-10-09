@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 21:45:29 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/09 01:52:10 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	*safe_malloc(size_t size)
 // 	minishell()->status = err;
 // 	process_err();
 // }
+
 
 void print_err(char *format, ...)
 {

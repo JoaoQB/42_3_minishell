@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/08 17:15:05 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/09 03:17:24 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ int	ft_update_fds(t_token *tk_s, t_pipex *pipex_s)
 			fd[1] = open(tk_s->next->value,
 					O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if ((fd[0] == -1 || fd[1] == -1) && pipex_s->status == 0)
+			print_err("%s: %s\n",tk_s->next->value, strerror(errno)); //todo accept or not this one errno
+		if ((fd[0] == -1 || fd[1] == -1) && pipex_s->status == 0) //if i pass put it into the main error val
 			pipex_s->status = errno;
 		tk_s = tk_s->next;
 	}
-	if (pipex_s->status > 0)
-		print_err(" %s\n", strerror(minishell()->pipex->status)); 
 	return (pipex_s->status);
 }
 
