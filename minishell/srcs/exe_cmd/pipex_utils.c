@@ -6,11 +6,25 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/01 18:34:23 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:02:28 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int		ft_close(int fd)
+{
+	if (fd > 2)
+	{
+		if (close(fd) == -1)
+		{
+			fd = -1;
+			return (-1);
+		}
+		fd = -1;
+	}
+	return (0);
+}
 
 char	*ft_strnjoin(char *old_str, char *str_add, int size)
 {

@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/03 21:24:50 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:33:34 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ void	close_all_fd(t_pipex *pipex_s)
 	{
 		if (pipex_s != save)
 		{
-			if (pipex_s->pipe_fd[0] > 2)
-				close(pipex_s->pipe_fd[0]);
-			if (pipex_s->pipe_fd[1] > 2)
-				close(pipex_s->pipe_fd[1]);
+			ft_close(pipex_s->pipe_fd[0]);
+			ft_close(pipex_s->pipe_fd[1]);
 		}
 		pipex_s = pipex_s->next;
 	}
@@ -43,12 +41,24 @@ void	close_all_fd(t_pipex *pipex_s)
 
 void	free_pipex_node(t_pipex *pipex_s)
 {
-	if (pipex_s->pipe_fd[0] > 2)
-		close(pipex_s->pipe_fd[0]);
-	if (pipex_s->pipe_fd[1] > 2)
-		close(pipex_s->pipe_fd[1]);
-	if (pipex_s->prev)
+	ft_close(pipex_s->pipe_fd[0]);
+	ft_close(pipex_s->pipe_fd[1]);
+	if (pipex_s == minishell()->pipex)
+	{
+		if (pipex_s->next)
+		{
+			pipex_s->next->prev = NULL;
+			minishell()->pipex = pipex_s->next;
+		}
+		else
+			minishell()->pipex = NULL;
+	}
+	else if (pipex_s->prev)
+	{
 		pipex_s->prev->next = pipex_s->next;
+		if (pipex_s->next)
+			pipex_s->next->prev = pipex_s->prev;
+	}
 	free_double_array(pipex_s->cmd);
 	free(pipex_s->path);
 	free(pipex_s);

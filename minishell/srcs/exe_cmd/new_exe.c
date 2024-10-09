@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 18:52:12 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:23:40 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_token *find_next_pipe(t_token *tokens_s)
 {
     while (tokens_s && tokens_s->type != PIPE) //funcao para este
 		tokens_s = tokens_s->next;
+    if (tokens_s && tokens_s->type == PIPE)
+        tokens_s = tokens_s->next;
     return (tokens_s);
 }
 
@@ -74,13 +76,12 @@ t_pipex *add_back_pipex_s(void)
     pipex_s = minishell()->pipex;
     while (pipex_s->next)
         pipex_s = pipex_s->next;
-    if (pipex_s != minishell()->pipex && find_next_pipe(pipex_s->token))
+    if (find_next_pipe(pipex_s->token))
     {
         pipex_s->next = ft_init_pipex_s();
-        pipex_s->next->prev = pipex_s; //TODO do i need this?
+        pipex_s->next->prev = pipex_s;
+        pipex_s->next->token = find_next_pipe(pipex_s->token);
     }
-    ft_n_update_cmds(pipex_s);
-    ft_n_update_fds(pipex_s);
     return (pipex_s);
 }
 
@@ -92,15 +93,16 @@ void new_process_tokens(void)
     token_s = minishell()->tokens;
     while (token_s)
     {
-        if (token_s->type == PIPE)
-            token_s = token_s->next;
         pipex_s = add_back_pipex_s();
-        pipex_s->token = token_s;
+        ft_n_update_fds(pipex_s);
+        ft_n_update_cmds(pipex_s);
         pipex_s->pid = fork();
 		if (pipex_s->pid == -1)
 			return (perror("fork failed")); //TODO Handle error s
 		else if (pipex_s->pid == 0)
             exe_cmd_child(pipex_s, minishell()->menv);
-        token_s = find_next_pipe(token_s); //TODO
+        token_s = find_next_pipe(pipex_s->token); //TODO
+        // handle_sigchild(0);
     }
+    //process_child_pid(minishell()->pipex);
 }

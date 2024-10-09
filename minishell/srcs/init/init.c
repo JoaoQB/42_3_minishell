@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:49:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 11:54:41 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:26:44 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	init_main(char **envp)
 	minishell()->silence_info = false;
 	minishell()->status = 0;
 	minishell()->history = NULL;
-	minishell()->pipex = ft_init_pipex_s();
+	// minishell()->pipex = ft_init_pipex_s();
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/02 13:17:37 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:56:08 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	read_heredoc(t_token *tokens_s)
 		write(piper[1], "\n", 1);
 		ft_free(&expanded_input);
 	}
-	close(piper[1]);
+	ft_close(piper[1]);
 	return (piper[0]);
 }
 

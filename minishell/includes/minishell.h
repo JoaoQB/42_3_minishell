@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/03 21:08:43 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:54:44 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,20 @@
 # include <sys/stat.h>
 # include <signal.h>
 # include <limits.h>
-#include <stdarg.h>
+# include <stdarg.h>
 
-# define MAX_HIST 30
+#  define MAX_HIST 30
+# ifndef COLORS_H
+#  define COLORS_H
+#  define RES   "\033[0m"
+#  define RED     "\033[31m"
+#  define GREEN   "\033[32m"
+#  define YELLOW  "\033[33m"
+#  define BLUE    "\033[34m"
+#  define PINK    "\033[35m" // Magenta is often used as pink
+#  define LBLUE   "\033[36m" // Light blue can be represented by cyan
+#  define WHITE   "\033[37m"
+# endif
 
 typedef struct s_env			t_env;
 typedef struct s_token			t_token;
@@ -35,6 +46,8 @@ typedef struct s_pipex			t_pipex;
 typedef struct s_main			t_main;
 typedef struct s_hist			t_hist;
 extern volatile sig_atomic_t	g_signal;
+
+
 
 typedef enum e_neg_operator
 {
@@ -294,6 +307,7 @@ void	syntax_error_pipe(void);
 /************************/
 
 int		ft_shell_pipex(void);
+void	process_child_pid(t_pipex *curr_pipex_s);
 int		process_child_pipes(t_pipex *pipex_s);
 void	free_pipex_s(void);
 void	close_all_fd(t_pipex *pipex_s);
@@ -383,7 +397,7 @@ t_main	*minishell(void);
 /************************/
 
 void	free_pipex_node(t_pipex *pipex_s);
-
+int		ft_close(int fd);
 void new_process_tokens(void); //corre todos os tokens e cria a struct
 t_pipex *add_back_pipex_s(void); //adiciona o novo pipe a stuct
 void ft_n_update_fds(t_pipex *pipex_s); //dentro de cada cria da update aos fd

@@ -19,22 +19,21 @@ void handle_sigchild(int sig)
     pid_t   pid;
     int     status;
 
-   (void)sig;
-   return ;
+    (void)sig;
     while(1)
     {
         pid = waitpid(-1, &status, WNOHANG);
-        if(pid == 0)
+        if(pid == 0 || pid == -1)
             break;
-        printf("child with PID %d terminated", pid);
-        //insted of next i can try to just run an v2 of prev
         pipex_s = minishell()->pipex;
         while (pipex_s && pipex_s->pid != pid)
             pipex_s = pipex_s->next;
-        process_child_pipes(pipex_s);
-        free_pipex_node(pipex_s); // TODO reddy to test
+        if (pipex_s)
+        {
+            process_child_pid(pipex_s);
+            //free_pipex_node(pipex_s); // TODO reddy to test
+        }
     }
-    //or i can just run the function that kills all
 }
 
 void handle_sigquit(int sig) 

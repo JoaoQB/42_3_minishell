@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 18:24:20 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:23:53 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,16 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 		curr_pipex_s->pid = -1;
 		if (curr_pipex_s->pipe_fd[0] > 2)
 		{
-			if (close(curr_pipex_s->pipe_fd[0]) == -1)
-				perror("Error closing pipe_fd[0]"); //TODO Handle error s
+			ft_close(curr_pipex_s->pipe_fd[0]);
 			if (curr_pipex_s->prev && curr_pipex_s->prev->pid > 0)
 				kill(curr_pipex_s->prev->pid, SIGPIPE);
 		}
 		if (curr_pipex_s->pipe_fd[1] > 2)
-			if (close(curr_pipex_s->pipe_fd[1]) == -1)
-				perror("Error closing pipe_fd[1]"); //TODO Handle error s
+			ft_close(curr_pipex_s->pipe_fd[1]);
 		if (WIFEXITED(status))
 			curr_pipex_s->status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			curr_pipex_s->status = 128 + WTERMSIG(status);
-		// free_pipex_node(curr_pipex_s); // TODO reddy to test
 	}
 }
 
@@ -70,19 +67,11 @@ int	ft_shell_pipex()
 
 	if (minishell()->silence_info == true)
 		return (0);
-	//my_print_env();
-	// ft_process_tokens_s();
 	add_to_history();
-	// print_struct();
-	// ft_exe_pipex_s();
 	minishell()->pipex = NULL;
 	new_process_tokens(); //TODO test comment ft_process_tokens_s and ft_exe_pipex_s
 	status = process_child_pipes(minishell()->pipex); //manage_pid
 	minishell()->status = status;
-	// printf("\n	COMMAND ERR: %d\n", status);
-	//print_check_processes(minishell()->pipex);
-	// free_pipex_s(minishell()->pipex); //temp free
-	//recieve signal when i do exit, so i can properly free it and pass responsability
 	return (0);
 }
 
