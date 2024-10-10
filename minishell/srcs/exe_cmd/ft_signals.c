@@ -36,6 +36,29 @@ void	handle_sigquit(int sig)
 	// exit(1); // General error
 }
 
+void handle_sigchild(int sig) 
+{
+    t_pipex *pipex_s;
+    pid_t   pid;
+    int     status;
+
+    (void)sig;
+    while(1)
+    {
+        pid = waitpid(-1, &status, WNOHANG);
+        if(pid == 0 || pid == -1)
+            break;
+        pipex_s = minishell()->pipex;
+        while (pipex_s && pipex_s->pid != pid)
+            pipex_s = pipex_s->next;
+        if (pipex_s)
+        {
+            process_child_pid(pipex_s);
+            // free_pipex_node(pipex_s); // TODO reddy to test
+        }
+    }
+}
+
 int	set_sig_handlers(int signal, void (*func_name)(int))
 {
 	struct sigaction	sa;

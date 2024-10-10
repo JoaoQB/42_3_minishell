@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/09 03:13:45 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/10 22:55:56 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,43 @@ int	check_for_pipeline(void)
 
 //TODO Handle error s
 
-int is_directory(const char *path)
+// int is_directory(const char *path)
+// {
+//     struct stat buffer;
+
+//     if (stat(path, &buffer) != 0)
+//         return (errno);
+//     else if (S_ISDIR(buffer.st_mode))
+//         return (EISDIR);
+//     return 0;
+// }
+
+bool is_directory(t_pipex *pipex_s)
 {
+	char	*path;
     struct stat buffer;
 
+	path = pipex_s->cmd[0];
     if (stat(path, &buffer) != 0)
-        return (errno);
-    else if (S_ISDIR(buffer.st_mode))
-        return (EISDIR);
-    return 0;
+        return false;
+    if (S_ISDIR(buffer.st_mode))
+	{
+		if (path[0] == '.' && !path[1])
+		{
+			printf("%s: filename argument required\n", path); //TODO Handle error s
+			printf("usage: %s filename [arguments]\n", path); //TODO Handle error s
+			pipex_s->status = 2;
+		}
+		else
+		{
+			printf("%s: %s\n", path, strerror(EISDIR)); //TODO Handle error s
+			pipex_s->status = 126;
+		}
+		return (true);
+	}
+	return (false);
 }
+
 
 // bool	is_directory(t_pipex *pipex_s)
 // {
@@ -86,7 +113,7 @@ void	ft_exe_pipex_s(void)
 	pipex_s = minishell()->pipex;
 	if (!check_for_pipeline()) //handle no pipeline //TODO exit
 		return ; //this worked but i did simplier
-	if (pipex_s->cmd)
+	//if (pipex_s->cmd)
 	while (pipex_s)
 	{
 		pipex_s->pid = fork();
@@ -100,20 +127,8 @@ void	ft_exe_pipex_s(void)
 	}
 }
 
-//TODO Handle error s
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
-	// if (!is_directory(pipex_s) && pipex_s->cmd && pipex_s->cmd[0])
-	// {//todo better is dir
-	// 	pipex_s->path = get_cmd_path(pipex_s);
-	// 	if (pipex_s->status == 126)
-	// 		print_err("%s", strerror(EACCES));
-	// 	else if (!pipex_s->path && pipex_s->status == 0)
-	// 	{
-	// 		print_err("%s: command not found\n");
-	// 		pipex_s->status = 127;
-	// 	}
-	// }
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
 	if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
@@ -121,12 +136,52 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	close_all_fd(pipex_s);
 	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
 		ft_exit_pid(pipex_s);
-	if (pipex_s->status != 0 || minishell()->status != 0)
+	else if (!is_directory(pipex_s))
+	{
+		pipex_s->path = get_cmd_path(pipex_s); //TODO Handle error s
+		if (pipex_s->status == 126)
+			printf("%s: %s\n", pipex_s->cmd[0], strerror(EACCES));
+		else if (!pipex_s->path && pipex_s->status == 0)
+		{
+			ft_putstr_fd(pipex_s->cmd[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
+			pipex_s->status = 127;
+		}
+	}
+	if (pipex_s->status != 0 || !pipex_s->cmd || !*pipex_s->cmd)
 		ft_exit_pid(pipex_s);
-	else if (pipex_s->path && execve(pipex_s->path, pipex_s->cmd, envp) == -1)
-		pipex_s->status = errno;
+	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
+			pipex_s->status = errno;
 	ft_exit_pid(pipex_s);
 }
+
+// //TODO Handle error s
+// void	exe_cmd_child(t_pipex *pipex_s, char **envp)
+// {
+// 	// if (!is_directory(pipex_s) && pipex_s->cmd && pipex_s->cmd[0])
+// 	// {//todo better is dir
+// 	// 	pipex_s->path = get_cmd_path(pipex_s);
+// 	// 	if (pipex_s->status == 126)
+// 	// 		print_err("%s", strerror(EACCES));
+// 	// 	else if (!pipex_s->path && pipex_s->status == 0)
+// 	// 	{
+// 	// 		print_err("%s: command not found\n");
+// 	// 		pipex_s->status = 127;
+// 	// 	}
+// 	// }
+// 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
+// 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
+// 	if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
+// 		dup2(pipex_s->pipe_fd[1], STDOUT_FILENO);
+// 	close_all_fd(pipex_s);
+// 	if (special_edge_cases(pipex_s) || edge_cases(pipex_s))
+// 		ft_exit_pid(pipex_s);
+// 	if (pipex_s->status != 0 || minishell()->status != 0)
+// 		ft_exit_pid(pipex_s);
+// 	else if (pipex_s->path && execve(pipex_s->path, pipex_s->cmd, envp) == -1)
+// 		pipex_s->status = errno;
+// 	ft_exit_pid(pipex_s);
+// }
 
 int		file_acess(char *file_path)
 {

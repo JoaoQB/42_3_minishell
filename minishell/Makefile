@@ -61,12 +61,13 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/exe_cmd/built_ins/ft_exit.c \
 	$(SRC_PATH)/exe_cmd/built_ins/ft_export.c \
 	$(SRC_PATH)/exe_cmd/built_ins/run_built_ins.c \
+	$(SRC_PATH)/exe_cmd/new_exe.c \
 
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 SANITIZE = -g -fsanitize=address
 

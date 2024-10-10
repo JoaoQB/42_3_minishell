@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/09 03:17:24 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/10 22:32:58 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,29 +60,29 @@ int	ft_update_fds(t_token *tk_s, t_pipex *pipex_s)
 	return (pipex_s->status);
 }
 
-static int	init_next_pipex(t_pipex *pipex_s, int piper[2])
-{
-	pipex_s->next = ft_init_pipex_s();
-	pipex_s->next->prev = pipex_s;
-	if (pipe(piper) == -1)
-	{
-		print_err("%s\n", strerror(errno));
-		free_main_input();
-		cleanup_main();
-		exit(1); // General error		
-		// return (perror("pipe"), errno); 
-	}
-	pipex_s->next->pipe_fd[1] = pipex_s->pipe_fd[1];
-	pipex_s->pipe_fd[1] = piper[1];
-	pipex_s->next->pipe_fd[0] = piper[0];
-	return (0);
-}
+// static int	init_next_pipex(t_pipex *pipex_s, int piper[2])
+// {
+// 	pipex_s->next = ft_init_pipex_s();
+// 	pipex_s->next->prev = pipex_s;
+// 	if (pipe(piper) == -1)
+// 	{
+// 		print_err("%s\n", strerror(errno));
+// 		free_main_input();
+// 		cleanup_main();
+// 		exit(1); // General error		
+// 		// return (perror("pipe"), errno); 
+// 	}
+// 	pipex_s->next->pipe_fd[1] = pipex_s->pipe_fd[1];
+// 	pipex_s->pipe_fd[1] = piper[1];
+// 	pipex_s->next->pipe_fd[0] = piper[0];
+// 	return (0);
+// }
 
-int	ft_create_pipeline(void)
+int	ft_create_pipeline()
 {
 	t_pipex	*pipex_s;
 	t_token	*tokens_s;
-	int		piper[2];
+	int	piper[2];
 
 	if (!minishell()->pipex)
 		minishell()->pipex = ft_init_pipex_s();
@@ -90,12 +90,17 @@ int	ft_create_pipeline(void)
 	pipex_s = minishell()->pipex;
 	pipex_s->pipe_fd[0] = STDIN_FILENO;
 	pipex_s->pipe_fd[1] = STDOUT_FILENO;
-	while (tokens_s)
+	while (tokens_s != NULL)
 	{
 		if (tokens_s->type == PIPE)
 		{
-			if (init_next_pipex(pipex_s, piper) != 0)
-				return (errno);
+			pipex_s->next = ft_init_pipex_s();
+			pipex_s->next->prev = pipex_s;
+			if (pipe(piper) == -1)
+				return (perror("pipe"), errno);
+			pipex_s->next->pipe_fd[1] = pipex_s->pipe_fd[1];
+			pipex_s->pipe_fd[1] = piper[1];
+			pipex_s->next->pipe_fd[0] = piper[0];
 			pipex_s = pipex_s->next;
 		}
 		tokens_s = tokens_s->next;
@@ -108,14 +113,14 @@ t_pipex	*ft_init_pipex_s(void)
 	t_pipex	*pipex_s;
 
 	pipex_s = (t_pipex *)safe_malloc(sizeof(t_pipex));
-	if (!pipex_s)
-		return (NULL);
 	pipex_s->pid = -1;
 	pipex_s->status = 0;
 	pipex_s->path = NULL;
 	pipex_s->cmd = NULL;
-	pipex_s->pipe_fd[0] = -2;
-	pipex_s->pipe_fd[1] = -2;
+	//pipex_s->pipe_fd[0] = -2;
+	//pipex_s->pipe_fd[1] = -2;
+	pipex_s->pipe_fd[0] = STDIN_FILENO; //add ti the initer
+	pipex_s->pipe_fd[1] = STDOUT_FILENO; //add ti the initer
 	pipex_s->prev = NULL;
 	pipex_s->next = NULL;
 	return (pipex_s);

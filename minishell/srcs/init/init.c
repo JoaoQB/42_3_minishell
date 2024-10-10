@@ -25,5 +25,5 @@ void	init_main(char **envp)
 	minishell()->silence_info = false;
 	minishell()->status = 0;
 	minishell()->history = NULL;
-	minishell()->pipex = ft_init_pipex_s();
+	// minishell()->pipex = ft_init_pipex_s();
 }
