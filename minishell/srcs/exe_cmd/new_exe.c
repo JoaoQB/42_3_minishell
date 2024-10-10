@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/09 21:23:40 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/09 22:23:24 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,5 @@ void new_process_tokens(void)
 		else if (pipex_s->pid == 0)
             exe_cmd_child(pipex_s, minishell()->menv);
         token_s = find_next_pipe(pipex_s->token); //TODO
-        // handle_sigchild(0);
     }
-    //process_child_pid(minishell()->pipex);
 }

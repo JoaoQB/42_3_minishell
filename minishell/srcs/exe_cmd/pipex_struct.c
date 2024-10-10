@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/09 16:56:08 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/09 22:46:59 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,13 @@ int	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s)
 			io_fd[1] = open(tokens_s->next->value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		else if (tokens_s->type == RED_OUT_APP && tokens_s->next && *tokens_s->next->value)
 			io_fd[1] = open(tokens_s->next->value, O_WRONLY | O_CREAT | O_APPEND, 0666);
-		if (io_fd[0] ==-1 || io_fd[1] == -1)
-			return(printf("%s: %s\n", tokens_s->next->value, strerror(errno)), errno); //TODO Handle error s
+		if ((io_fd[0] ==-1 || io_fd[1] == -1) && pipex_s->status == 0)
+			printf("%s: %s\n", tokens_s->next->value, strerror(errno)); //TODO Handle error s
+		if ((io_fd[0] ==-1 || io_fd[1] == -1) && pipex_s->status == 0)
+			pipex_s->status = errno;
 		tokens_s = tokens_s->next;
 	}
-	return (0);
+	return (0);//TODO remove return
 }
 
 int ft_create_pipeline()
