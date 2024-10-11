@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/10 22:35:00 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:00:46 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,7 @@ int		ft_process_tokens_s(void);
 int		ft_create_pipeline(void);
 int		ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s);
 int		ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s);
-int		ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
+void		ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
 int		read_heredoc(t_token *tokens_s);
 t_pipex	*ft_init_pipex_s(void);
 
@@ -386,5 +386,8 @@ void ft_n_update_fds(t_pipex *pipex_s); //dentro de cada cria da update aos fd
 int	ft_n_update_cmds(t_pipex *pipex_s); //
 t_token *find_next_pipe(t_token *tokens_s);
 void	process_child_pid(t_pipex *curr_pipex_s);
+int ft_n_update_path(t_pipex *pipex_s);
+int ft_open_fd(t_token *tk_s, int *fd);
+int is_directory(const char *path);
 
 #endif

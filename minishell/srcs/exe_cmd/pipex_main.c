@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/10 22:49:24 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:16:32 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ void	close_all_fd(t_pipex *pipex_s)
 	{
 		if (pipex_s != save)
 		{
-			if (pipex_s->pipe_fd[0] > 2) //TODO 1ft_close
-				close(pipex_s->pipe_fd[0]);
-			if (pipex_s->pipe_fd[1] > 2)
-				close(pipex_s->pipe_fd[1]); //TODO 1ft_close
+			ft_close(pipex_s->pipe_fd[0]);
+			ft_close(pipex_s->pipe_fd[1]); //TODO 1ft_close
 		}
 		pipex_s = pipex_s->next;
 	}
@@ -38,7 +36,7 @@ void	free_pipex_s(void)
 {
 	t_pipex	*temp;
 
-	close_all_fd(NULL);
+	close_all_fd(minishell()->pipex);
 	while (minishell()->pipex)
 	{
 		temp = minishell()->pipex;
@@ -57,14 +55,10 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 	if (waitpid(curr_pipex_s->pid, &status, WNOHANG))
 	{
 		curr_pipex_s->pid = -1;
-		if (curr_pipex_s->pipe_fd[0] > 2)
-		{
-			ft_close(curr_pipex_s->pipe_fd[0]);
-			if (curr_pipex_s->prev && curr_pipex_s->prev->pid > 0)
-				kill(curr_pipex_s->prev->pid, SIGPIPE);
-		}
-		if (curr_pipex_s->pipe_fd[1] > 2)
-			ft_close(curr_pipex_s->pipe_fd[1]);
+		ft_close(curr_pipex_s->pipe_fd[0]);
+		ft_close(curr_pipex_s->pipe_fd[1]);
+		if (curr_pipex_s->prev && curr_pipex_s->prev->pid > 0)
+			kill(curr_pipex_s->prev->pid, SIGPIPE);
 		if (WIFEXITED(status))
 			curr_pipex_s->status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
