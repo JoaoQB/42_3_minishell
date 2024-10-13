@@ -3,26 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_ins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/08 17:49:28 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:48:14 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	run_export(t_pipex *pipex_s)
+int	run_export(t_pipex *pipex_s)
 {
 	t_env	*new;
 	int		i;
+	int		exit_status;
 
+	exit_status = 0;
 	if (!pipex_s)
-		return ;
+		return (1);
 	if (!pipex_s->cmd[1])
 	{
 		print_export(minishell()->export);
-		return ;
+		return (exit_status);
 	}
 	i = 1;
 	while (pipex_s->cmd[i])
@@ -30,30 +32,26 @@ void	run_export(t_pipex *pipex_s)
 		new = ft_export_new(pipex_s->cmd[i]);
 		if (new)
 			export_check(new);
+		else
+			exit_status = 1;
 		i++;
 	}
+	return (exit_status);
 }
 
 void	run_unset(t_pipex *pipex_s)
 {
-	t_env	*menv_s;
-	t_env	*prev;
+	int		i;
 
-	menv_s = minishell()->env;
+	i = 1;
 	if (!pipex_s->cmd[1])
 		return ;
-	while (menv_s && ft_strcmp(menv_s->var, pipex_s->cmd[1]) != 0)
+	while (pipex_s->cmd[i])
 	{
-		prev = menv_s;
-		menv_s = menv_s->next;
+		env_unset(pipex_s->cmd[i]);
+		export_unset(pipex_s->cmd[i]);
+		i++;
 	}
-	if (!menv_s)
-		return ;
-	prev->next = menv_s->next;
-	free(menv_s->value);
-	free(menv_s->var_value);
-	free(menv_s->var);
-	free(menv_s);
 }
 
 //TODO Handle error n
