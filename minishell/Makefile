@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
+#    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/10/07 16:48:18 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/10/13 20:49:49 by fandre-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ SRC = $(SRC_PATH)/main.c \
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 
 SANITIZE = -g -fsanitize=address
 

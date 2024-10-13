@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/13 15:56:07 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:57:41 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 {
 	int		status;
 
+	status = 0;
 	if (waitpid(curr_pipex_s->pid, &status, WNOHANG))
 	{
 		curr_pipex_s->pid = -1;
