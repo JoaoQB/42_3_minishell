@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/13 17:33:43 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:21:48 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void ft_n_update_fds(t_pipex *pipex_s)
 			print_err("%s\n", strerror(errno));
 			free_main_input();
 			cleanup_main();
-			exit(1); 
+			exit(1);
 		}
 		pipex_s->pipe_fd[1] = piper[1];
 		pipex_s->next->pipe_fd[0] = piper[0];
@@ -116,7 +116,7 @@ int ft_n_update_path(t_pipex *pipex_s)
 		print_err("usage: %s filename [arguments]\n", path);
 		return (2);
 	}
-	if(is_directory(path) != 0)//TODO a bool
+	if(is_directory(path) != 0)
 	{
 		print_err("%s: %s\n", path, strerror(EISDIR));
 		return (126);
@@ -139,17 +139,14 @@ void new_process_tokens(void)
 	{
 		pipex_s = add_back_pipex_s();
 		ft_n_update_cmds(pipex_s);
-		//os ficheiros tem de ser aqui actually
+		if (pipex_s == minishell()->pipex && !check_for_pipeline())
+			break;
 		ft_n_update_fds(pipex_s);
-		if (pipex_s->cmd == NULL)
-			printf("this is cmd: %s\n", "NULL");
-		if (pipex_s->cmd && ft_strcmp(pipex_s->cmd[0], "exit") == 0)
-			ft_exit(pipex_s);
 		pipex_s->pid = fork();
 		if (pipex_s->pid == -1)
 			return (perror("fork failed")); //TODO Handle error s
 		else if (pipex_s->pid == 0)
 			exe_cmd_child(pipex_s, minishell()->menv);
-		token_s = find_next_pipe(pipex_s->token); //TODO
+		token_s = find_next_pipe(pipex_s->token);
 	}
 }

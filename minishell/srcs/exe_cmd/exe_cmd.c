@@ -6,34 +6,50 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/13 17:07:16 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:17:45 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// int	check_for_pipeline(void)
+// {
+// 	t_token	*tokens_s;
+// 	int		check;
+
+// 	check = 0;
+// 	tokens_s = minishell()->tokens;
+// 	while (tokens_s)
+// 	{
+// 		if (tokens_s->type == PIPE)
+// 			return (1);
+// 		else if (tokens_s->type == PATH)
+// 		{
+// 			check = 1;
+// 			if (!special_edge_cases(minishell()->pipex))
+// 				return (1);
+// 		}
+// 		tokens_s = tokens_s->next;
+// 	}
+// 	if (!check && !special_edge_cases(minishell()->pipex))
+// 		return (1);
+// 	return (0);
+// }
+
 int	check_for_pipeline(void)
 {
 	t_token	*tokens_s;
-	int		check;
 
-	check = 0;
 	tokens_s = minishell()->tokens;
 	while (tokens_s)
 	{
 		if (tokens_s->type == PIPE)
 			return (1);
-		else if (tokens_s->type == PATH)
-		{
-			check = 1;
-			if (!special_edge_cases(minishell()->pipex))
-				return (1);
-		}
 		tokens_s = tokens_s->next;
 	}
-	if (!check && !special_edge_cases(minishell()->pipex))
-		return (1);
-	return (0);
+	if (special_edge_cases(minishell()->pipex))
+		return (0);
+	return(1);
 }
 
 //TODO Handle error s

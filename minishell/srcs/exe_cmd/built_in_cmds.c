@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/13 17:33:09 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:13:52 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,5 @@ int	special_edge_cases(t_pipex *pipex_s)
 		run_export(pipex_s);
 	else
 		return (0);
-	pipex_s->pid = -1;
-	ft_close(pipex_s->pipe_fd[0]);
-	ft_close(pipex_s->pipe_fd[1]);
 	return (1);
 }

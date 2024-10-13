@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/13 17:29:38 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:18:16 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,5 +390,6 @@ int ft_n_update_path(t_pipex *pipex_s);
 int ft_open_fd(t_token *tk_s, int *fd);
 void	ft_update_fds2(t_token *tk_s, t_pipex *pipex_s);
 int is_directory(const char *path);
+int	check_for_pipeline(void);
 
 #endif
