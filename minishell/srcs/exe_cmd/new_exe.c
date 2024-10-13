@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/13 16:23:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 17:33:43 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ t_token *find_next_pipe(t_token *tokens_s)
 	return (tokens_s);
 }
 
-int	ft_n_update_cmds(t_pipex *pipex_s)
+void	ft_n_update_cmds(t_pipex *pipex_s)
 {
 	int count;
 	t_token *tokens_s;
 
 	tokens_s = pipex_s->token;
-	pipex_s->cmd = NULL; //safeguard
+	// pipex_s->cmd = NULL; //safeguard
 	count = 0;
 	while (tokens_s && tokens_s->type != PIPE) //---------------
 	{
@@ -35,7 +35,8 @@ int	ft_n_update_cmds(t_pipex *pipex_s)
 			count += 1;
 		tokens_s = tokens_s->next;
 	}
-	pipex_s->cmd = (char **) safe_malloc(sizeof(char *) *(count + 1)); //---------------
+	if (count)
+		pipex_s->cmd = (char **) safe_malloc(sizeof(char *) *(count + 1)); //---------------
 	count = 0;
 	tokens_s = pipex_s->token; //to be used
 	while (tokens_s && tokens_s->type != PIPE) //funcao para este
@@ -47,7 +48,6 @@ int	ft_n_update_cmds(t_pipex *pipex_s)
 		}
 		tokens_s = tokens_s->next;
 	}
-	return (0);
 }
 
 void ft_n_update_fds(t_pipex *pipex_s)
@@ -107,7 +107,7 @@ int ft_n_update_path(t_pipex *pipex_s)
 {
 	char *path;
 
-	if (pipex_s->status != 0)
+	if (pipex_s->status != 0 || !pipex_s->cmd)
 		return(pipex_s->status);
 	path = pipex_s->cmd[0];
 	if (path[0] == '.' && !path[1])
@@ -141,7 +141,9 @@ void new_process_tokens(void)
 		ft_n_update_cmds(pipex_s);
 		//os ficheiros tem de ser aqui actually
 		ft_n_update_fds(pipex_s);
-		if (ft_strcmp(pipex_s->cmd[0], "exit") == 0)
+		if (pipex_s->cmd == NULL)
+			printf("this is cmd: %s\n", "NULL");
+		if (pipex_s->cmd && ft_strcmp(pipex_s->cmd[0], "exit") == 0)
 			ft_exit(pipex_s);
 		pipex_s->pid = fork();
 		if (pipex_s->pid == -1)
