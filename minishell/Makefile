@@ -6,7 +6,7 @@
 #    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/10/13 18:49:58 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/10/07 16:48:18 by jqueijo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,12 +62,13 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/exe_cmd/built_ins/ft_export.c \
 	$(SRC_PATH)/exe_cmd/built_ins/ft_unset.c \
 	$(SRC_PATH)/exe_cmd/built_ins/run_built_ins.c \
+	$(SRC_PATH)/exe_cmd/new_exe.c \
 
 
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 SANITIZE = -g -fsanitize=address
 

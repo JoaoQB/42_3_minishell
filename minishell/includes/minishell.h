@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/13 18:49:07 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:18:16 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_token
 	t_token	*next;
 }	t_token;
 
-// pipe_fd restruct in case of *
 typedef struct s_pipex //mine2
 {
 	pid_t	pid;
@@ -88,6 +87,7 @@ typedef struct s_pipex //mine2
 	char	*path;
 	char	**cmd;
 	int		pipe_fd[2];
+	t_token	*token;
 	t_pipex	*prev;
 	t_pipex	*next;
 	t_main	*main_s;
@@ -298,7 +298,7 @@ int		ft_process_tokens_s(void);
 int		ft_create_pipeline(void);
 int		ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s);
 int		ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s);
-int		ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
+void		ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
 int		read_heredoc(t_token *tokens_s);
 t_pipex	*ft_init_pipex_s(void);
 
@@ -372,9 +372,28 @@ char	**get_array_env(void);
 int		set_sig_handlers(int signal, void (*func_name)(int));
 void	handle_sigquit(int sig);
 void	handle_sigint(int sig);
+void handle_sigchild(int sig); //indica existencia do fim de um child e da exit ao msm
 void	ft_exit_pid(t_pipex *pipex);
 t_main	*minishell(void);
 
 void print_err(char *format, ...);
+
+/************************/
+/*** NEW PIPEX ****/
+/************************/
+
+void	free_pipex_node(t_pipex *pipex_s);
+int		ft_close(int fd);
+void new_process_tokens(void); //corre todos os tokens e cria a struct
+t_pipex *add_back_pipex_s(void); //adiciona o novo pipe a stuct
+void ft_n_update_fds(t_pipex *pipex_s); //dentro de cada cria da update aos fd
+void	ft_n_update_cmds(t_pipex *pipex_s); //
+t_token *find_next_pipe(t_token *tokens_s);
+void	process_child_pid(t_pipex *curr_pipex_s);
+int ft_n_update_path(t_pipex *pipex_s);
+int ft_open_fd(t_token *tk_s, int *fd);
+void	ft_update_fds2(t_token *tk_s, t_pipex *pipex_s);
+int is_directory(const char *path);
+int	check_for_pipeline(void);
 
 #endif

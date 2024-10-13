@@ -6,11 +6,25 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 21:45:29 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/10 22:34:25 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int		ft_close(int fd)
+{
+	if (fd > 2)
+	{
+		if (close(fd) == -1)
+		{
+			fd = -1;
+			return (-1);
+		}
+		fd = -1;
+	}
+	return (0);
+}
 
 char	*ft_strnjoin(char *old_str, char *str_add, int size)
 {
@@ -29,8 +43,6 @@ char	*ft_strnjoin(char *old_str, char *str_add, int size)
 	if (i < size || size == -1)
 		size = i;
 	new_str = (char *) safe_malloc(size + len + 1);
-	if (!new_str)
-		return (NULL);
 	i = -1;
 	while (old_str && ++i < len)
 		new_str[i] = old_str[i];

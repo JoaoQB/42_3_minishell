@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/08 16:31:29 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:57:25 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,30 @@ void	handle_sigquit(int sig)
 	// free_main_input();
 	// cleanup_main();
 	// exit(1); // General error
+}
+
+void handle_sigchild(int sig) 
+{
+    t_pipex *pipex_s;
+    pid_t   pid;
+    int     status;
+
+    (void)sig;
+    while(1)
+    {
+        pid = waitpid(-1, &status, WNOHANG);
+        if(pid == 0 || pid == -1)
+            break;
+        pipex_s = minishell()->pipex;
+        while (pipex_s && pipex_s->pid != pid)
+            pipex_s = pipex_s->next;
+        if (pipex_s)
+        {
+            process_child_pid(pipex_s);
+			pipex_s->pid = -1;
+            // free_pipex_node(pipex_s); // TODO reddy to test
+        }
+    }
 }
 
 int	set_sig_handlers(int signal, void (*func_name)(int))

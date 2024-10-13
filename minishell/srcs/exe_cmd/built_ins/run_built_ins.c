@@ -21,7 +21,7 @@ int	run_export(t_pipex *pipex_s)
 	exit_status = 0;
 	if (!pipex_s)
 		return (1);
-	if (!pipex_s->cmd[1])
+	if (!pipex_s->cmd[1]) //do i need to protect $SHELL?
 	{
 		print_export(minishell()->export);
 		return (exit_status);
@@ -44,7 +44,7 @@ void	run_unset(t_pipex *pipex_s)
 	int		i;
 
 	i = 1;
-	if (!pipex_s->cmd[1])
+	if (!pipex_s->cmd[1] || ft_strcmp(pipex_s->cmd[1], "SHELL") == 0)
 		return ;
 	while (pipex_s->cmd[i])
 	{
@@ -75,7 +75,6 @@ int	run_cd(t_pipex *pipex_s)
 	cmd = pipex_s->cmd;
 	if (cmd[1] && cmd[2])
 		return (print_err("%s: %s\n", cmd[0], "too many arguments"), 1);
-		// return (printf("%s: %s\n", cmd[0], "too many arguments"), 1);
 	if (!cmd[1] || strcmp(cmd[1], "~") == 0)
 		new_dir = ft_strdup(ft_getenv("HOME"));
 	else if (strcmp(cmd[1], "-") == 0)
@@ -90,7 +89,6 @@ int	run_cd(t_pipex *pipex_s)
 	if (new_dir && !(chdir(new_dir) == 0))
 		return (free(new_dir),
 			print_err("%s: %s: %s\n", cmd[0], cmd[1], strerror(errno)), 1);
-			// printf("%s: %s: %s\n", cmd[0], cmd[1], strerror(errno)), 1);
 	ft_setenv("PWD", run_pwd(false), 1);
 	free(new_dir);
 	return (0);
