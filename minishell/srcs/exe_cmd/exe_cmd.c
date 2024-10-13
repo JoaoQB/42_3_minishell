@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/11 20:01:16 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 14:24:18 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ void	ft_exe_pipex_s(void)
 
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
-	ft_n_update_fds(pipex_s);
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
 	if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
@@ -141,7 +140,10 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	if (pipex_s->status != 0 || !pipex_s->cmd || !*pipex_s->cmd)
 		ft_exit_pid(pipex_s);
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
+	{
 		pipex_s->status = errno;
+		print_err("excve error reads : %s\n", strerror(pipex_s->status));
+	}
 	ft_exit_pid(pipex_s);
 }
 
@@ -195,7 +197,7 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	{
 		if (file_acess (temp) == EACCES)
 			pipex_s->status = EACCES;
-		else if(file_acess (temp) == 0)
+		if(access(temp, F_OK | R_OK | X_OK) == 0)
 			return (temp);
 		free(temp);
 		i = 0;

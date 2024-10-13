@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/11 19:00:46 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 08:07:14 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,6 +388,7 @@ t_token *find_next_pipe(t_token *tokens_s);
 void	process_child_pid(t_pipex *curr_pipex_s);
 int ft_n_update_path(t_pipex *pipex_s);
 int ft_open_fd(t_token *tk_s, int *fd);
+void	ft_update_fds2(t_token *tk_s, t_pipex *pipex_s);
 int is_directory(const char *path);
 
 #endif

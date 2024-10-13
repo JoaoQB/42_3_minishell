@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/08 17:49:28 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 13:58:05 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	run_unset(t_pipex *pipex_s)
 	t_env	*prev;
 
 	menv_s = minishell()->env;
-	if (!pipex_s->cmd[1])
+	if (!pipex_s->cmd[1] || ft_strcmp(pipex_s->cmd[1], "SHELL") == 0)
 		return ;
 	while (menv_s && ft_strcmp(menv_s->var, pipex_s->cmd[1]) != 0)
 	{

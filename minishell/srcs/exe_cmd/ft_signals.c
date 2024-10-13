@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/11 19:57:22 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:57:25 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void handle_sigchild(int sig)
         if (pipex_s)
         {
             process_child_pid(pipex_s);
+			pipex_s->pid = -1;
             // free_pipex_node(pipex_s); // TODO reddy to test
         }
     }

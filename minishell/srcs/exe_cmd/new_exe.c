@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/11 20:30:40 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/13 16:23:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ void ft_n_update_fds(t_pipex *pipex_s)
 		pipex_s->pipe_fd[1] = piper[1];
 		pipex_s->next->pipe_fd[0] = piper[0];
 	}
+	// ft_update_fds2(pipex_s->token, pipex_s);
 	ft_update_fds(pipex_s->token, pipex_s);
-	if (pipex_s->status != 0)
-		ft_exit_pid(pipex_s);
+
 }
 
 t_pipex *add_back_pipex_s(void)
@@ -107,10 +107,8 @@ int ft_n_update_path(t_pipex *pipex_s)
 {
 	char *path;
 
-	// if (ft_strcmp(pipex_s->cmd[0], ".") == 0 && pipex_s->cmd[1])
-	// 	path = pipex_s->cmd[1];
-	// else
-	// 	path = pipex_s->cmd[1];
+	if (pipex_s->status != 0)
+		return(pipex_s->status);
 	path = pipex_s->cmd[0];
 	if (path[0] == '.' && !path[1])
 	{
@@ -118,16 +116,16 @@ int ft_n_update_path(t_pipex *pipex_s)
 		print_err("usage: %s filename [arguments]\n", path);
 		return (2);
 	}
-	pipex_s->path = get_cmd_path(pipex_s);
-	if(is_directory(pipex_s->path) != 0)//TODO a bool
+	if(is_directory(path) != 0)//TODO a bool
 	{
 		print_err("%s: %s\n", path, strerror(EISDIR));
 		return (126);
 	}
-	if (pipex_s->status == EACCES)
+	pipex_s->path = get_cmd_path(pipex_s);
+	if (pipex_s->path == NULL && pipex_s->status == EACCES)
 		return (print_err ("%s: %s\n", path, strerror(pipex_s->status)), 126);
-	if (pipex_s->status == ENOENT)
-		return (print_err ("%s: %s\n", path, "Command not found"), 127);
+	if (pipex_s->path == NULL && pipex_s->status == ENOENT)
+		return (print_err ("%s: command not found\n", path), 127);
 	return (0);
 }
 
@@ -142,6 +140,9 @@ void new_process_tokens(void)
 		pipex_s = add_back_pipex_s();
 		ft_n_update_cmds(pipex_s);
 		//os ficheiros tem de ser aqui actually
+		ft_n_update_fds(pipex_s);
+		if (ft_strcmp(pipex_s->cmd[0], "exit") == 0)
+			ft_exit(pipex_s);
 		pipex_s->pid = fork();
 		if (pipex_s->pid == -1)
 			return (perror("fork failed")); //TODO Handle error s
