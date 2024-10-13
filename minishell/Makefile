@@ -60,6 +60,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/exe_cmd/ft_signals.c \
 	$(SRC_PATH)/exe_cmd/built_ins/ft_exit.c \
 	$(SRC_PATH)/exe_cmd/built_ins/ft_export.c \
+	$(SRC_PATH)/exe_cmd/built_ins/ft_unset.c \
 	$(SRC_PATH)/exe_cmd/built_ins/run_built_ins.c \
 	$(SRC_PATH)/exe_cmd/new_exe.c \
 

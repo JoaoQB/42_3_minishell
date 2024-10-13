@@ -334,19 +334,23 @@ int		edge_cases(t_pipex *pipex_s);
 /****** BUILT INS *******/
 /************************/
 
-/* ft_exit.c */
-void	ft_exit(t_pipex *pipex);
-
-/* ft_export.c */
-void	print_export(t_env *first);
-void	export_check(t_env *new);
-
 /* run_built_ins.c */
 char	*run_pwd(bool print);
 int		run_cd(t_pipex *pipex_s);
 void	run_echo(t_pipex *pipex_s);
 void	run_unset(t_pipex *pipex_s);
-void	run_export(t_pipex *pipex_s);
+int		run_export(t_pipex *pipex_s);
+
+/* ft_exit.c */
+void	ft_exit(t_pipex *pipex);
+
+/* ft_unset.c */
+void	export_unset(char *export_var);
+void	env_unset(char *env_var);
+
+/* ft_export.c */
+void	print_export(t_env *first);
+void	export_check(t_env *new);
 
 /************************/
 /***** ENV FUNCTIONS ****/
