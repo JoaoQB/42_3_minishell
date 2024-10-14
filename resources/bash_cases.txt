@@ -1,3 +1,24 @@
+Control C
+	In interactive mode: new prompt, exit status 130
+	In parent: \n
+	In child: default
+	In here_doc: exits here_doc
+
+Control D
+	In interactive mode: exit minishell
+	In parent: default
+	In child: default
+	In here_doc: exits heredoc with message: "heredoc ended by ^D (wanted $DELIM)"
+
+Control \
+	In interactive mode: ignored
+	In parent: "Quit (core dumped\n)"
+	In child: default
+	In here_doc: ignored
+
+https://github.com/ahokcool/frankenshell/blob/main/docs/documentation.md#signals
+
+----------------------------------------------------------------
 ls > output.txt > input.txt Makefile
 	cat Makefile > out.txt > out2.txt > out3.txt
 
