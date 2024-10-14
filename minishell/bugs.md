@@ -9,6 +9,11 @@ bash error = ( command not found)
 //this file exists but is not an executable
 
 
+Test 142: ✅⚠️  /test_files
+mini error = ( command not found)
+bash error = ( No such file or directory)
+
+
 Test 140: ❌ test_files
 mini exit code = 126
 bash exit code = 127
@@ -16,6 +21,11 @@ mini error = ( Is a directory)
 bash error = ( command not found)
 
 //its an directory, but aint detecting as one (cuz of no /)
+
+
+Test 137: ✅⚠️  ./missing.out
+mini error = ( command not found)
+bash error = ( No such file or directory)
 
 
 Test 129: ❌ echo hi | echo >>./outfiles/outfile01 bye >./test_files/invalid_permission
@@ -50,3 +60,7 @@ mini output = (hi)
 bash output = ()
 mini error = ( command not found)
 bash error = ()
+
+146 140 99 79 75
+
+99 KO sometimes

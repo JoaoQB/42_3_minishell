@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/14 13:35:25 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:06:10 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ void	ft_exe_pipex_s(void)
 	while (pipex_s)
 	{
 		pipex_s->pid = fork();
-		set_signals(SIGCMD);
 		if (pipex_s->pid == -1)
 			return (perror("fork failed")); //TODO Handle error s
 		else if (pipex_s->pid == 0 && !special_edge_cases(pipex_s))

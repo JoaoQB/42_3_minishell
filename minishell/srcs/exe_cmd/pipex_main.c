@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/13 20:57:41 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:22:45 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	close_all_fd(t_pipex *pipex_s)
 {
 	t_pipex	*save;
 
-	save = NULL; 
+	save = NULL;
 	if (!pipex_s)
 		pipex_s = minishell()->pipex;
 	while (pipex_s->prev)
@@ -72,6 +72,7 @@ int	process_child_pipes(t_pipex *pipex_s)
 	t_pipex	*curr_pipex_s;
 	int		rep;
 
+	set_signals(SIGCMD);
 	while (pipex_s->next)
 		pipex_s = pipex_s->next;
 	curr_pipex_s = pipex_s;

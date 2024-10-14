@@ -6,37 +6,41 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/14 13:46:40 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:04:37 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// HEREDOC NOT WORKING
 static void	sigint_handler_hd(int sig)
 {
 	(void)sig;
 	g_signal = 2;
-	close(STDIN_FILENO);
+	free_main_input();
+	// printf("exiting heredoc");
+	// close(STDIN_FILENO);
 }
 
 static void	sigquit_handler_cmd(int sig)
 {
 	(void)sig;
-	g_signal = 2;
-	printf("^\\ Quit (core dumped)\n");
+	printf(" Quit (core dumped)\n");
 }
 
 static void	sigint_handler_cmd(int sig)
 {
 	(void)sig;
-	g_signal = 1;
 	printf("\n");
+	minishell()->status = 130;
+	// rl_replace_line("", 0);
+	// rl_on_new_line();
+	// rl_redisplay();
 }
 
 static void	sigint_handler_main(int sig)
 {
 	(void)sig;
-	g_signal = 1;
 	printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -110,6 +114,7 @@ void	set_signals(int sigmode)
 		if (set_sig_handlers(SIGQUIT, sigquit_handler_cmd) != 0)
 			return;
 	}
+	// HEREDOC NOT WORKING
 	else if (sigmode == SIGHD)
 	{
 		if (set_sig_handlers(SIGINT, sigint_handler_hd) != 0)
