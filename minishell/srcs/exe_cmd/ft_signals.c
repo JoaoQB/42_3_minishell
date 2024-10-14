@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/14 16:04:37 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:38:50 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void handle_sigchild(int sig)
     (void)sig;
     while(1)
     {
+		status = 0;
         pid = waitpid(-1, &status, WNOHANG);
         if(pid == 0 || pid == -1)
             break;
