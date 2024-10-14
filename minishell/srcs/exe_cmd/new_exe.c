@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_exe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/14 15:20:40 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:04:16 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ void ft_n_update_fds(t_pipex *pipex_s)
 		pipex_s->pipe_fd[1] = piper[1];
 		pipex_s->next->pipe_fd[0] = piper[0];
 	}
-	// ft_update_fds2(pipex_s->token, pipex_s);
 	ft_update_fds(pipex_s->token, pipex_s);
-
 }
 
 t_pipex *add_back_pipex_s(void)
@@ -116,7 +114,7 @@ int ft_n_update_path(t_pipex *pipex_s)
 		print_err("usage: %s filename [arguments]\n", path);
 		return (2);
 	}
-	if(is_directory(path) != 0)
+	if((path[0] == '.' || path[0] == '/') && is_directory(path) != 0)
 	{
 		print_err("%s: %s\n", path, strerror(EISDIR));
 		return (126);
@@ -149,7 +147,6 @@ void new_process_tokens(void)
 		{
 			set_signals(SIGCMD);
 			exe_cmd_child(pipex_s, minishell()->menv);
-			printf("ola2");
 		}
 		token_s = find_next_pipe(pipex_s->token);
 	}
