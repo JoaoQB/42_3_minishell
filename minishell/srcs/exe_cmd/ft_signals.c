@@ -3,16 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/13 15:57:25 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:46:40 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	handle_sigint(int sig)
+static void	sigint_handler_hd(int sig)
+{
+	(void)sig;
+	g_signal = 2;
+	close(STDIN_FILENO);
+}
+
+static void	sigquit_handler_cmd(int sig)
+{
+	(void)sig;
+	g_signal = 2;
+	printf("^\\ Quit (core dumped)\n");
+}
+
+static void	sigint_handler_cmd(int sig)
+{
+	(void)sig;
+	g_signal = 1;
+	printf("\n");
+}
+
+static void	sigint_handler_main(int sig)
 {
 	(void)sig;
 	g_signal = 1;
@@ -20,23 +41,21 @@ void	handle_sigint(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	// rl_point = 0;
-	// rl_done = 1;
-	// exit(0);
+	minishell()->status = 130;
 }
 
-void	handle_sigquit(int sig)
-{
-	(void)sig;
-	g_signal = 2;
-	// printf("this is an forced core dump\n");
-	// abort(); //TODO exit with abort value or free and core dump
-	// free_main_input();
-	// cleanup_main();
-	// exit(1); // General error
-}
+// static void	handle_sigquit(int sig)
+// {
+// 	(void)sig;
+// 	g_signal = 2;
+// 	// printf("this is an forced core dump\n");
+// 	// abort(); //TODO exit with abort value or free and core dump
+// 	// free_main_input();
+// 	// cleanup_main();
+// 	// exit(1); // General error
+// }
 
-void handle_sigchild(int sig) 
+void handle_sigchild(int sig)
 {
     t_pipex *pipex_s;
     pid_t   pid;
@@ -73,4 +92,29 @@ int	set_sig_handlers(int signal, void (*func_name)(int))
 		return (1);
 	}
 	return (0);
+}
+
+void	set_signals(int sigmode)
+{
+	if (sigmode == SIGMAIN)
+	{
+		if (set_sig_handlers(SIGINT, sigint_handler_main) != 0)
+			return;
+		if (set_sig_handlers(SIGQUIT, SIG_IGN) != 0)
+			return;
+	}
+	else if (sigmode == SIGCMD)
+	{
+		if (set_sig_handlers(SIGINT, sigint_handler_cmd) != 0)
+			return;
+		if (set_sig_handlers(SIGQUIT, sigquit_handler_cmd) != 0)
+			return;
+	}
+	else if (sigmode == SIGHD)
+	{
+		if (set_sig_handlers(SIGINT, sigint_handler_hd) != 0)
+			return;
+		if (set_sig_handlers(SIGQUIT, SIG_IGN) != 0)
+			return;
+	}
 }

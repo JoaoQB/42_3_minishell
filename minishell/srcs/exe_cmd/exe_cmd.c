@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/13 21:03:34 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:35:25 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void	ft_exe_pipex_s(void)
 	while (pipex_s)
 	{
 		pipex_s->pid = fork();
+		set_signals(SIGCMD);
 		if (pipex_s->pid == -1)
 			return (perror("fork failed")); //TODO Handle error s
 		else if (pipex_s->pid == 0 && !special_edge_cases(pipex_s))
@@ -193,7 +194,7 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 int		file_acess(char *file_path)
 {
 		if (access(file_path, F_OK) != 0)
-			return (errno); //unixistent file 13 ENOENT 
+			return (errno); //unixistent file 13 ENOENT
 		if (access(file_path, R_OK | X_OK) != 0)
 			return (errno); //no permitions 2 EACCES
 		else

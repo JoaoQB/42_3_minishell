@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/13 18:18:16 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:27:34 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ typedef struct s_pipex			t_pipex;
 typedef struct s_main			t_main;
 typedef struct s_hist			t_hist;
 extern volatile sig_atomic_t	g_signal;
+
+typedef enum e_sigmode
+{
+	SIGMAIN,
+	SIGCMD,
+	SIGHD
+}	t_sigmode;
 
 typedef enum e_neg_operator
 {
@@ -369,10 +376,11 @@ char	**get_array_env(void);
 /************************/
 
 // int setup_signal_handlers(int process_type);
+void	set_signals(int sigmode);
 int		set_sig_handlers(int signal, void (*func_name)(int));
-void	handle_sigquit(int sig);
-void	handle_sigint(int sig);
-void handle_sigchild(int sig); //indica existencia do fim de um child e da exit ao msm
+// void	handle_sigquit(int sig);
+// void	handle_sigint(int sig);
+void	handle_sigchild(int sig); //indica existencia do fim de um child e da exit ao msm
 void	ft_exit_pid(t_pipex *pipex);
 t_main	*minishell(void);
 

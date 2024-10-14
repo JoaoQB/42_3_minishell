@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/07 15:57:55 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:22:47 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ void	free_main_input(void)
 	minishell()->input_reorg = NULL;
 	minishell()->pipex = NULL;
 	minishell()->silence_info = false;
+	set_signals(SIGMAIN);
 }
