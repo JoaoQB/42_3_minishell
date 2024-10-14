@@ -1,3 +1,26 @@
+Control C
+	In interactive mode:
+		empty prompt: new prompt, exit status 130 --DONE
+		stuff written: new prompt, exit status 130 (buffer should be clean too) --DONE
+	after running a blocking command like cat without arguments: new prompt -- doing two prompts
+	In here_doc: exits here_doc -- exiting program
+
+Control D
+	In interactive mode:
+		in empty prompt: exit minishell -- DONE
+		stuff written: do nothing -- DONE
+	after running a blocking command like cat without arguments: default -- DONE
+	In here_doc: exits heredoc with message: "heredoc ended by ^D (wanted $DELIM)" -- new prompt, missing message
+
+Control \
+	In interactive mode: ignored -- DONE
+	In parent: "Quit (core dumped\n)" -- not doing anything
+	In child: default
+	In here_doc: ignored -- DONE
+
+https://github.com/ahokcool/frankenshell/blob/main/docs/documentation.md#signals
+
+----------------------------------------------------------------
 ls > output.txt > input.txt Makefile
 	cat Makefile > out.txt > out2.txt > out3.txt
 

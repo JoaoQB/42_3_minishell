@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_struct2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/11 16:33:41 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:51:26 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	read_heredoc(t_token *tokens_s)
 	char	*expanded_input;
 	int		piper[2];
 
+	set_signals(SIGHD);
 	delim = tokens_s->value;
 	if (pipe(piper) == -1)
 		return (perror("failed pipe"), 0);

@@ -6,3 +6,4 @@ libft.a
 /resources/other_minishells
 *.txt
 /minishell/minishell_tester
+valgrind.log

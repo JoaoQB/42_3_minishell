@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_exe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/13 18:21:48 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:20:40 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_n_update_cmds(t_pipex *pipex_s)
 void ft_n_update_fds(t_pipex *pipex_s)
 {
 	int piper[2];
-	
+
 	if (pipex_s->next)
 	{
 		if (pipe(piper) == -1)
@@ -146,7 +146,11 @@ void new_process_tokens(void)
 		if (pipex_s->pid == -1)
 			return (perror("fork failed")); //TODO Handle error s
 		else if (pipex_s->pid == 0)
+		{
+			set_signals(SIGCMD);
 			exe_cmd_child(pipex_s, minishell()->menv);
+			printf("ola2");
+		}
 		token_s = find_next_pipe(pipex_s->token);
 	}
 }
