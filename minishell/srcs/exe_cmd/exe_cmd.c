@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 09:45:48 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:42:47 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ int	check_for_pipeline(void)
 
 int is_directory(const char *path)
 {
-    struct stat buffer;
+	struct stat	buffer;
 
-    if (stat(path, &buffer) != 0)
+	if (stat(path, &buffer) != 0)
 	{
 		print_err("%s: %s\n", path, strerror(errno));
 		return (127);
 	}
-    else if (S_ISDIR(buffer.st_mode))
+	else if (S_ISDIR(buffer.st_mode))
 	{
 		if ((path[0] == '.' || path[0] == '/'))
 		{
@@ -71,7 +71,7 @@ int is_directory(const char *path)
 			return (126);
 		}
 	}
-    return (0);
+	return (0);
 }
 
 // bool is_directory(t_pipex *pipex_s)
@@ -185,7 +185,7 @@ int		file_acess(char *file_path)
 {
 		if (access(file_path, F_OK) != 0)
 			return (errno); //unixistent file 13 ENOENT
-		if (access(file_path, R_OK) != 0)
+		if (access(file_path, X_OK) != 0)
 			return (errno); //no permitions 2 EACCES
 		return (0);
 }
@@ -200,7 +200,7 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	temp = ft_strnjoin(NULL, pipex_s->cmd[0], -1);
 	while (paths && *paths != '\0')
 	{
-		if (file_acess (temp) == EACCES)
+		if (file_acess(temp) == EACCES)
 			pipex_s->status = EACCES;
 		if(access(temp, F_OK | R_OK | X_OK) == 0)
 			return (temp);
