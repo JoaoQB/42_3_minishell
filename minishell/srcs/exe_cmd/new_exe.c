@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_exe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 15:10:19 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:49:34 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,6 @@ t_pipex *add_back_pipex_s(void)
 	return (pipex_s);
 }
 
-// int is_directory(const char *path)
-// {
-// 	struct stat buffer;
-
-// 	if (stat(path, &buffer) != 0)
-// 		return (errno);
-// 	else if (S_ISDIR(buffer.st_mode))
-// 		return (EISDIR);
-// 	return (0);
-// }
-
 int ft_n_update_path(t_pipex *pipex_s)
 {
 	char	*path;
@@ -115,12 +104,9 @@ int ft_n_update_path(t_pipex *pipex_s)
 		print_err("usage: %s filename [arguments]\n", path);
 		return (2);
 	}
-	if ((path[0] == '.' || path[0] == '/'))
-	{
-		status = is_directory(path);
-		if (status != 0)
-			return (status);
-	}
+	status = is_directory(path);
+	if (status != 0)
+		return (status);
 	pipex_s->path = get_cmd_path(pipex_s);
 	if (pipex_s->path == NULL && pipex_s->status == EACCES)
 		return (print_err ("%s: %s\n", path, strerror(pipex_s->status)), 126);

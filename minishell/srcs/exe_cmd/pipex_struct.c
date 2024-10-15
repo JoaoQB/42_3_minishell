@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 09:38:47 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:32:55 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int ft_open_fd(t_token *tk_s, int *fd)
 {
 	int status;
 
+	errno = 0;
 	status = 0;
 	if (tk_s->type == HERE_DOC && tk_s->next && *tk_s->next->value)
 		fd[0] = read_heredoc(tk_s->next);
@@ -43,7 +44,7 @@ int ft_open_fd(t_token *tk_s, int *fd)
 		fd[1] = open(tk_s->next->value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	else if (tk_s->type == RED_OUT_APP && tk_s->next && *tk_s->next->value)
 		fd[1] = open(tk_s->next->value, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	if (fd[0] == -1  || fd[1] == -1)
+	if ((fd[0] == -1  || fd[1] == -1) && errno)
 		status = errno;
 	return (status);
 }
@@ -53,6 +54,7 @@ void	ft_update_fds(t_token *tk_s, t_pipex *pipex_s)
 	int		*fd;
 	int status;
 
+	errno = 0;
 	status = 0;
 	fd = pipex_s->pipe_fd;
 	while (tk_s && tk_s->type != PIPE && status != EACCES && status != ENOENT)
@@ -64,9 +66,9 @@ void	ft_update_fds(t_token *tk_s, t_pipex *pipex_s)
 		status = ft_open_fd(tk_s, fd);
 		tk_s = tk_s->next;
 	}
-	if (fd[0] == -1  || fd[1] == -1)
+	if ((fd[0] == -1  || fd[1] == -1) && status)
 	{
-		print_err(" %s\n", strerror(errno));
+		print_err(" %s\n", strerror(status));
 		pipex_s->status = 1;
 	}
 }

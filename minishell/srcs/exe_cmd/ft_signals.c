@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/14 20:38:50 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:36:40 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ void handle_sigchild(int sig)
     int     status;
 
     (void)sig;
+	status = 0;
     while(1)
     {
-		status = 0;
         pid = waitpid(-1, &status, WNOHANG);
         if(pid == 0 || pid == -1)
             break;

@@ -6,42 +6,11 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 17:38:20 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:39:03 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// void here_doc(int fd)
-// {write into fd using readline
-// i can do an fork allowing me to do dup of stdinput
-// }
-
-// void run_export(t_pipex *pipex_s)
-// {
-	// char *prefix;
-	// char *sufix;
-	// int	i;
-//
-	// if (!pipex_s->cmd[1])
-		// return ;
-	// i = 0;
-	// while ((pipex_s->cmd[1])[i] &&(pipex_s->cmd[1])[i] != '=')
-		// i++;
-//
-	// prefix = ft_strnjoin(NULL, pipex_s->cmd[1], i++);
-	// sufix = ft_strnjoin(NULL, &pipex_s->cmd[1][i], -1);
-	// i = 0;
-	// while (prefix[i] && is_alpha(prefix[i]))
-		// i++;
-	// if (sufix && prefix[i] = '+')
-	// {
-		// prefix[i] = 0;
-		// ft_addenv(prefix, sufix, 1);
-	// }
-	// else if (sufix)
-		// ft_setenv(prefix, sufix, 1);
-// }
 
 int	edge_cases(t_pipex *pipex_s)
 {
@@ -71,7 +40,7 @@ int	special_edge_cases(t_pipex *pipex_s)
 	else if (ft_strcmp(pipex_s->cmd[0], "unset") == 0)
 		run_unset(pipex_s);
 	else if (ft_strcmp(pipex_s->cmd[0], "export") == 0)
-		pipex_s->status =  run_export(pipex_s);
+		pipex_s->status = run_export(pipex_s);
 	else
 		return (0);
 	return (1);

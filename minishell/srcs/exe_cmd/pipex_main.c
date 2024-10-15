@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/14 15:22:45 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:18:08 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,26 +109,3 @@ int	ft_shell_pipex()
 	return (0);
 }
 
-//TODO dir name
-
-
-// int	ft_shell_pipex(void)
-// {
-// 	int	status;
-
-// 	if (minishell()->silence_info == true)
-// 		return (0);
-// 	//my_print_env();
-// 	ft_process_tokens_s();
-// 	add_to_history();
-// 	// print_struct();
-// 	ft_exe_pipex_s();
-// 	status = process_child_pipes(minishell()->pipex); //manage_pid
-// 	minishell()->status = status;
-// 	// printf("\n	COMMAND ERR: %d\n", status);
-// 	//print_check_processes(minishell()->pipex);
-// 	// free_pipex_s(minishell()->pipex); //temp free
-// 	//recieve signal when i do exit,
-// 	// so i can properly free it and pass responsability
-// 	return (status);
-// }

@@ -48,8 +48,8 @@ int	main(int argc, char **argv, char **envp)
 	// 	return (1);
 	// if (set_sig_handlers(SIGQUIT, handle_sigquit) != 0)
     //     	return (1);
-	// if (set_sig_handlers(SIGCHLD, handle_sigchild) != 0)
-	// 	return (1);
+	if (set_sig_handlers(SIGCHLD, handle_sigchild) != 0)
+		return (1);
 	repl(envp);
 	cleanup_main();
 	return (0);
