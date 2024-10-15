@@ -3,60 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_struct2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/14 15:51:26 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/15 09:27:08 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	ft_process_tokens_s(void)
-{
-	t_token	*tokens_s;
-	t_pipex	*pipex_s;
-
-	tokens_s = minishell()->tokens;
-	ft_create_pipeline();
-	pipex_s = minishell()->pipex;
-	while (tokens_s->next != NULL)
-		tokens_s = tokens_s->next;
-	while (pipex_s->next != NULL)
-		pipex_s = pipex_s->next;
-	while (tokens_s != NULL)
-	{
-		if (tokens_s->prev == NULL || tokens_s->prev->type == PIPE)
-		{
-			ft_update_pipex_s(tokens_s, pipex_s);
-			pipex_s = pipex_s->prev;
-		}
-		tokens_s = tokens_s->prev;
-	}
-	return (0);
-}
-
-int	ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s)
-{
-	int		count;
-	t_token	*curr_token;
-
-	curr_token = tokens_s;
-	count = 0;
-	while (curr_token && curr_token->type != PIPE)
-	{
-		if (curr_token->type == CMD || curr_token->type == ARG)
-			count += 1;
-		curr_token = curr_token->next;
-	}
-	pipex_s->cmd = (char **) safe_malloc(sizeof(char *) *(count + 1));
-	if (!pipex_s->cmd)
-		return (-1);
-	pipex_s->status = ft_update_cmds(tokens_s, pipex_s);
-	if (pipex_s->status == 0)
-		ft_update_fds(tokens_s, pipex_s);
-	return (pipex_s->status);
-}
 
 int	read_heredoc(t_token *tokens_s)
 {

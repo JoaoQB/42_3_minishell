@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/14 15:06:10 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/15 09:45:48 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,18 @@ int is_directory(const char *path)
     struct stat buffer;
 
     if (stat(path, &buffer) != 0)
-        return (0);
+	{
+		print_err("%s: %s\n", path, strerror(errno));
+		return (127);
+	}
     else if (S_ISDIR(buffer.st_mode))
-        return (EISDIR);
+	{
+		if ((path[0] == '.' || path[0] == '/'))
+		{
+			print_err("%s: %s\n", path, strerror(EISDIR));
+			return (126);
+		}
+	}
     return (0);
 }
 
@@ -122,25 +131,7 @@ int is_directory(const char *path)
 // }
 
 //join function with execute_command
-void	ft_exe_pipex_s(void)
-{
-	t_pipex	*pipex_s;
 
-	pipex_s = minishell()->pipex;
-	if (!check_for_pipeline()) //handle no pipeline //TODO exit
-		return ; //this worked but i did simplier
-	while (pipex_s)
-	{
-		pipex_s->pid = fork();
-		if (pipex_s->pid == -1)
-			return (perror("fork failed")); //TODO Handle error s
-		else if (pipex_s->pid == 0 && !special_edge_cases(pipex_s))
-			exe_cmd_child(pipex_s, minishell()->menv);
-		// else <parent> change stuff here latter
-		//	exe_cmd_parent()
-		pipex_s = pipex_s->next;
-	}
-}
 
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
@@ -194,10 +185,9 @@ int		file_acess(char *file_path)
 {
 		if (access(file_path, F_OK) != 0)
 			return (errno); //unixistent file 13 ENOENT
-		if (access(file_path, R_OK | X_OK) != 0)
+		if (access(file_path, R_OK) != 0)
 			return (errno); //no permitions 2 EACCES
-		else
-			return (0);
+		return (0);
 }
 
 char	*get_cmd_path(t_pipex *pipex_s)
