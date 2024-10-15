@@ -18,6 +18,9 @@ file names even if they exist:
 	bash: permission denied
 	mini: command not found
 
+./Folder
+	bash: Is a directory
+	mini: Is a directory
 
 
 
