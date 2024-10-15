@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/10 22:34:25 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:01:08 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,33 +122,12 @@ void	*safe_malloc(size_t size)
 // 		ft_putstr_fd(strerror(errno), 2);
 // }
 
-// void	hdl_err(int err, char *format, ...)
-// {
-// 	va_list	args;
-
-// 	va_start(args, format);
-// 	while (*format)
-// 	{
-// 		if (*format == '%')
-// 		{
-// 			format++;
-// 			if (*format == 's')
-// 				ft_putstr_fd(va_arg(args, char *), 2);
-// 		}
-// 		else
-// 			write(2, format, 1);
-// 		format++;
-// 	}
-// 	va_end(args);
-// 	minishell()->status = err;
-// 	process_err();
-// }
-
 void print_err(char *format, ...)
 {
     va_list args;
 
     va_start(args, format);
+	// write(2, "force alternative", 16);
     while(*format) 
 	{
 		if(*format == '%') 

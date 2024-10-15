@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 18:32:55 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:18:18 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	ft_update_fds(t_token *tk_s, t_pipex *pipex_s)
 	}
 	if ((fd[0] == -1  || fd[1] == -1) && status)
 	{
-		print_err(" %s\n", strerror(status));
 		pipex_s->status = 1;
+		print_err("%s: %s\n",tk_s->value, strerror(status));
 	}
 }
 

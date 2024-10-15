@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 18:49:34 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:04:09 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int ft_n_update_path(t_pipex *pipex_s)
 	char	*path;
 	int		status;
 
-	if (pipex_s->status != 0 || !pipex_s->cmd)
+	if (pipex_s->status || !pipex_s->cmd)
 		return(pipex_s->status);
 	path = pipex_s->cmd[0];
 	if (path[0] == '.' && !path[1])
@@ -125,7 +125,7 @@ void new_process_tokens(void)
 	{
 		pipex_s = add_back_pipex_s();
 		ft_n_update_cmds(pipex_s);
-		if (pipex_s == minishell()->pipex && !check_for_pipeline())
+		if (!check_for_pipeline())
 			break;
 		ft_n_update_fds(pipex_s);
 		pipex_s->pid = fork();

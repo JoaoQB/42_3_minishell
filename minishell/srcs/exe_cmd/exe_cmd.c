@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 18:45:32 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:07:28 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 int	check_for_pipeline(void)
 {
-	t_token	*tokens_s;
+	t_pipex *first_pipe;
 
-	tokens_s = minishell()->tokens;
-	while (tokens_s)
-	{
-		if (tokens_s->type == PIPE)
-			return (1);
-		tokens_s = tokens_s->next;
-	}
-	if (special_edge_cases(minishell()->pipex))
-		return (0);
+	first_pipe = minishell()->pipex;
+	if (first_pipe && !first_pipe->next && !find_next_pipe(first_pipe->token))
+		if (special_edge_cases(first_pipe))
+			return (0);
 	return(1);
 }
 
@@ -61,20 +56,24 @@ int is_directory(const char *path)
 
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
+	if (pipex_s->status)
+		ft_exit_pid(pipex_s);
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
 	if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
 		dup2(pipex_s->pipe_fd[1], STDOUT_FILENO);
 	close_all_fd(pipex_s);
-	if (pipex_s->status || special_edge_cases(pipex_s) || edge_cases(pipex_s))
+	if (pipex_s->status)
+		ft_exit_pid(pipex_s);
+	if (edge_cases(pipex_s) || special_edge_cases(pipex_s))
 		ft_exit_pid(pipex_s);
 	pipex_s->status = ft_n_update_path(pipex_s);
-	if (pipex_s->status != 0 || !pipex_s->cmd || !*pipex_s->cmd)
+	if (pipex_s->status || !pipex_s->cmd || !*pipex_s->cmd)
 		ft_exit_pid(pipex_s);
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
 	{
-		// pipex_s->status = errno;
-		print_err("excve error reads : %s\n", strerror(pipex_s->status));
+		pipex_s->status = errno;
+		print_err("minishell error reads : %s\n", strerror(pipex_s->status));
 	}
 	ft_exit_pid(pipex_s);
 }

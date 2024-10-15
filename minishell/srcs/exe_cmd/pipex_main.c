@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 18:18:08 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:13:23 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 	int		status;
 
 	status = 0;
+	if (curr_pipex_s->pid < 1)
+		return;
 	if (waitpid(curr_pipex_s->pid, &status, WNOHANG))
 	{
 		curr_pipex_s->pid = -1;
@@ -61,10 +63,12 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 		if (curr_pipex_s->prev && curr_pipex_s->prev->pid > 0)
 			kill(curr_pipex_s->prev->pid, SIGPIPE);
 		if (WIFEXITED(status))
-			curr_pipex_s->status = WEXITSTATUS(status);
+			status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
-			curr_pipex_s->status = 128 + WTERMSIG(status);
+			status = 128 + WTERMSIG(status);
 	}
+	if (!curr_pipex_s->status)
+		curr_pipex_s->status = status;
 }
 
 int	process_child_pipes(t_pipex *pipex_s)
@@ -96,16 +100,26 @@ int	process_child_pipes(t_pipex *pipex_s)
 	close_all_fd(NULL);
 }
 
+int get_final_status(void)
+{
+	t_pipex *pipex_s;
+
+	if (minishell()->status)
+		return (minishell()-> status);
+	pipex_s = minishell()->pipex;
+	while (pipex_s->next)
+		pipex_s = pipex_s->next;
+	return (pipex_s->status);
+}
+
 int	ft_shell_pipex()
 {
-	int status;
-
 	if (minishell()->silence_info == true)
 		return (0);
 	add_to_history();
 	new_process_tokens(); //TODO test comment ft_process_tokens_s and ft_exe_pipex_s
-	status = process_child_pipes(minishell()->pipex); //manage_pid
-	minishell()->status = status;
+	process_child_pipes(minishell()->pipex); //manage_pid
+	minishell()->status = get_final_status();
 	return (0);
 }
 
