@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 20:07:28 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:26:32 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_for_pipeline(void)
 
 	first_pipe = minishell()->pipex;
 	if (first_pipe && !first_pipe->next && !find_next_pipe(first_pipe->token))
-		if (special_edge_cases(first_pipe))
+		if (first_pipe->status || special_edge_cases(first_pipe))
 			return (0);
 	return(1);
 }

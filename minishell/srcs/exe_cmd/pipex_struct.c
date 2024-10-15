@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 20:18:18 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:24:41 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int ft_open_fd(t_token *tk_s, int *fd)
 		fd[1] = open(tk_s->next->value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	else if (tk_s->type == RED_OUT_APP && tk_s->next && *tk_s->next->value)
 		fd[1] = open(tk_s->next->value, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	if ((fd[0] == -1  || fd[1] == -1) && errno)
+	if ((fd[0] == -1  || fd[1] == -1))
 		status = errno;
 	return (status);
 }
