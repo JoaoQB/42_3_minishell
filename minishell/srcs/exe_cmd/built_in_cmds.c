@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 18:39:03 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:33:08 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	edge_cases(t_pipex *pipex_s)
 {
 	if (!pipex_s || !pipex_s->cmd || !pipex_s->cmd[0])
+		return (0);
+	if (pipex_s->status)
 		return (0);
 	if (ft_strcmp(pipex_s->cmd[0], "history") == 0)
 		get_history(minishell()->history, -1);
@@ -32,6 +34,8 @@ int	edge_cases(t_pipex *pipex_s)
 int	special_edge_cases(t_pipex *pipex_s)
 {
 	if (!pipex_s || !pipex_s->cmd || !pipex_s->cmd[0])
+		return (0);
+	if (pipex_s->status)
 		return (0);
 	if (ft_strcmp(pipex_s->cmd[0], "cd") == 0)
 		pipex_s->status = run_cd(pipex_s);
