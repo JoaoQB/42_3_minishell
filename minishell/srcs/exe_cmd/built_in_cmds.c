@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/13 19:42:35 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:38:20 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ int	edge_cases(t_pipex *pipex_s)
 {
 	if (!pipex_s || !pipex_s->cmd || !pipex_s->cmd[0])
 		return (0);
-	if (ft_strcmp(pipex_s->cmd[0], "cd") == 0)
-		pipex_s->status = run_cd(pipex_s);
-	else if (ft_strcmp(pipex_s->cmd[0], "history") == 0)
+	if (ft_strcmp(pipex_s->cmd[0], "history") == 0)
 		get_history(minishell()->history, -1);
 	else if (ft_strcmp(pipex_s->cmd[0], "pwd") == 0)
 		free(run_pwd(true));
@@ -66,7 +64,9 @@ int	special_edge_cases(t_pipex *pipex_s)
 {
 	if (!pipex_s || !pipex_s->cmd || !pipex_s->cmd[0])
 		return (0);
-	if (ft_strcmp(pipex_s->cmd[0], "exit") == 0)
+	if (ft_strcmp(pipex_s->cmd[0], "cd") == 0)
+		pipex_s->status = run_cd(pipex_s);
+	else if (ft_strcmp(pipex_s->cmd[0], "exit") == 0)
 		ft_exit(pipex_s);
 	else if (ft_strcmp(pipex_s->cmd[0], "unset") == 0)
 		run_unset(pipex_s);
