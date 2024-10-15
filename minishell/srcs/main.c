@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:42:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/14 13:20:00 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/15 12:15:09 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	main(int argc, char **argv, char **envp)
 	// 	return (1);
 	// if (set_sig_handlers(SIGQUIT, handle_sigquit) != 0)
     //     	return (1);
-	if (set_sig_handlers(SIGCHLD, handle_sigchild) != 0)
-		return (1);
+	// if (set_sig_handlers(SIGCHLD, handle_sigchild) != 0)
+	// 	return (1);
 	repl(envp);
 	cleanup_main();
 	return (0);

@@ -1,3 +1,33 @@
+$PWD OR /home/jqueijo-
+	bash: /home/jqueijo-: Is a directory
+	mini: Is a directory
+
+/notexisting
+	bash: /notexisting: No such file or directory
+	mini: No such file or directory
+
+Folder without slash, like: Music
+	bash: command not found
+	mini: execve error reads : Permission denied
+
+file names even if they exist:
+	bash: command not found
+	mini: command not found
+
+./bugs.md (file exists but not executable)
+	bash: permission denied
+	mini: command not found
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------
+
+SIGNALS!!!
+
 Control C
 	In interactive mode:
 		empty prompt: new prompt, exit status 130 --DONE

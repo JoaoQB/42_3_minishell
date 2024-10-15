@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_exe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/14 18:04:16 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:04:48 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,7 @@ int ft_n_update_path(t_pipex *pipex_s)
 		return (2);
 	}
 	if((path[0] == '.' || path[0] == '/') && is_directory(path) != 0)
-	{
-		print_err("%s: %s\n", path, strerror(EISDIR));
 		return (126);
-	}
 	pipex_s->path = get_cmd_path(pipex_s);
 	if (pipex_s->path == NULL && pipex_s->status == EACCES)
 		return (print_err ("%s: %s\n", path, strerror(pipex_s->status)), 126);
