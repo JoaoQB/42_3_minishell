@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/16 14:18:09 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:21:28 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,52 @@ int get_final_status(void)
 	return (pipex_s->status);
 }
 
+void	create_error_fd()
+{
+	int	err_fd[2];
+
+	if (pipe(err_fd) == -1)
+	{
+		print_err("%s\n", strerror(errno));
+		minishell()->status = 1;
+		return ;
+	}
+	minishell()->err_fd[0] = err_fd[0];
+	minishell()->err_fd[1] = err_fd[1];
+}
+
+void	read_error_fd()
+{
+	int			ret;
+	static char	buffer[10];
+
+	close(minishell()->err_fd[1]);
+	//use read until EOF do NOT use get_next_line
+	ret = 1;
+	while (ret)
+	{
+		ret = read(minishell()->err_fd[0], buffer, 10);
+		if (ret > 0)
+			write(2, buffer, ret);
+	}
+	if (ret == -1)
+		perror("read error");
+	ret = -1;
+	while (ret++ < 10)
+		buffer[ret] = 0;
+	close(minishell()->err_fd[0]);	
+}
+
 int	ft_shell_pipex()
 {
 	if (minishell()->silence_info == true)
 		return (0);
+	create_error_fd();
 	add_to_history();
 	new_process_tokens(); 
 	process_child_pipes(minishell()->pipex);
 	minishell()->status = get_final_status();
+	read_error_fd();
 	return (0);
 }
 

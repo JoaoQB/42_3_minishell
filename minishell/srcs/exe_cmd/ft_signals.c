@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/16 09:52:01 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:31:45 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	sigint_handler_hd(int sig)
 static void	sigquit_handler_cmd(int sig)
 {
 	(void)sig;
-	printf(" Quit (core dumped)\n");
+	print_err("%s\n"," Quit (core dumped)");
 }
 
 static void	sigint_handler_cmd(int sig)

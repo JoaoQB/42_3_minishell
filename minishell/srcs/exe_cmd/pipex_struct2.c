@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/16 10:38:28 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:34:19 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int	read_heredoc(t_token *tokens_s)
 	{
 		input = readline("> ");
 		if (!input)
+		{
+			ft_putstr_fd("minishell: EOF\n", 2);
 			break ;
+		}
 		if (ft_strcmp(input, delim) == 0)
 		{
 			free(input);
