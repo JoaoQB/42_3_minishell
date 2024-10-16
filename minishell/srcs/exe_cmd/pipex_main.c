@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/16 09:51:16 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:18:09 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 		curr_pipex_s->pid = -1;
 		ft_close(curr_pipex_s->pipe_fd[0]);
 		ft_close(curr_pipex_s->pipe_fd[1]);
-		if (curr_pipex_s->prev && curr_pipex_s->prev->pid > 0)
-			kill(curr_pipex_s->prev->pid, SIGPIPE);
+		// if (curr_pipex_s->prev && curr_pipex_s->prev->pid > 0)
+			//kill(curr_pipex_s->prev->pid, SIGPIPE);
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
