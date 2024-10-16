@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/16 10:28:52 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:15:23 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,31 +85,41 @@ int		file_acess(char *file_path)
 		return (0);
 }
 
-char	*get_cmd_path(t_pipex *pipex_s)
+char	*find_path_from_env(char *cmd, int *status)
 {
-	char	*temp;
 	char	*paths;
+	char	*temp;
 	int		i;
-
+	
 	paths = ft_getenv("PATH");
-	temp = ft_strnjoin(NULL, pipex_s->cmd[0], -1);
 	while (paths && *paths != '\0')
 	{
-		if(access(temp, F_OK | R_OK | X_OK) == 0)
-			return (temp);
-		if (file_acess(temp) == EACCES)
-			pipex_s->status = EACCES;
-		free(temp);
 		i = 0;
 		while (paths[i] && paths[i] != ':')
 			i++;
 		temp = ft_strnjoin(ft_strnjoin(NULL, paths, i++), "/", 1);
-		temp = ft_strnjoin(temp, pipex_s->cmd[0], -1);
+		temp = ft_strnjoin(temp, cmd, -1);
+		if(access(temp, F_OK | R_OK | X_OK) == 0)
+			return (temp);
+		if (file_acess(temp) == EACCES)
+			*status = EACCES;
+		free(temp);
 		if (!paths[i - 1])
 			break ;
 		paths += i;
 	}
+	return (NULL);
+}
+
+char	*get_cmd_path(t_pipex *pipex_s)
+{
+	char	*temp;
+
+	if (access(pipex_s->cmd[0], F_OK | R_OK | X_OK) == 0)
+		return (ft_strdup(pipex_s->cmd[0]));
+	else
+		temp = find_path_from_env(pipex_s->cmd[0], &pipex_s->status);
 	if (pipex_s->status != EACCES)
 		pipex_s->status = ENOENT;
-	return (free(temp), NULL);
+	return (temp);
 }

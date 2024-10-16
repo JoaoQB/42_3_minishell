@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:33 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 17:20:51 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:12:45 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ char	**get_array_env(void)
 		env = env->next;
 	}
 	menvp = (char **) safe_malloc (sizeof (char *) * (i + 1));
-	if (!menvp)
-		return (NULL);
 	i = 0;
 	env = minishell()->env;
 	while (env)
@@ -35,6 +33,7 @@ char	**get_array_env(void)
 		menvp[i++] = ft_strdup(env->value);
 		env = env->next;
 	}
+	// printf("menvp[0]: %s\n", menvp[i - 1]);
 	menvp[i] = NULL;
 	return (menvp);
 }
