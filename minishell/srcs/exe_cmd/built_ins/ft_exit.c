@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/08 16:10:11 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:11:22 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,19 @@ static void	invalid_exit(t_pipex *pipex, int flag)
 static bool	is_valid_status(char *str)
 {
 	int		i;
-	double	status;
 
 	if (!str)
 		return (true);
 	i = 0;
+	while (str[i] == ' ')
+		i++;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (false);
+	while (str[i] && ft_isdigit(str[i]))
 		i++;
-	}
-	status = ft_atoi_dbl(str);
-	if (status > INT_MAX || status < INT_MIN)
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (str[i] && !ft_isdigit(str[i]))
 		return (false);
 	return (true);
 }

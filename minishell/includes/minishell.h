@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/14 13:27:34 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:45:58 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,6 +278,9 @@ char	*var_check_env(t_env *env, char *str);
 
 /* heredoc_expand.c */
 char	*heredoc_expand(t_token *delim, char *str);
+
+/* token_check_before_pipex.c */
+void	token_check_before_pipex(t_token *first);
 
 /************************/
 /******* PARSING ********/

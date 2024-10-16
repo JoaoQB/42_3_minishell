@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 09:36:26 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/07 18:09:09 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:45:04 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,5 @@ void	input_process(char *user_input)
 	if (!minishell()->input_trim || !*minishell()->input_trim)
 		minishell()->silence_info = true;
 	minishell()->input_reorg = input_and_tokens_reorg();
+	token_check_before_pipex(minishell()->tokens);
 }

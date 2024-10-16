@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_ins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/16 11:41:47 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:02:55 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void	run_echo(t_pipex *pipex_s)
 		{
 			i++;
 			nl = 0;
+			while (pipex_s->cmd[i] && ft_strcmp(pipex_s->cmd[i], "-n") == 0)
+				i++;
 			if (!pipex_s->cmd[i])
 				return ;
 		}

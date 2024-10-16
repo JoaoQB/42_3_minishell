@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+         #
+#    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/10/13 20:49:49 by fandre-b         ###   ########.fr        #
+#    Updated: 2024/10/16 14:45:30 by jqueijo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/processing/token_split_words.c \
 	$(SRC_PATH)/processing/quotes_remover.c \
 	$(SRC_PATH)/processing/tokenize_smarter.c \
+	$(SRC_PATH)/processing/token_check_before_pipex.c \
 	$(SRC_PATH)/processing/var_swap.c \
 	$(SRC_PATH)/processing/var_conc.c \
 	$(SRC_PATH)/processing/var_remove_quotes.c \
