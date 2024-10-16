@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 20:01:08 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 09:55:52 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,25 @@ char	*ft_strstr(const char *big, const char *little)
 
 // void *handle_error(char *err_print)
 
+void	*critical_error(char *err_print)
+{
+	perror(err_print);
+	free_main_input();
+	cleanup_main();
+	exit(1);
+}
+
 void	*safe_malloc(size_t size)
 {
 	void	*ptr;
 
 	ptr = (void *) malloc(size);
 	if (ptr == NULL)
-	{
-		perror("safe_malloc");
-		free_main_input();
-		cleanup_main();
-		exit(1);
-	}
+		critical_error("malloc failed");
 	return (ptr);
 }
 
-//TODO chat_gpt generated
-//i wanto to handle errnos and convert then into the errors shell gives
+//ALL POSSIBLE ERRORS
 // void	process_err(void)
 // {
 // 	if (errno == 0)

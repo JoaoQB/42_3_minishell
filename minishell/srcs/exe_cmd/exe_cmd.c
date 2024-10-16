@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 20:26:32 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:28:52 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int	check_for_pipeline(void)
 			return (0);
 	return(1);
 }
-
-//TODO Handle error s
 
 int is_directory(const char *path)
 {
@@ -56,7 +54,7 @@ int is_directory(const char *path)
 
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
-	if (pipex_s->status)
+	if (pipex_s->status || minishell()->status)
 		ft_exit_pid(pipex_s);
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);

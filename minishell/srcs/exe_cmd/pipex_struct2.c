@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/15 09:27:08 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:38:28 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	read_heredoc(t_token *tokens_s)
 	set_signals(SIGHD);
 	delim = tokens_s->value;
 	if (pipe(piper) == -1)
-		return (perror("failed pipe"), 0);
+		return (perror("failed pipe"), 0); //TODO alredy exists put it into function
 	while (1)
 	{
 		input = readline("> ");

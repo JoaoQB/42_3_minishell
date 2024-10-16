@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 20:13:23 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 09:51:16 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	close_all_fd(t_pipex *pipex_s)
 		if (pipex_s != save)
 		{
 			ft_close(pipex_s->pipe_fd[0]);
-			ft_close(pipex_s->pipe_fd[1]); //TODO 1ft_close
+			ft_close(pipex_s->pipe_fd[1]);
 		}
 		pipex_s = pipex_s->next;
 	}
@@ -47,7 +47,6 @@ void	free_pipex_s(void)
 	}
 }
 
-//TODO Handle error s
 void	process_child_pid(t_pipex *curr_pipex_s)
 {
 	int		status;
@@ -67,7 +66,7 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 		else if (WIFSIGNALED(status))
 			status = 128 + WTERMSIG(status);
 	}
-	if (!curr_pipex_s->status)
+	if (status > 0)
 		curr_pipex_s->status = status;
 }
 
@@ -117,8 +116,8 @@ int	ft_shell_pipex()
 	if (minishell()->silence_info == true)
 		return (0);
 	add_to_history();
-	new_process_tokens(); //TODO test comment ft_process_tokens_s and ft_exe_pipex_s
-	process_child_pipes(minishell()->pipex); //manage_pid
+	new_process_tokens(); 
+	process_child_pipes(minishell()->pipex);
 	minishell()->status = get_final_status();
 	return (0);
 }

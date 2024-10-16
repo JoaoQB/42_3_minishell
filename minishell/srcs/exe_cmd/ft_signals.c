@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/15 20:16:07 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 09:52:01 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,6 @@ static void	sigint_handler_main(int sig)
 	minishell()->status = 130;
 }
 
-// static void	handle_sigquit(int sig)
-// {
-// 	(void)sig;
-// 	g_signal = 2;
-// 	// printf("this is an forced core dump\n");
-// 	// abort(); //TODO exit with abort value or free and core dump
-// 	// free_main_input();
-// 	// cleanup_main();
-// 	// exit(1); // General error
-// }
-
 void handle_sigchild(int sig)
 {
     t_pipex *pipex_s;
@@ -79,7 +68,6 @@ void handle_sigchild(int sig)
         {
             process_child_pid(pipex_s);
 			pipex_s->pid = -1;
-            // free_pipex_node(pipex_s); // TODO reddy to test
         }
     }
 }
@@ -93,7 +81,7 @@ int	set_sig_handlers(int signal, void (*func_name)(int))
 	sigemptyset(&sa.sa_mask); //block all signals while handling SIGINT
 	if (sigaction(signal, &sa, NULL) == -1)
 	{
-		perror("sigaction failed");
+		perror("sigaction failed"); //TODO handle error 2
 		return (1);
 	}
 	return (0);

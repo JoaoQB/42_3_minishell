@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 20:04:09 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:36:19 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,8 @@ void ft_n_update_fds(t_pipex *pipex_s)
 		if (pipe(piper) == -1)
 		{
 			print_err("%s\n", strerror(errno));
-			free_main_input();
-			cleanup_main();
-			exit(1);
+			minishell()->status = 1;
+			return ;
 		}
 		pipex_s->pipe_fd[1] = piper[1];
 		pipex_s->next->pipe_fd[0] = piper[0];
@@ -120,8 +119,9 @@ void new_process_tokens(void)
 	t_token *token_s;
 	t_pipex *pipex_s;
 
+	minishell()->status = 0;
 	token_s = minishell()->tokens;
-	while (token_s)
+	while (token_s && minishell()->status == 0)
 	{
 		pipex_s = add_back_pipex_s();
 		ft_n_update_cmds(pipex_s);

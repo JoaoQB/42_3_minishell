@@ -6,22 +6,11 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:48:17 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/10 16:15:20 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 09:42:23 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int is_directory(const char *path)
-{
-    struct stat buffer;
-
-    if (stat(path, &buffer) != 0)
-        return (errno);
-    else if (S_ISDIR(buffer.st_mode))
-        return (EISDIR);
-    return (0);
-}
 
 int		file_acess(char *file_path)
 {

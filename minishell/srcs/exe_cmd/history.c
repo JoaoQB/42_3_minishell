@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/07 20:22:34 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 09:51:28 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	get_history(t_hist *hist_s, int index)
 			if (!str_token)
 				break ;
 			print_err("%d %s\n", temp_s->idx, str_token);
-			// printf("%d %s\n", temp_s->idx, str_token);
 			temp_s = temp_s->next;
 		}
 	}

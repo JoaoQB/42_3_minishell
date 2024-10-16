@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_smarter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:28:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/02 13:09:54 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:37:15 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,37 +34,6 @@ static void	tokenize_args(t_token *current, int type)
 		}
 	}
 }
-
-// void	tokenize_smarter(t_token *first)
-// {
-// 	t_token	*current;
-// 	t_token	*next;
-// 	bool	no_cmd;
-// 	int		type;
-
-// 	if (!first)
-// 		return ;
-// 	no_cmd = true;
-// 	current = first;
-// 	while (current)
-// 	{
-// 		next = current->next;
-// 		type = current->type;
-// 		if (no_cmd && (type == WORD))
-// 		{
-// 			tokenize_args(current, CMD);
-// 			no_cmd = false;
-// 		}
-// 		else if (type == PIPE)
-// 			no_cmd = true;
-// 		else if ((type == RED_IN || type == RED_OUT || type == RED_OUT_APP)
-// 			&& next && next->type == WORD)
-// 			next->type = PATH;
-// 		else if (type == HERE_DOC && next && next->type == WORD)
-// 			next->type = DELIM;
-// 		current = next;
-// 	}
-// }
 
 void	tokenize_smarter(t_token *first)
 {
