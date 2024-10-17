@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/17 16:12:03 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:06:45 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 // {
 // 	char	*input;
 // 	char	*delim;
-// 	char	*input;
 // 	int		piper[2];
 
 // 	set_signals(SIGHD);
@@ -90,7 +89,6 @@ int	read_heredoc(t_token *tokens_s)
 		free_main_input();
 		cleanup_main();
 		ft_close(piper[1]);
-		exit(0);
 	}
 	else
 	{

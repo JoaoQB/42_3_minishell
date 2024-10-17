@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/16 15:35:28 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:04:30 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int is_directory(const char *path)
 
 void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
-	if (pipex_s->status || minishell()->status)
+	if (pipex_s->status || minishell()->status || !pipex_s->cmd)
 		ft_exit_pid(pipex_s);
 	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
 		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
@@ -62,18 +62,13 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 		dup2(pipex_s->pipe_fd[1], STDOUT_FILENO);
 	dup2(minishell()->err_fd[1], STDERR_FILENO);
 	close_all_fd(pipex_s);
-	if (pipex_s->status)
-		ft_exit_pid(pipex_s);
-	if (edge_cases(pipex_s) || special_edge_cases(pipex_s))
+	if (pipex_s->status || edge_cases(pipex_s) || special_edge_cases(pipex_s))
 		ft_exit_pid(pipex_s);
 	pipex_s->status = ft_n_update_path(pipex_s);
-	if (pipex_s->status || !pipex_s->cmd || !*pipex_s->cmd)
+	if (pipex_s->status || !pipex_s->cmd || !pipex_s->path)
 		ft_exit_pid(pipex_s);
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
-	{
 		pipex_s->status = errno;
-		print_err("minishell error reads : %s\n", strerror(pipex_s->status));
-	}
 	ft_exit_pid(pipex_s);
 }
 

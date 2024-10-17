@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/17 16:01:29 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:01:37 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	ft_exit_pid(t_pipex *pipex)
 {
 	int		status;
 
-	if (!pipex || !pipex->cmd)
+	if (!pipex)
 		return ;
 	status = minishell()->status;
 	if (status == 0)
