@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/17 17:42:32 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:52:50 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,12 @@ void new_process_tokens(void)
 	t_token *token_s;
 	t_pipex *pipex_s;
 
-	minishell()->status = 0;
 	free_double_array(minishell()->menv);
 	minishell()->menv = get_array_env();
 	token_s = minishell()->tokens;
-	while (token_s && minishell()->status == 0)
+	while (token_s)
 	{
+		minishell()->status = 0;
 		pipex_s = add_back_pipex_s();
 		ft_n_update_cmds(pipex_s);
 		if (!check_for_pipeline())

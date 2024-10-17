@@ -1,3 +1,10 @@
+adicionei o f_exit
+comeco o processo com minishell->status em 0
+critical error
+podera ser do child estar a sair
+podera ser do status ser updated e estar a impedir o proximo.
+
+
 Test  75: ❌ # cat <"./test_files/infile_big" | echo hi
 mini output = (hi)
 bash output = ()

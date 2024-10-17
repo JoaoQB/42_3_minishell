@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/17 16:07:38 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:49:45 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ void handle_sigchild(int sig)
         pipex_s = minishell()->pipex;
         while (pipex_s && pipex_s->pid != pid)
             pipex_s = pipex_s->next;
-        if (pipex_s)
+        if (pipex_s && pipex_s->pid == pid)
         {
+			// printf("plipe finised %d\n", pipex_s->pid);
             process_child_pid(pipex_s);
 			pipex_s->pid = -1;
         }
