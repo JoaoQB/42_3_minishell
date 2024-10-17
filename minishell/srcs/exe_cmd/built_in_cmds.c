@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/16 15:41:34 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:52:52 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	special_edge_cases(t_pipex *pipex_s)
 		return (1);
 	if (pipex_s->status)
 		return (0);
-	if (ft_strcmp(pipex_s->cmd[0], "") == 0)
-		return (1);
 	if (ft_strcmp(pipex_s->cmd[0], "cd") == 0)
 		pipex_s->status = run_cd(pipex_s);
 	else if (ft_strcmp(pipex_s->cmd[0], "exit") == 0)

@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/16 15:31:45 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:07:38 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@
 static void	sigint_handler_hd(int sig)
 {
 	(void)sig;
-	g_signal = 2;
+	
+	// g_signal = 2;
 	free_main_input();
+	cleanup_main();
+	// ft_exit_pid(2);
+	exit(2);
 	// printf("exiting heredoc");
 	// close(STDIN_FILENO);
 }

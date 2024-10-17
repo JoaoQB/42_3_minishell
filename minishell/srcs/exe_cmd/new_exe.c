@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/16 15:44:16 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:01:36 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	ft_n_update_cmds(t_pipex *pipex_s)
 	t_token *tokens_s;
 
 	tokens_s = pipex_s->token;
-	// pipex_s->cmd = NULL; //safeguard
 	count = 0;
 	while (tokens_s && tokens_s->type != PIPE) //---------------
 	{
-		if (tokens_s->type == CMD || tokens_s->type == ARG || tokens_s->type == EMPTY)
+		if (tokens_s->type == CMD || tokens_s->type == ARG || \
+		tokens_s->type == EMPTY)
 			count += 1;
 		tokens_s = tokens_s->next;
 	}
@@ -41,7 +41,8 @@ void	ft_n_update_cmds(t_pipex *pipex_s)
 	tokens_s = pipex_s->token; //to be used
 	while (tokens_s && tokens_s->type != PIPE) //funcao para este
 	{
-		if (tokens_s->type == CMD || tokens_s->type == ARG)
+		if (tokens_s->type == CMD || tokens_s->type == ARG || \
+		tokens_s->type == EMPTY)
 		{
 			pipex_s->cmd[count++] = ft_strnjoin(NULL, tokens_s->value, -1);
 			pipex_s->cmd[count] = NULL;

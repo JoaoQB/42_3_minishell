@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/15 20:24:41 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:04:43 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	ft_update_fds(t_token *tk_s, t_pipex *pipex_s)
 	fd = pipex_s->pipe_fd;
 	while (tk_s && tk_s->type != PIPE && status != EACCES && status != ENOENT)
 	{
+		if (minishell()->status)
+			break ;
 		if ((tk_s->type == RED_IN || tk_s->type == HERE_DOC))
 			ft_close (fd[0]);
 		else if ((tk_s->type == RED_OUT || tk_s->type == RED_OUT_APP))
