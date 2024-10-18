@@ -6,11 +6,29 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/17 21:31:41 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:25:39 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s)
+{
+	int	count;
+
+	count = 0;
+	pipex_s->cmd[0] = NULL;
+	while (tokens_s && tokens_s->type != PIPE)
+	{
+		if (tokens_s->type == CMD || tokens_s->type == ARG)
+		{
+			pipex_s->cmd[count++] = ft_strnjoin(NULL, tokens_s->value, -1);
+			pipex_s->cmd[count] = NULL;
+		}
+		tokens_s = tokens_s->next;
+	}
+	return (0);
+}
 
 int ft_open_fd(t_token *tk_s, int *fd)
 {

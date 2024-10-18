@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/17 22:50:33 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:48:42 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // {
 // 	char	*input;
 // 	char	*delim;
+// 	char	*input;
 // 	int		piper[2];
 
 // 	set_signals(SIGHD);
@@ -64,6 +65,7 @@ int	read_heredoc(t_token *tokens_s)
 	{
 		set_signals(SIGHD);
 		ft_close(piper[0]);
+		// ft_close(piper[0]); //close the read end
 		while (1)
 		{
 			input = readline("> ");
@@ -85,16 +87,17 @@ int	read_heredoc(t_token *tokens_s)
 			write(piper[1], "\n", 1);
 			ft_free(&input);
 		}
-		ft_close(piper[1]);
 		free_main_input();
 		cleanup_main();
+		ft_close(piper[1]);
+		exit(0);
 	}
 	else
 	{
 		status = 0;
 		ft_close(piper[1]);
 		waitpid(pid, &status, 0);
-		if(WIFEXITED(status))
+		if(WIFEXITED(status) && WEXITSTATUS(status) != 0)
 			minishell()->status = 130;
 	}
 	return (piper[0]);
