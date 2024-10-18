@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/16 15:21:28 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:45:03 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 		return;
 	if (waitpid(curr_pipex_s->pid, &status, WNOHANG))
 	{
-		curr_pipex_s->pid = -1;
 		ft_close(curr_pipex_s->pipe_fd[0]);
 		ft_close(curr_pipex_s->pipe_fd[1]);
 		// if (curr_pipex_s->prev && curr_pipex_s->prev->pid > 0)
@@ -65,6 +64,7 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 			status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			status = 128 + WTERMSIG(status);
+		curr_pipex_s->pid = -1;
 	}
 	if (status > 0)
 		curr_pipex_s->status = status;

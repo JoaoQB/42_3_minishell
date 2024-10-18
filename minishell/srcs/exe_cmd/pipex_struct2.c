@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/18 12:48:42 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:44:52 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,29 @@
 // 	return (piper[0]);
 // }
 
+// char *ft_gnl(int fd)
+// {
+// 	static buffer[BUFFERSIZE];
+// 	int	rd;
+// 	char *str;
+
+// 	str = NULL;
+// 	rd = 1;
+// 	while (rd)
+// 	{
+// 		if (!*buffer)
+// 			rd = read(fd, buffer, BUFFERSIZE);
+// 		if (rd == -1 || rd == 0)
+// 			break;
+// 		size = ft_char_index(str);
+// 		if (size < BUFFERSIZE)
+// 			size ++;
+// 		ft_strnjoin(str, buffer, size);
+// 		ft_shift(buffer);
+// 		ret = 
+// 		while ()
+// 	}
+// }
 
 int	read_heredoc(t_token *tokens_s)
 {
@@ -68,6 +91,7 @@ int	read_heredoc(t_token *tokens_s)
 		// ft_close(piper[0]); //close the read end
 		while (1)
 		{
+			printf("getting an line\n");
 			input = readline("> ");
 			if (!input)
 			{
@@ -94,11 +118,11 @@ int	read_heredoc(t_token *tokens_s)
 	}
 	else
 	{
-		status = 0;
-		ft_close(piper[1]);
 		waitpid(pid, &status, 0);
 		if(WIFEXITED(status) && WEXITSTATUS(status) != 0)
 			minishell()->status = 130;
+		status = 0;
+		ft_close(piper[1]);
 	}
 	return (piper[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/18 12:28:33 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:18:05 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # include <stdarg.h>
 
 # define MAX_HIST 30
+# ifndef BUFFERSIZE
+#  define BUFFERSIZE 100
+# endif
 
 typedef struct s_env			t_env;
 typedef struct s_token			t_token;
