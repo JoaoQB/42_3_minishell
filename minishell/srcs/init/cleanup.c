@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/14 13:22:47 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:32:53 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	free_double_array(char **array)
 
 void	cleanup_main(void)
 {
+	ft_close(&minishell()->err_fd[0]);
+	ft_close(&minishell()->err_fd[1]);
 	if (minishell()->env)
 		free_env(&minishell()->env);
 	if (minishell()->menv)

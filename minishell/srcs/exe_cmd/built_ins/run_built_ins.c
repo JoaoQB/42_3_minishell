@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_ins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/16 15:02:55 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:39:08 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*run_pwd(bool print)
 	char	cwd[PATH_MAX];
 
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
-		return (perror("getcwd() error"), NULL);
+		return (print_err("getcwd() error"), NULL);
 	if (print == true)
 		printf("%s\n", cwd);
 	return (ft_strdup((char *)cwd));
