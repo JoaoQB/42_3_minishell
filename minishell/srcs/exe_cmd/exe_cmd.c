@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/19 22:06:50 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/19 22:41:47 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,19 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 
 int		file_acess(char *file_path)
 {
-		if (access(file_path, F_OK) != 0)
-			return (errno); //unixistent file 13 ENOENT
-		if (access(file_path, R_OK) != 0)
-			return (errno); //no permitions 2 EACCES
-		return (0);
+	struct stat	buffer;
+
+	if (access(file_path, F_OK) != 0)
+		return (errno);
+	if (stat(file_path, &buffer) != 0)
+		return (errno);
+	if (!S_ISREG(buffer.st_mode))
+		return (ENOENT);
+	// if (S_ISLNK(buffer.st_mode))
+    //     printf("File is a symbolic link.\n");
+	if (access(file_path, X_OK) != 0)
+		return (errno);
+	return (0);
 }
 
 char	*get_cmd_path(t_pipex *pipex_s)
