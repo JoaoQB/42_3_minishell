@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/19 15:55:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/19 22:06:50 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*get_cmd_path(t_pipex *pipex_s)
 
 	paths = ft_getenv("PATH");
 	temp = ft_strnjoin(NULL, pipex_s->cmd[0], -1);
-	while (paths && *paths != '\0')
+	while (1)
 	{
 		if(access(temp, F_OK | R_OK | X_OK) == 0)
 			return (temp);
@@ -97,11 +97,11 @@ char	*get_cmd_path(t_pipex *pipex_s)
 			pipex_s->status = EACCES;
 		free(temp);
 		i = 0;
-		while (paths[i] && paths[i] != ':')
+		while (paths && paths[i] && paths[i] != ':')
 			i++;
 		temp = ft_strnjoin(ft_strnjoin(NULL, paths, i++), "/", 1);
 		temp = ft_strnjoin(temp, pipex_s->cmd[0], -1);
-		if (!paths[i - 1])
+		if (!paths || !paths[i - 1])
 			break ;
 		paths += i;
 	}
