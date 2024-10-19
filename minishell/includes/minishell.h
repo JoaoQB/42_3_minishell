@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/18 15:20:38 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/18 22:18:41 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,7 +356,7 @@ void	run_unset(t_pipex *pipex_s);
 int		run_export(t_pipex *pipex_s);
 
 /* ft_exit.c */
-void	ft_exit(t_pipex *pipex);
+void	ft_exit_builtins(t_pipex *pipex);
 
 /* ft_unset.c */
 void	export_unset(char *export_var);
@@ -410,5 +410,7 @@ int ft_open_fd(t_token *tk_s, int *fd);
 void	ft_update_fds2(t_token *tk_s, t_pipex *pipex_s);
 int is_directory(const char *path);
 int	check_for_pipeline(void);
+void	ft_exit(int status);
+void	critical_error(char *err_print);
 
 #endif

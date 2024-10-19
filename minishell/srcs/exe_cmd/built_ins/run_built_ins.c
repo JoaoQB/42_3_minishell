@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/18 15:39:08 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/18 22:38:43 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	run_echo(t_pipex *pipex_s)
 {
 	int	i;
 	int	nl;
-
+	
 	if (!pipex_s->cmd || pipex_s->pipe_fd[1] == -1)
 		return ;
 	nl = 1;
