@@ -66,7 +66,7 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 		ft_exit_pid(pipex_s);
 	pipex_s->status = ft_n_update_path(pipex_s);
 	if (pipex_s->status || !pipex_s->path)
-		ft_exit_pid(pipex_s); 
+		ft_exit_pid(pipex_s);
 	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
 		pipex_s->status = errno;
 	ft_exit_pid(pipex_s);

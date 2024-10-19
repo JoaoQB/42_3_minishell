@@ -6,22 +6,22 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/16 15:23:12 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/19 21:28:40 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		ft_close(int fd)
+int		ft_close(int *fd)
 {
-	if (fd > 2)
+	if (*fd > 2)
 	{
-		if (close(fd) == -1)
+		if (close(*fd) == -1)
 		{
-			fd = -1;
+			*fd = -1;
 			return (-1);
 		}
-		fd = -1;
+		*fd = -1;
 	}
 	return (0);
 }
@@ -75,12 +75,10 @@ char	*ft_strstr(const char *big, const char *little)
 
 // void *handle_error(char *err_print)
 
-void	*critical_error(char *err_print)
+void	critical_error(char *err_print)
 {
 	perror(err_print);
-	free_main_input();
-	cleanup_main();
-	exit(1);
+	ft_exit(1);
 }
 
 void	*safe_malloc(size_t size)

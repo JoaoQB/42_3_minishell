@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/18 14:18:05 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/19 20:37:32 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,7 +356,7 @@ void	run_unset(t_pipex *pipex_s);
 int		run_export(t_pipex *pipex_s);
 
 /* ft_exit.c */
-void	ft_exit(t_pipex *pipex);
+void	ft_exit_builtins(t_pipex *pipex);
 
 /* ft_unset.c */
 void	export_unset(char *export_var);
@@ -398,7 +398,7 @@ void print_err(char *format, ...);
 /************************/
 
 void	free_pipex_node(t_pipex *pipex_s);
-int		ft_close(int fd);
+int		ft_close(int *fd);
 void new_process_tokens(void); //corre todos os tokens e cria a struct
 t_pipex *add_back_pipex_s(void); //adiciona o novo pipe a stuct
 void ft_n_update_fds(t_pipex *pipex_s); //dentro de cada cria da update aos fd
@@ -410,5 +410,7 @@ int ft_open_fd(t_token *tk_s, int *fd);
 void	ft_update_fds2(t_token *tk_s, t_pipex *pipex_s);
 int is_directory(const char *path);
 int	check_for_pipeline(void);
+void	ft_exit(int status);
+void	critical_error(char *err_print);
 
 #endif

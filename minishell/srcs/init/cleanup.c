@@ -42,6 +42,8 @@ void	free_double_array(char **array)
 
 void	cleanup_main(void)
 {
+	ft_close(&minishell()->err_fd[0]);
+	ft_close(&minishell()->err_fd[1]);
 	if (minishell()->env)
 		free_env(&minishell()->env);
 	if (minishell()->menv)

@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/18 14:45:03 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/19 20:37:06 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	close_all_fd(t_pipex *pipex_s)
 	{
 		if (pipex_s != save)
 		{
-			ft_close(pipex_s->pipe_fd[0]);
-			ft_close(pipex_s->pipe_fd[1]);
+			ft_close(&pipex_s->pipe_fd[0]);
+			ft_close(&pipex_s->pipe_fd[1]);
 		}
 		pipex_s = pipex_s->next;
 	}
@@ -56,8 +56,8 @@ void	process_child_pid(t_pipex *curr_pipex_s)
 		return;
 	if (waitpid(curr_pipex_s->pid, &status, WNOHANG))
 	{
-		ft_close(curr_pipex_s->pipe_fd[0]);
-		ft_close(curr_pipex_s->pipe_fd[1]);
+		ft_close(&curr_pipex_s->pipe_fd[0]);
+		ft_close(&curr_pipex_s->pipe_fd[1]);
 		// if (curr_pipex_s->prev && curr_pipex_s->prev->pid > 0)
 			//kill(curr_pipex_s->prev->pid, SIGPIPE);
 		if (WIFEXITED(status))
@@ -130,7 +130,7 @@ void	read_error_fd()
 	int			ret;
 	static char	buffer[10];
 
-	close(minishell()->err_fd[1]);
+	ft_close(&minishell()->err_fd[1]);
 	//use read until EOF do NOT use get_next_line
 	ret = 1;
 	while (ret)
@@ -140,11 +140,11 @@ void	read_error_fd()
 			write(2, buffer, ret);
 	}
 	if (ret == -1)
-		perror("read error");
+		perror("read error"); //TODO handle read write errors?
 	ret = -1;
 	while (ret++ < 10)
 		buffer[ret] = 0;
-	close(minishell()->err_fd[0]);	
+	ft_close(&minishell()->err_fd[0]);	
 }
 
 int	ft_shell_pipex()

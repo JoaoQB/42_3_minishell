@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/17 18:01:37 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/18 22:23:25 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static bool	is_valid_status(char *str)
 	return (true);
 }
 
-void	ft_exit(t_pipex *pipex)
+void	ft_exit_builtins(t_pipex *pipex)
 {
 	int		status;
 	char	**cmd;
@@ -75,6 +75,11 @@ void	ft_exit(t_pipex *pipex)
 			pipex->status = (pipex->status % 256 + 256) % 256;
 	}
 	status = pipex->status;
+	ft_exit(status);
+}
+
+void	ft_exit(int status)
+{
 	free_main_input();
 	cleanup_main();
 	exit(status);
@@ -89,7 +94,5 @@ void	ft_exit_pid(t_pipex *pipex)
 	status = minishell()->status;
 	if (status == 0)
 		status = pipex->status;
-	free_main_input();
-	cleanup_main();
-	exit(status);
+	ft_exit(status);
 }

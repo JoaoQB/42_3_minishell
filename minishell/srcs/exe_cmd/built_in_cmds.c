@@ -40,7 +40,7 @@ int	special_edge_cases(t_pipex *pipex_s)
 	if (ft_strcmp(pipex_s->cmd[0], "cd") == 0)
 		pipex_s->status = run_cd(pipex_s);
 	else if (ft_strcmp(pipex_s->cmd[0], "exit") == 0)
-		ft_exit(pipex_s);
+		ft_exit_builtins(pipex_s);
 	else if (ft_strcmp(pipex_s->cmd[0], "unset") == 0)
 		run_unset(pipex_s);
 	else if (ft_strcmp(pipex_s->cmd[0], "export") == 0)

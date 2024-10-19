@@ -19,7 +19,7 @@ static t_token	*ambiguous_redirect(t_token *current)
 	if (!minishell()->silence_info)
 		ft_putendl_fd("minishell: ambiguous redirect", 2);
 	minishell()->silence_info = true;
-	minishell()->status = 1;
+	minishell()->status = 1; //TODO this will prevent pipex to be ran?
 	return (current->next);
 }
 
