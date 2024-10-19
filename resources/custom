@@ -1,0 +1,276 @@
+# ADD TO MINISHELL_TESTER
+
+""
+/bin/ls
+/bin/pwd
+/bin/echo hello world
+/bin/cat /etc/hostname
+/bin/date
+
+/bin/ls -l /bin
+/bin/echo This is a test
+/bin/cat /etc/passwd /etc/hostname
+/bin/grep root /etc/passwd
+
+/bin/cat /nonexistentfile
+/bin/ls /nonexistentdir
+/bin/rm /nonexistentfile
+/bin/mkdir /bin/invalid
+
+bin
+bin/var
+
+/bin/
+/usr/
+/home/
+
+/bin/.
+/bin/usr
+
+touch /tmp/emptyfile
+/tmp/emptyfile
+
+/bin/chmod 000 /bin/ls
+/bin/ls
+/bin/chmod 755 /bin/ls
+
+touch /tmp/not_executable
+/tmp/not_executable
+
+/bin/echo /bin/ls
+/bin/ls /bin/ls
+
+/bin/ls -Z
+/bin/echo -z
+/bin/cat -invalid
+/bin/grep -invalid
+
+touch /tmp/test.sh
+chmod -x /tmp/test.sh
+/bin/tmp/test.sh
+/bin/echo "test" > /tmp/output
+/bin/cat < /tmp/output
+
+ECHO
+
+echo
+echo Hello
+echo HELLO world
+echo One Two Three Four
+echo -n Hello
+echo -n "Hello World"
+echo -na "Hello World"
+echo -n
+echo "A 'test' inside quotes"
+echo 'A "test" inside quotes'
+echo -n "A 'test' inside quotes"
+echo -n -n -n -na "A 'test' inside quotes"
+echo -n -n -n "A 'test' inside quotes"
+echo "" | cat -e
+echo "     " | cat -e
+echo "  leading and trailing spaces  " | cat -e
+
+echo "test1" > /tmp/testfile
+echo "test2" >> /tmp/testfile
+echo -n "no new line" >> /tmp/testfile
+cat /tmp/testfile
+
+echo "Hello&World"
+echo "Test@#$%^&*()!"
+echo "*?[]{}"
+
+echo "test" | /bin/grep test
+echo "hello world" | /bin/cut -d' ' -f1
+
+EXIT
+
+exit
+exit 42
+exit 0
+exit 255
+exit abc
+exit "hello"
+exit 'world'
+exit 42 43
+exit 1 2 3
+exit 999 "string"
+exit 999999999999999
+exit -1
+exit -42
+exit "   42   "
+exit "   0"
+
+export EXIT_CODE=77
+exit $EXIT_CODE
+
+/bin/ls
+echo $?
+
+/bin/ls filethatdoesntexist
+echo $?
+
+/bin/cat /etc/passwd
+echo $?
+
+/bin/cat nonexistentfile
+echo $?
+
+/bin/cat /root/secretfile
+echo $?
+
+/bin/invalidcmd
+echo $?
+
+/bin/echo hello123
+echo $?
+
+/bin/ls
+expr $? + $?
+
+/bin/ls nonexistingfile
+expr $? + $?
+
+expr hello + world
+echo $?
+
+/bin/echo
+echo $?
+/bin/ls nonexistentfile
+echo $?
+/bin/echo Test
+echo $?
+
+
+echo "cat lol.c | cat > lol.c"
+
+export MY_VAR=hello
+env | grep MY_VAR
+
+export MY_VAR
+env | grep MY_VAR
+
+export MY_VAR=world
+env | grep MY_VAR
+
+export VAR1=test1 VAR2=test2 VAR3=test3
+env | grep VAR1
+env | grep VAR2
+env | grep VAR3
+
+export MY_VAR
+env | grep MY_VAR
+
+export 1INVALID_VAR=value
+env | grep 1INVALID_VAR
+
+
+export MY_VAR=hello
+unset MY_VAR
+env | grep MY_VAR
+
+export VAR1=test1 VAR2=test2 VAR3=test3
+unset VAR1 VAR2
+env | grep VAR1
+env | grep VAR2
+env | grep VAR3
+
+unset NON_EXISTENT_VAR
+env | grep NON_EXISTENT_VAR
+
+export MY_VAR=hello
+unset MY_VAR
+export MY_VAR=new_value
+env | grep MY_VAR
+
+export MY_VAR1=hello MY_VAR2=world
+unset MY_VAR
+env | grep MY_VAR1
+env | grep MY_VAR2
+
+unset PATH
+env | grep PATH
+
+export VAR1=test1
+export VAR2=test2
+unset VAR1 | unset VAR2
+env | grep VAR1
+env | grep VAR2
+
+cd
+/bin/ls
+pwd
+
+cd /usr/bin
+/bin/ls
+pwd
+
+cd ..
+/bin/ls
+pwd
+
+cd .
+/bin/ls
+pwd
+
+cd /thisdirectorydoesnotexist
+pwd
+
+cd "Directory With Spaces"
+/bin/ls
+pwd
+
+cd /tmp
+pwd
+cd /var
+pwd
+
+cd /usr/bin
+./ls
+./pwd
+
+cd /usr/bin
+../../bin/ls
+
+unset PATH
+ls
+wc -l /etc/passwd
+
+touch /tmp/my_ls
+chmod +x /tmp/my_ls
+export PATH=/tmp:/bin
+my_ls
+
+echo "Hello World" > output.txt
+cat output.txt
+
+echo "This is a test." >> output.txt
+cat output.txt
+
+echo "Hello World" > $EMPTY
+cat output.txt
+
+echo "Hello World" < $EMPTY
+cat output.txt
+
+echo "Hello World" >> $EMPTY
+cat output.txt
+
+echo "First line" > output.txt
+echo "Second line" > output.txt
+cat output.txt
+
+echo "Test" > output.txt
+echo "Test" > output.txt
+cat output.txt
+
+echo "Hello World" | tr ' ' '\n' | sort
+
+cat file.txt | grep "pattern" | sort
+
+ls non_existing_file | grep "pattern"
+
+ls | grep ".c" > c_files.txt
+cat c_files.txt
+
+cat | cat | ls
+echo arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8 arg9 arg10 arg11 arg12 arg13 arg14 arg15 arg16 arg17 arg18 arg19 arg20

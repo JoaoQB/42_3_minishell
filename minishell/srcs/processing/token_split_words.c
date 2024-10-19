@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:11:37 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 15:35:42 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/19 17:30:35 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static t_token	*ambiguous_redirect(t_token *current)
 	if (!minishell()->silence_info)
 		ft_putendl_fd("minishell: ambiguous redirect", 2);
 	minishell()->silence_info = true;
+	minishell()->status = 1;
 	return (current->next);
 }
 
