@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:33 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/19 22:08:01 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:49:56 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	**get_array_env(void)
 		menvp[i++] = ft_strdup(env->value);
 		env = env->next;
 	}
-	// printf("menvp[0]: %s\n", menvp[i - 1]);
 	menvp[i] = NULL;
 	return (menvp);
 }

@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:49:20 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/14 13:21:56 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:46:44 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ void	init_main(char **envp)
 	minishell()->status = 0;
 	minishell()->history = NULL;
 	set_signals(SIGMAIN);
-	// minishell()->pipex = ft_init_pipex_s();
 }

@@ -6,12 +6,13 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 13:51:40 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:06:52 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
+//do i need to protect $SHELL?
 int	run_export(t_pipex *pipex_s)
 {
 	t_env	*new;
@@ -21,7 +22,7 @@ int	run_export(t_pipex *pipex_s)
 	exit_status = 0;
 	if (!pipex_s)
 		return (1);
-	if (!pipex_s->cmd[1]) //do i need to protect $SHELL?
+	if (!pipex_s->cmd[1])
 	{
 		print_export(minishell()->export);
 		return (exit_status);

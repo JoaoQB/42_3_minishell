@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/19 21:28:40 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:06:21 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		ft_close(int *fd)
+int	ft_close(int *fd)
 {
 	if (*fd > 2)
 	{
@@ -53,25 +53,25 @@ char	*ft_strnjoin(char *old_str, char *str_add, int size)
 	return (free(old_str), new_str);
 }
 
-char	*ft_strstr(const char *big, const char *little)
-{
-	size_t	i;
-	size_t	j;
+// char	*ft_strstr(const char *big, const char *little)
+// {
+// 	size_t	i;
+// 	size_t	j;
 
-	if (little[0] == '\0')
-		return ((char *)(big));
-	i = 0;
-	while (big[i])
-	{
-		j = 0;
-		while (big[i + j] == little[j] && little[j])
-			j++;
-		if (little[j] == '\0')
-			return ((char *)&big[i]);
-		i++;
-	}
-	return (NULL);
-}
+// 	if (little[0] == '\0')
+// 		return ((char *)(big));
+// 	i = 0;
+// 	while (big[i])
+// 	{
+// 		j = 0;
+// 		while (big[i + j] == little[j] && little[j])
+// 			j++;
+// 		if (little[j] == '\0')
+// 			return ((char *)&big[i]);
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
 
 // void *handle_error(char *err_print)
 
@@ -122,24 +122,24 @@ void	*safe_malloc(size_t size)
 // 		ft_putstr_fd(strerror(errno), 2);
 // }
 
-void print_err(char *format, ...)
+void	print_err(char *format, ...)
 {
-    va_list args;
+	va_list	args;
 	int		fd_err;
 
 	fd_err = minishell()->err_fd[1];
-    va_start(args, format);
-    while(*format) 
+	va_start(args, format);
+	while (*format)
 	{
-		if(*format == '%') 
+		if (*format == '%')
 		{
 			format++;
-			if(*format == 's') 
+			if (*format == 's')
 				ft_putstr_fd(va_arg(args, char *), fd_err);
 		}
 		else
 			write(fd_err, format, 1);
 		format++;
 	}
-    va_end(args);
+	va_end(args);
 }

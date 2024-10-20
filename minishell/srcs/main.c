@@ -6,23 +6,22 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:42:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 14:18:15 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:14:18 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+// print_tokens(minishell()->tokens);
 static void	repl(char **envp)
 {
 	init_main(envp);
 	while (1)
 	{
-		// get_input();
 		minishell()->user_input = readline("minishell-> ");
 		if (!minishell()->user_input)
 			break ;
 		input_process(minishell()->user_input);
-		// print_tokens(minishell()->tokens);
 		ft_shell_pipex();
 		free_main_input();
 	}

@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:48:17 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/16 09:42:23 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:13:45 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		file_acess(char *file_path)
+//unixistent file 13 ENOENT
+//no permitions 2 EACCES
+int	file_acess(char *file_path)
 {
-		if (access(file_path, F_OK) != 0)
-			return (errno); //unixistent file 13 ENOENT 
-		if (access(file_path, R_OK | X_OK) != 0)
-			return (errno); //no permitions 2 EACCES
-		else
-			return (0);
+	if (access(file_path, F_OK) != 0)
+		return (errno);
+	if (access(file_path, R_OK | X_OK) != 0)
+		return (errno);
+	else
+		return (0);
 }
 
 char	*get_cmd_path(t_pipex *pipex_s)
@@ -34,7 +36,7 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	{
 		if (file_acess (temp) == EACCES)
 			pipex_s->status = EACCES;
-		else if(file_acess (temp) == 0)
+		else if (file_acess (temp) == 0)
 			return (temp);
 		free(temp);
 		i = 0;

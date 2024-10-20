@@ -3,44 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   new_exe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/19 22:00:34 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:12:49 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token *find_next_pipe(t_token *tokens_s)
-{
-	while (tokens_s && tokens_s->type != PIPE) //funcao para este
-		tokens_s = tokens_s->next;
-	if (tokens_s && tokens_s->type == PIPE)
-		tokens_s = tokens_s->next;
-	return (tokens_s);
-}
-
+// || tokens_s->type == EMPTY)
 void	ft_n_update_cmds(t_pipex *pipex_s)
 {
-	int count;
-	t_token *tokens_s;
+	int		count;
+	t_token	*tokens_s;
 
 	tokens_s = pipex_s->token;
 	count = 0;
-	while (tokens_s && tokens_s->type != PIPE) //---------------
+	while (tokens_s && tokens_s->type != PIPE)
 	{
-		if (tokens_s->type == CMD || tokens_s->type == ARG)// || tokens_s->type == EMPTY)
+		if (tokens_s->type == CMD || tokens_s->type == ARG)
 			count += 1;
 		tokens_s = tokens_s->next;
 	}
 	if (count)
-		pipex_s->cmd = (char **) safe_malloc(sizeof(char *) *(count + 1)); //---------------
+		pipex_s->cmd = (char **) safe_malloc(sizeof(char *) *(count + 1));
 	count = 0;
 	tokens_s = pipex_s->token;
-	while (tokens_s && tokens_s->type != PIPE) //funcao para este
+	while (tokens_s && tokens_s->type != PIPE)
 	{
-		if (tokens_s->type == CMD || tokens_s->type == ARG)// || tokens_s->type == EMPTY)
+		if (tokens_s->type == CMD || tokens_s->type == ARG)
 		{
 			pipex_s->cmd[count++] = ft_strnjoin(NULL, tokens_s->value, -1);
 			pipex_s->cmd[count] = NULL;
@@ -49,9 +41,9 @@ void	ft_n_update_cmds(t_pipex *pipex_s)
 	}
 }
 
-void ft_n_update_fds(t_pipex *pipex_s)
+void	ft_n_update_fds(t_pipex *pipex_s)
 {
-	int piper[2];
+	int	piper[2];
 
 	if (pipex_s->next)
 	{
@@ -67,9 +59,9 @@ void ft_n_update_fds(t_pipex *pipex_s)
 	ft_update_fds(pipex_s->token, pipex_s);
 }
 
-t_pipex *add_back_pipex_s(void)
+t_pipex	*add_back_pipex_s(void)
 {
-	t_pipex *pipex_s;
+	t_pipex	*pipex_s;
 
 	if (!minishell()->pipex)
 	{
@@ -88,13 +80,13 @@ t_pipex *add_back_pipex_s(void)
 	return (pipex_s);
 }
 
-int ft_n_update_path(t_pipex *pipex_s)
+int	ft_n_update_path(t_pipex *pipex_s)
 {
 	char	*path;
 	int		status;
 
 	if (pipex_s->status || !pipex_s->cmd)
-		return(pipex_s->status);
+		return (pipex_s->status);
 	path = pipex_s->cmd[0];
 	if (path[0] == '.' && !path[1])
 	{
@@ -113,10 +105,11 @@ int ft_n_update_path(t_pipex *pipex_s)
 	return (0);
 }
 
-void new_process_tokens(void)
+//TODO Handle error s
+void	new_process_tokens(void)
 {
-	t_token *token_s;
-	t_pipex *pipex_s;
+	t_token	*token_s;
+	t_pipex	*pipex_s;
 
 	minishell()->status = 0;
 	free_double_array(minishell()->menv);
@@ -127,11 +120,11 @@ void new_process_tokens(void)
 		pipex_s = add_back_pipex_s();
 		ft_n_update_cmds(pipex_s);
 		if (!check_for_pipeline())
-			break;
+			break ;
 		ft_n_update_fds(pipex_s);
 		pipex_s->pid = fork();
 		if (pipex_s->pid == -1)
-			return (perror("fork failed")); //TODO Handle error s
+			return (perror("fork failed"));
 		else if (pipex_s->pid == 0)
 		{
 			set_signals(SIGCMD);

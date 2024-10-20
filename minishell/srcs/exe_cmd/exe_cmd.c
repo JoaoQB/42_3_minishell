@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/19 22:41:47 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:04:46 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 int	check_for_pipeline(void)
 {
-	t_pipex *first_pipe;
+	t_pipex	*first_pipe;
 
 	first_pipe = minishell()->pipex;
 	if (first_pipe && !first_pipe->next && !find_next_pipe(first_pipe->token))
 		if (first_pipe->status || special_edge_cases(first_pipe))
 			return (0);
-	return(1);
+	return (1);
 }
 
-int is_directory(const char *path)
+int	is_directory(const char *path)
 {
 	struct stat	buffer;
 
@@ -34,7 +34,7 @@ int is_directory(const char *path)
 			print_err("%s: %s\n", path, strerror(errno));
 			return (127);
 		}
-		return(0);
+		return (0);
 	}
 	else if (S_ISDIR(buffer.st_mode))
 	{
@@ -46,7 +46,7 @@ int is_directory(const char *path)
 		else
 		{
 			print_err ("%s: command not found\n", path);
-			return(127);
+			return (127);
 		}
 	}
 	return (0);
@@ -72,7 +72,8 @@ void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 	ft_exit_pid(pipex_s);
 }
 
-int		file_acess(char *file_path)
+// symbolic link?
+int	file_acess(char *file_path)
 {
 	struct stat	buffer;
 
@@ -82,8 +83,6 @@ int		file_acess(char *file_path)
 		return (errno);
 	if (!S_ISREG(buffer.st_mode))
 		return (ENOENT);
-	// if (S_ISLNK(buffer.st_mode))
-    //     printf("File is a symbolic link.\n");
 	if (access(file_path, X_OK) != 0)
 		return (errno);
 	return (0);
@@ -99,7 +98,7 @@ char	*get_cmd_path(t_pipex *pipex_s)
 	temp = ft_strnjoin(NULL, pipex_s->cmd[0], -1);
 	while (1)
 	{
-		if(access(temp, F_OK | R_OK | X_OK) == 0)
+		if (access(temp, F_OK | R_OK | X_OK) == 0)
 			return (temp);
 		if (file_acess(temp) == EACCES)
 			pipex_s->status = EACCES;
@@ -122,7 +121,7 @@ char	*get_cmd_path(t_pipex *pipex_s)
 // 	char	*paths;
 // 	char	*temp;
 // 	int		i;
-	
+
 // 	paths = ft_getenv("PATH");
 // 	while (paths && *paths != '\0')
 // 	{
