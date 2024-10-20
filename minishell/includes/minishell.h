@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 14:42:37 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:27:00 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,7 +407,7 @@ void	ft_n_update_cmds(t_pipex *pipex_s);
 t_token	*find_next_pipe(t_token *tokens_s);
 void	process_child_pid(t_pipex *curr_pipex_s);
 int		ft_n_update_path(t_pipex *pipex_s);
-int		ft_open_fd(t_token *tk_s, int *fd);
+int		ft_process_redirect(t_token *tk_s, int *fd);
 // void	ft_update_fds2(t_token *tk_s, t_pipex *pipex_s);
 int		is_directory(const char *path);
 int		check_for_pipeline(void);

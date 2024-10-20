@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_split_words.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:11:37 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 14:46:17 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:32:21 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static t_token	*ambiguous_redirect(t_token *current)
 {
 	if (!current)
 		return (NULL);
-	if (!minishell()->silence_info)
-		ft_putendl_fd("minishell: ambiguous redirect", 2);
 	ft_free(&current->value);
 	current->value = ft_strdup("");
 	minishell()->status = 1;
