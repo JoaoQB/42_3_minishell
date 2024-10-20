@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/20 15:06:21 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:37:18 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,6 @@ char	*ft_strnjoin(char *old_str, char *str_add, int size)
 	return (free(old_str), new_str);
 }
 
-// char	*ft_strstr(const char *big, const char *little)
-// {
-// 	size_t	i;
-// 	size_t	j;
-
-// 	if (little[0] == '\0')
-// 		return ((char *)(big));
-// 	i = 0;
-// 	while (big[i])
-// 	{
-// 		j = 0;
-// 		while (big[i + j] == little[j] && little[j])
-// 			j++;
-// 		if (little[j] == '\0')
-// 			return ((char *)&big[i]);
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
-
-// void *handle_error(char *err_print)
-
 void	critical_error(char *err_print)
 {
 	perror(err_print);
@@ -90,37 +68,6 @@ void	*safe_malloc(size_t size)
 		critical_error("malloc failed");
 	return (ptr);
 }
-
-//ALL POSSIBLE ERRORS
-// void	process_err(void)
-// {
-// 	if (errno == 0)
-// 		return ;
-// 	if (errno == 2)
-// 		ft_putstr_fd("No such file or directory\n", 2);
-// 	else if (errno == 13)
-// 		ft_putstr_fd("Permission denied\n", 2);
-// 	else if (errno == 21)
-// 		ft_putstr_fd("Is a directory\n", 2);
-// 	else if (errno == 126)
-// 		ft_putstr_fd("Permission denied\n", 2);
-// 	else if (errno == 127)
-// 		ft_putstr_fd("Command not found\n", 2);
-// 	else if (errno == 128)
-// 		ft_putstr_fd("Invalid argument\n", 2);
-// 	else if (errno == 130)
-// 		ft_putstr_fd("Terminated by Ctrl+C\n", 2);
-// 	else if (errno == 134)
-// 		ft_putstr_fd("Abort trap\n", 2);
-// 	else if (errno == 139)
-// 		ft_putstr_fd("Segmentation fault\n", 2);
-// 	else if (errno == 141)
-// 		ft_putstr_fd("Broken pipe\n", 2);
-// 	else if (errno == 255)
-// 		ft_putstr_fd("Exit status out of range\n", 2);
-// 	else
-// 		ft_putstr_fd(strerror(errno), 2);
-// }
 
 void	print_err(char *format, ...)
 {

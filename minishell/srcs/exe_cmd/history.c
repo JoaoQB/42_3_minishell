@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/16 09:51:28 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:36:26 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	add_to_history(void)
 		minishell()->history = temp_s;
 }
 
-//TODO poder receber numero de cmds para printar
 void	get_history(t_hist *hist_s, int index)
 {
 	char	*str_token;

@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   new_exe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/20 15:12:49 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:38:43 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// || tokens_s->type == EMPTY)
 void	ft_n_update_cmds(t_pipex *pipex_s)
 {
 	int		count;
@@ -105,7 +104,7 @@ int	ft_n_update_path(t_pipex *pipex_s)
 	return (0);
 }
 
-//TODO Handle error s
+//TODO Handle perror fork
 void	new_process_tokens(void)
 {
 	t_token	*token_s;

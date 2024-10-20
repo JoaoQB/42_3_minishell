@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 14:53:06 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 14:57:19 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:39:07 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	handle_sigchild(int sig)
 	}
 }
 
-// TODO CHANGE PERROR?
 int	set_sig_handlers(int signal, void (*func_name)(int))
 {
 	struct sigaction	sa;
@@ -46,7 +45,7 @@ int	set_sig_handlers(int signal, void (*func_name)(int))
 	sigemptyset(&sa.sa_mask);
 	if (sigaction(signal, &sa, NULL) == -1)
 	{
-		perror("sigaction failed");
+		print_err("sigaction failed\n");
 		return (1);
 	}
 	return (0);

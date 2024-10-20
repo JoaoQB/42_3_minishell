@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_ins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 15:06:52 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:38:13 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-//do i need to protect $SHELL?
 int	run_export(t_pipex *pipex_s)
 {
 	t_env	*new;
@@ -59,7 +58,6 @@ void	run_unset(t_pipex *pipex_s)
 	minishell()->menv = get_array_env();
 }
 
-//TODO Handle error n
 char	*run_pwd(bool print)
 {
 	char	cwd[PATH_MAX];
@@ -71,7 +69,6 @@ char	*run_pwd(bool print)
 	return (ft_strdup((char *)cwd));
 }
 
-//TODO Handle error s
 int	run_cd(t_pipex *pipex_s)
 {
 	char	*new_dir;

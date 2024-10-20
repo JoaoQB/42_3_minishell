@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:48:17 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/20 15:13:45 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:38:19 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-//unixistent file 13 ENOENT
-//no permitions 2 EACCES
 int	file_acess(char *file_path)
 {
 	if (access(file_path, F_OK) != 0)
