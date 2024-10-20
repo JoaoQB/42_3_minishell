@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/20 15:35:05 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 23:01:21 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void	ft_update_heredoc(t_token *tk_s, t_pipex *pipex_s)
 		if (tk_s->type == HERE_DOC)
 			ft_close (&fd[0]);
 		if (tk_s->type == HERE_DOC && tk_s->next && *tk_s->next->value)
+		{
 			fd[0] = read_heredoc(tk_s->next);
+			minishell()->temp_fd[1] = -2;
+			minishell()->temp_fd[1] = -2;
+		}
 		tk_s = tk_s->next;
 	}
 }

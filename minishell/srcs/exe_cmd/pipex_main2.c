@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 15:09:00 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 15:58:50 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 23:03:21 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	close_all_fd(t_pipex *pipex_s)
 	save = NULL;
 	if (!pipex_s)
 		pipex_s = minishell()->pipex;
-	while (pipex_s->prev)
+	while (pipex_s && pipex_s->prev)
 		pipex_s = pipex_s->prev;
 	while (pipex_s)
 	{

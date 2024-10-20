@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 15:27:00 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 22:58:49 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_main
 	char	*input_reorg;
 	bool	silence_info;
 	int		status;
+	int		temp_fd[2];
 	int		err_fd[2];
 	t_env	*env;
 	t_env	*export;

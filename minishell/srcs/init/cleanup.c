@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:21:08 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 16:00:19 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 23:02:19 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	cleanup_main(void)
 {
 	ft_close(&minishell()->err_fd[0]);
 	ft_close(&minishell()->err_fd[1]);
+	ft_close(&minishell()->temp_fd[0]);
+	ft_close(&minishell()->temp_fd[1]);
 	if (minishell()->env)
 		free_env(&minishell()->env);
 	if (minishell()->menv)

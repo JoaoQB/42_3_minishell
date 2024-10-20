@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 16:03:58 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 22:58:51 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	read_heredoc(t_token *tokens_s)
 	set_sig_handlers(SIGINT, SIG_IGN);
 	if (pipe(piper) == -1)
 		return (perror("failed pipe"), 0);
+	minishell()->temp_fd[0] = piper[0];
+	minishell()->temp_fd[1] = piper[1];
 	pid = fork();
 	if (pid == -1)
 		return (perror("failed fork"), 0);
