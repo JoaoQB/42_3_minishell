@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/19 20:37:32 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:18:06 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_token			t_token;
 typedef struct s_pipex			t_pipex;
 typedef struct s_main			t_main;
 typedef struct s_hist			t_hist;
-extern volatile sig_atomic_t	g_signal;
 
 typedef enum e_sigmode
 {

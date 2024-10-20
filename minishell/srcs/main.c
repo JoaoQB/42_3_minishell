@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:42:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/17 15:28:38 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:18:15 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-volatile sig_atomic_t	g_signal; // Definition
 
 static void	repl(char **envp)
 {
@@ -39,7 +37,6 @@ t_main	*minishell(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	g_signal = 0;
 	(void)argv;
 	if (argc != 1)
 		return (1);
