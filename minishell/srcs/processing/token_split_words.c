@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:11:37 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/19 17:30:35 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 13:29:13 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ static t_token	*ambiguous_redirect(t_token *current)
 		return (NULL);
 	if (!minishell()->silence_info)
 		ft_putendl_fd("minishell: ambiguous redirect", 2);
-	minishell()->silence_info = true;
+	// minishell()->silence_info = true;
+	ft_free(&current->value);
+	current->value = ft_strdup("");
 	minishell()->status = 1; //TODO this will prevent pipex to be ran?
 	return (current->next);
 }

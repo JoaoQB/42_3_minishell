@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_ins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/19 21:34:33 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/20 13:51:40 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	run_export(t_pipex *pipex_s)
 			exit_status = 1;
 		i++;
 	}
+	free_double_array(minishell()->menv);
+	minishell()->menv = get_array_env();
 	return (exit_status);
 }
 
@@ -52,6 +54,8 @@ void	run_unset(t_pipex *pipex_s)
 		export_unset(pipex_s->cmd[i]);
 		i++;
 	}
+	free_double_array(minishell()->menv);
+	minishell()->menv = get_array_env();
 }
 
 //TODO Handle error n
