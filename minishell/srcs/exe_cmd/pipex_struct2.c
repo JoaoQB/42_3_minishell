@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_struct2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 15:01:48 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:03:58 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	read_heredoc(t_token *tokens_s)
 		heredoc_child(piper, tokens_s);
 	else
 	{
+		status = 0;
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 			minishell()->status = 130;

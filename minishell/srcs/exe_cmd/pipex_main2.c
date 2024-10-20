@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_main2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 15:09:00 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 15:12:41 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:58:50 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	close_all_fd(t_pipex *pipex_s)
 {
 	t_pipex	*save;
 
+	ft_close(&minishell()->err_fd[0]);
+	ft_close(&minishell()->err_fd[1]);
 	save = NULL;
 	if (!pipex_s)
 		pipex_s = minishell()->pipex;
