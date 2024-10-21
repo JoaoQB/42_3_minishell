@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 22:58:49 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/21 11:51:34 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,7 +318,10 @@ t_pipex	*ft_init_pipex_s(void);
 //Execute pipex cmds
 // void	ft_exe_pipex_s(void);
 // void	execute_command(t_pipex *pipex_s, char **envp);
+int		ft_n_update_path(t_pipex *pipex_s);
+int		is_directory(const char *path);
 char	*get_cmd_path(t_pipex *pipex_s);
+int	file_access(char *file_path);
 void	exe_cmd_child(t_pipex *pipex_s, char **envp);
 
 //pipex_utils
@@ -407,10 +410,8 @@ void	ft_n_update_fds(t_pipex *pipex_s);
 void	ft_n_update_cmds(t_pipex *pipex_s);
 t_token	*find_next_pipe(t_token *tokens_s);
 void	process_child_pid(t_pipex *curr_pipex_s);
-int		ft_n_update_path(t_pipex *pipex_s);
 int		ft_process_redirect(t_token *tk_s, int *fd);
 // void	ft_update_fds2(t_token *tk_s, t_pipex *pipex_s);
-int		is_directory(const char *path);
 int		check_for_pipeline(void);
 void	critical_error(char *err_print);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_ins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:47:34 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 15:38:13 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:29:21 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,15 @@ void	run_unset(t_pipex *pipex_s)
 	int		i;
 
 	i = 1;
-	if (!pipex_s->cmd[1] || ft_strcmp(pipex_s->cmd[1], "SHELL") == 0)
+	if (!pipex_s->cmd[1])
 		return ;
 	while (pipex_s->cmd[i])
 	{
-		env_unset(pipex_s->cmd[i]);
-		export_unset(pipex_s->cmd[i]);
+		if (ft_strcmp(pipex_s->cmd[i], "SHELL") != 0)
+		{
+			env_unset(pipex_s->cmd[i]);
+			export_unset(pipex_s->cmd[i]);
+		}
 		i++;
 	}
 	free_double_array(minishell()->menv);

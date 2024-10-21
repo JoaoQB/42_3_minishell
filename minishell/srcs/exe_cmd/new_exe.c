@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_exe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 12:09:12 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/20 15:38:43 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:14:07 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,31 +77,6 @@ t_pipex	*add_back_pipex_s(void)
 		pipex_s->next->token = find_next_pipe(pipex_s->token);
 	}
 	return (pipex_s);
-}
-
-int	ft_n_update_path(t_pipex *pipex_s)
-{
-	char	*path;
-	int		status;
-
-	if (pipex_s->status || !pipex_s->cmd)
-		return (pipex_s->status);
-	path = pipex_s->cmd[0];
-	if (path[0] == '.' && !path[1])
-	{
-		print_err("%s: filename argument required\n", path);
-		print_err("usage: %s filename [arguments]\n", path);
-		return (2);
-	}
-	status = is_directory(path);
-	if (status != 0)
-		return (status);
-	pipex_s->path = get_cmd_path(pipex_s);
-	if (pipex_s->path == NULL && pipex_s->status == EACCES)
-		return (print_err ("%s: %s\n", path, strerror(pipex_s->status)), 126);
-	if (pipex_s->path == NULL && pipex_s->status == ENOENT)
-		return (print_err ("%s: command not found\n", path), 127);
-	return (0);
 }
 
 //TODO Handle perror fork
