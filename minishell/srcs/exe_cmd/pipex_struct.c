@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/21 10:51:28 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:05:05 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_process_redirect(t_token *tk_s, int *fd)
 	int	status;
 
 	status = 0;
-	if ((tk_s->type == RED_IN))
+	if (tk_s->type == RED_IN)
 		ft_close (&fd[0]);
 	else if ((tk_s->type == RED_OUT || tk_s->type == RED_OUT_APP))
 		ft_close (&fd[1]);

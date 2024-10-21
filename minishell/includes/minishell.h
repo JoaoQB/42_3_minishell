@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/21 11:51:34 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:51:16 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,15 +319,17 @@ t_pipex	*ft_init_pipex_s(void);
 // void	ft_exe_pipex_s(void);
 // void	execute_command(t_pipex *pipex_s, char **envp);
 int		ft_n_update_path(t_pipex *pipex_s);
-int		is_directory(const char *path);
 char	*get_cmd_path(t_pipex *pipex_s);
-int	file_access(char *file_path);
+int		check_cmd_path(t_pipex *pipex_s);
+int		is_directory(char *path);
+int		file_access(char *file_path);
 void	exe_cmd_child(t_pipex *pipex_s, char **envp);
 
 //pipex_utils
 char	*ft_strnjoin(char *old_str, char *str_add, int size);
 // char	*ft_strstr(const char *big, const char *little);
 void	*safe_malloc(size_t size);
+int		ft_is_path(char *str);
 
 /************************/
 /******* HISTORY ********/

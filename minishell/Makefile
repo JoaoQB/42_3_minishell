@@ -6,7 +6,7 @@
 #    By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 15:19:20 by jqueijo-          #+#    #+#              #
-#    Updated: 2024/10/21 11:38:23 by jqueijo-         ###   ########.fr        #
+#    Updated: 2024/10/21 15:43:49 by jqueijo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/exe_cmd/pipex_main.c \
 	$(SRC_PATH)/exe_cmd/pipex_main2.c \
 	$(SRC_PATH)/exe_cmd/pipex_path.c \
+	$(SRC_PATH)/exe_cmd/pipex_path_utils.c \
 	$(SRC_PATH)/exe_cmd/pipex_struct.c \
 	$(SRC_PATH)/exe_cmd/pipex_struct2.c \
 	$(SRC_PATH)/exe_cmd/pipex_utils.c \
