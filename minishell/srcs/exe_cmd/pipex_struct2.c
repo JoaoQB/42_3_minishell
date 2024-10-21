@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 22:58:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:48:06 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	heredoc_child(int *piper, t_token *tokens_s)
 	char	*input;
 
 	set_signals(SIGHD);
-	ft_close(&piper[0]);
 	while (1)
 	{
 		input = readline("> ");
@@ -45,6 +44,7 @@ void	heredoc_child(int *piper, t_token *tokens_s)
 		write(piper[1], "\n", 1);
 		ft_free(&input);
 	}
+	ft_close(&piper[0]);
 	ft_close(&piper[1]);
 	ft_exit(0);
 }
@@ -55,6 +55,7 @@ int	read_heredoc(t_token *tokens_s)
 	int		piper[2];
 	pid_t	pid;
 	int		status;
+	static int i = 0;
 
 	set_sig_handlers(SIGINT, SIG_IGN);
 	if (pipe(piper) == -1)
@@ -72,7 +73,6 @@ int	read_heredoc(t_token *tokens_s)
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 			minishell()->status = 130;
-		status = 0;
 		ft_close(&piper[1]);
 	}
 	return (piper[0]);
