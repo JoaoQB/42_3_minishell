@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:30:04 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/20 23:01:21 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:51:28 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,17 @@ int	ft_process_redirect(t_token *tk_s, int *fd)
 		ft_close (&fd[0]);
 	else if ((tk_s->type == RED_OUT || tk_s->type == RED_OUT_APP))
 		ft_close (&fd[1]);
+	else
+		return (0);
 	if (tk_s->type == RED_IN && tk_s->next && *tk_s->next->value)
 		fd[0] = open(tk_s->next->value, O_RDONLY, 0666);
 	else if (tk_s->type == RED_OUT && tk_s->next && *tk_s->next->value)
 		fd[1] = open(tk_s->next->value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	else if (tk_s->type == RED_OUT_APP && tk_s->next && *tk_s->next->value)
 		fd[1] = open(tk_s->next->value, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	else if (tk_s->next && tk_s->next->type == PATH && !*tk_s->next->value)
+	if (tk_s->next && tk_s->next->type == PATH && !*tk_s->next->value)
 		status = EINVAL;
-	if ((fd[0] == -1 || fd[1] == -1))
+	else if ((fd[0] == -1 || fd[1] == -1))
 		status = errno;
 	return (status);
 }
