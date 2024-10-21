@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:37:46 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/21 15:47:25 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:52:22 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ static char	*find_in_path(char *paths, t_pipex *pipex_s)
 
 char	*get_cmd_path(t_pipex *pipex_s)
 {
-	char *temp;
-	char *paths;
+	char	*temp;
+	char	*paths;
 
 	temp = ft_strdup(pipex_s->cmd[0]);
 	if (file_access(temp) == 0)
