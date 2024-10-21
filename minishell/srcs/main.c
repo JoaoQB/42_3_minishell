@@ -52,8 +52,6 @@ int	main(int argc, char **argv, char **envp)
 	pre_close_all_fd();
 	if (argc != 1)
 		return (1);
-	if (set_sig_handlers(SIGCHLD, handle_sigchild) != 0)
-		return (1);
 	repl(envp);
 	cleanup_main();
 	return (0);

@@ -42,7 +42,8 @@ typedef enum e_sigmode
 {
 	SIGMAIN,
 	SIGCMD,
-	SIGHD
+	SIGHDC,
+	SIGHD,
 }	t_sigmode;
 
 typedef enum e_neg_operator

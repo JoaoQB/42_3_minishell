@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:37:46 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/21 15:52:22 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:54:30 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_directory(char *path)
 	}
 	else if (S_ISDIR(buffer.st_mode) && ft_is_path(path))
 	{
-		print_err("%s: is a directory\n", path);
+		print_err("%s: Is a directory\n", path);
 		return (126);
 	}
 	return (0);
@@ -53,7 +53,7 @@ int	check_cmd_path(t_pipex *pipex_s)
 	}
 	if (access(temp, X_OK) != 0)
 	{
-		print_err ("%s: permission denied\n", temp);
+		print_err ("%s: Permission denied\n", temp);
 		return (126);
 	}
 	return (0);

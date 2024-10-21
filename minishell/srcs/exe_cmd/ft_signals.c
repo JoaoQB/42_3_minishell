@@ -45,23 +45,23 @@ void	set_signals(int sigmode)
 {
 	if (sigmode == SIGMAIN)
 	{
-		if (set_sig_handlers(SIGINT, sigint_handler_main) != 0)
-			return ;
-		if (set_sig_handlers(SIGQUIT, SIG_IGN) != 0)
-			return ;
+		set_sig_handlers(SIGCHLD, handle_sigchild);
+		set_sig_handlers(SIGINT, sigint_handler_main);
+		set_sig_handlers(SIGQUIT, SIG_IGN);
 	}
 	else if (sigmode == SIGCMD)
 	{
-		if (set_sig_handlers(SIGINT, sigint_handler_cmd) != 0)
-			return ;
-		if (set_sig_handlers(SIGQUIT, sigquit_handler_cmd) != 0)
-			return ;
+		set_sig_handlers(SIGINT, sigint_handler_cmd);
+		set_sig_handlers(SIGQUIT, sigquit_handler_cmd);
+	}
+	else if (sigmode == SIGHDC)
+	{
+		set_sig_handlers(SIGINT, sigint_handler_hd);
+		set_sig_handlers(SIGQUIT, SIG_IGN);
 	}
 	else if (sigmode == SIGHD)
 	{
-		if (set_sig_handlers(SIGINT, sigint_handler_hd) != 0)
-			return ;
-		if (set_sig_handlers(SIGQUIT, SIG_IGN) != 0)
-			return ;
+		set_sig_handlers(SIGINT, SIG_IGN);
+		set_sig_handlers(SIGCHLD, SIG_IGN);
 	}
 }

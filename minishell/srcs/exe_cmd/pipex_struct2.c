@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 22:58:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:51:10 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	heredoc_child(int *piper, t_token *tokens_s)
 {
 	char	*input;
 
-	set_signals(SIGHD);
+	set_signals(SIGHDC);
 	while (1)
 	{
 		input = readline("> ");
@@ -40,8 +40,7 @@ void	heredoc_child(int *piper, t_token *tokens_s)
 			break ;
 		}
 		input = heredoc_expand(tokens_s, input);
-		write(piper[1], input, ft_strlen(input));
-		write(piper[1], "\n", 1);
+		ft_putendl_fd(input, piper[1]);
 		ft_free(&input);
 	}
 	ft_close(&piper[0]);
@@ -56,7 +55,7 @@ int	read_heredoc(t_token *tokens_s)
 	pid_t	pid;
 	int		status;
 
-	set_sig_handlers(SIGINT, SIG_IGN);
+	set_signals(SIGHD);
 	if (pipe(piper) == -1)
 		return (perror("failed pipe"), 0);
 	minishell()->temp_fd[0] = piper[0];
@@ -73,6 +72,7 @@ int	read_heredoc(t_token *tokens_s)
 		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 			minishell()->status = 130;
 		ft_close(&piper[1]);
+		set_signals(SIGMAIN);
 	}
 	return (piper[0]);
 }
