@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:42:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 16:14:27 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:35:34 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	pre_close_all_fd();
 	if (argc != 1)
-		return (1);
-	if (set_sig_handlers(SIGCHLD, handle_sigchild) != 0)
 		return (1);
 	repl(envp);
 	cleanup_main();
