@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/22 15:18:04 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:46:58 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static void	invalid_exit(t_pipex *pipex, int flag)
 
 static bool	is_valid_status(char *str)
 {
-	int		i;
+	int			i;
+	long long	status;
 
 	if (!str)
 		return (true);
@@ -52,27 +53,33 @@ static bool	is_valid_status(char *str)
 		i++;
 	if (str[i] && !ft_isdigit(str[i]))
 		return (false);
+	errno = 0;
+	status = ft_atoi_lng(str);
+	if (errno == ERANGE)
+		return (false);
 	return (true);
 }
 
 void	ft_exit_builtins(t_pipex *pipex)
 {
-	int		status;
-	char	**cmd;
+	long long	long_status;
+	int			status;
+	char		**cmd;
 
 	if (!pipex || !pipex->cmd)
 		return ;
 	cmd = pipex->cmd;
-	status = pipex->status;
-	if (!is_valid_status(cmd[1]))
+	status = 0;
+	if (cmd[1] && !is_valid_status(cmd[1]))
 		invalid_exit(pipex, 1);
 	else if (cmd[1])
 	{
 		if (cmd[2])
 			return (invalid_exit(pipex, 2));
-		pipex->status = ft_atoi(cmd[1]);
-		if (pipex->status < 0 || pipex->status > 255)
-			pipex->status = (pipex->status % 256 + 256) % 256;
+		long_status = ft_atoi_lng(cmd[1]);
+		if (long_status < 0 || long_status > 255)
+			long_status = (long_status % 256 + 256) % 256;
+		pipex->status = long_status;
 	}
 	status = pipex->status;
 	ft_exit(status);

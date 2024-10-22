@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:11:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 14:33:53 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:41:32 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,33 @@ char	*ft_itoa(int n)
 	if (sign == -1)
 		result[0] = '-';
 	return (result);
+}
+
+long long	ft_atoi_lng(const char *nptr)
+{
+	long long	res;
+	long long	sign;
+	int		i;
+
+	res = 0;
+	i = 0;
+	sign = 1;
+	while ((nptr[i] >= '\t' && nptr[i] <= '\r') || nptr[i] == ' ')
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
+		if (nptr[i++] == '-')
+			sign = -1;
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		if (res > ((LLONG_MAX - (nptr[i] - '0')) / 10))
+		{
+			errno = ERANGE;
+			return (res * sign);
+		}
+		res = (res * 10) +(nptr[i] - '0');
+		i++;
+	}
+	return (res * sign);
 }
 
 int	ft_atoi(const char *nptr)

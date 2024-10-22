@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/22 15:23:21 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:40:02 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,8 +224,9 @@ void	ft_putchar_fd(char c, int fd);
 void	print_err(char *format, ...);
 
 /* to_utils.c */
-int		ft_atoi(const char *nptr);
-char	*ft_itoa(int n);
+int			ft_atoi(const char *nptr);
+long long	ft_atoi_lng(const char *nptr);
+char		*ft_itoa(int n);
 
 /************************/
 /****** PROCESSING ******/
