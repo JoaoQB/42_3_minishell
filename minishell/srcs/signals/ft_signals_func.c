@@ -36,10 +36,16 @@ void	handle_sigchild(int sig)
 	}
 }
 
-void	sigint_handler_hd(int sig)
+void	sigint_handler_hdc(int sig)
 {
 	(void)sig;
 	ft_exit(2);
+}
+
+void	sigint_handler_hd(int sig)
+{
+	(void)sig;
+	minishell()->status = 130;
 }
 
 void	sigquit_handler_cmd(int sig)

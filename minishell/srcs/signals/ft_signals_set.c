@@ -37,12 +37,12 @@ void	set_signals(int sigmode)
 	}
 	else if (sigmode == SIGHDC)
 	{
-		set_sig_handlers(SIGINT, sigint_handler_hd);
+		set_sig_handlers(SIGINT, sigint_handler_hdc);
 		set_sig_handlers(SIGQUIT, SIG_IGN);
 	}
 	else if (sigmode == SIGHD)
 	{
-		set_sig_handlers(SIGINT, SIG_IGN);
+		set_sig_handlers(SIGINT, sigint_handler_hd);
 		set_sig_handlers(SIGCHLD, SIG_IGN);
 	}
 }

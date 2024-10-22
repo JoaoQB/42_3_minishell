@@ -33,23 +33,9 @@ t_main	*minishell(void)
 	return (&main_s);
 }
 
-//TODO delete this function and caller
-void	pre_close_all_fd(void)
-{
-	int	i;
-
-	i = 3;
-	while (i < 1024)
-	{
-		close(i);
-		i++;
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argv;
-	pre_close_all_fd();
 	if (argc != 1)
 		return (1);
 	repl(envp);

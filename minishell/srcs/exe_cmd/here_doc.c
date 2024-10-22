@@ -48,7 +48,6 @@ void	heredoc_child(int *piper, t_token *tokens_s)
 	ft_exit(0);
 }
 
-// TODO PERROR?
 int	read_heredoc(t_token *tokens_s)
 {
 	int		piper[2];

@@ -422,8 +422,8 @@ char		**get_array_env(void);
 
 void		handle_sigchild(int sig);
 void		sigint_handler_hd(int sig);
+void		sigint_handler_hdc(int sig);
 void		sigquit_handler_cmd(int sig);
-void		sigint_handler_cmd(int sig);
 void		sigint_handler_cmd(int sig);
 
 //signals setting

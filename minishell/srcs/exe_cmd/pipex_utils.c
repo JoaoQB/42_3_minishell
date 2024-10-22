@@ -62,7 +62,6 @@ int	process_child_pipes(t_pipex *pipex_s)
 	close_all_fd(NULL);
 }
 
-//TODO perror?
 void	read_error_fd(void)
 {
 	int			ret;
@@ -70,7 +69,7 @@ void	read_error_fd(void)
 
 	ft_close(&minishell()->err_fd[1]);
 	ret = 1;
-	while (ret)
+	while (ret && minishell()->status != 130)
 	{
 		ret = read(minishell()->err_fd[0], buffer, 10);
 		if (ret > 0)
