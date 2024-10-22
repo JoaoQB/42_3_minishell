@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:25:22 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/22 15:14:38 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:56:46 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	heredoc_child(int *piper, t_token *tokens_s)
 	ft_exit(0);
 }
 
-// TODO PERROR?
 int	read_heredoc(t_token *tokens_s)
 {
 	int		piper[2];

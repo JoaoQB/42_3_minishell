@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 14:53:06 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/22 15:25:09 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:02:02 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,16 @@ void	handle_sigchild(int sig)
 	}
 }
 
-void	sigint_handler_hd(int sig)
+void	sigint_handler_hdc(int sig)
 {
 	(void)sig;
 	ft_exit(2);
+}
+
+void	sigint_handler_hd(int sig)
+{
+	(void)sig;
+	minishell()->status = 130;
 }
 
 void	sigquit_handler_cmd(int sig)

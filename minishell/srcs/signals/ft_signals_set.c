@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/22 15:21:58 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:02:04 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	set_signals(int sigmode)
 	}
 	else if (sigmode == SIGHDC)
 	{
-		set_sig_handlers(SIGINT, sigint_handler_hd);
+		set_sig_handlers(SIGINT, sigint_handler_hdc);
 		set_sig_handlers(SIGQUIT, SIG_IGN);
 	}
 	else if (sigmode == SIGHD)
 	{
-		set_sig_handlers(SIGINT, SIG_IGN);
+		set_sig_handlers(SIGINT, sigint_handler_hd);
 		set_sig_handlers(SIGCHLD, SIG_IGN);
 	}
 }

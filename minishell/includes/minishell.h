@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/22 15:54:52 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:01:45 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,9 +421,9 @@ char		**get_array_env(void);
 //signals functions
 
 void		handle_sigchild(int sig);
-void		sigint_handler_hd(int sig);
+void	sigint_handler_hd(int sig);
+void		sigint_handler_hdc(int sig);
 void		sigquit_handler_cmd(int sig);
-void		sigint_handler_cmd(int sig);
 void		sigint_handler_cmd(int sig);
 
 //signals setting
