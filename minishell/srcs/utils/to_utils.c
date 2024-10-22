@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:11:25 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/22 15:41:32 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:55:11 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ long long	ft_atoi_lng(const char *nptr)
 {
 	long long	res;
 	long long	sign;
-	int		i;
+	int			i;
 
 	res = 0;
 	i = 0;
