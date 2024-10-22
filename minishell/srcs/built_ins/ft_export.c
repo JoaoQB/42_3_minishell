@@ -6,11 +6,11 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:51:31 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:58:40 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:18:12 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static char	*export_append_values(t_env *new, t_env *current)
 {

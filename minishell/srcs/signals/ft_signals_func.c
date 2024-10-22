@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_signals2.c                                      :+:      :+:    :+:   */
+/*   ft_signals_func.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 14:53:06 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 15:39:07 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:25:09 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,22 @@ void	handle_sigchild(int sig)
 	}
 }
 
-int	set_sig_handlers(int signal, void (*func_name)(int))
+void	sigint_handler_hd(int sig)
 {
-	struct sigaction	sa;
+	(void)sig;
+	ft_exit(2);
+}
 
-	sa.sa_handler = func_name;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	if (sigaction(signal, &sa, NULL) == -1)
-	{
-		print_err("sigaction failed\n");
-		return (1);
-	}
-	return (0);
+void	sigquit_handler_cmd(int sig)
+{
+	(void)sig;
+	print_err("%s\n", " Quit (core dumped)");
+	minishell()->status = 131;
+}
+
+void	sigint_handler_cmd(int sig)
+{
+	(void)sig;
+	printf("\n");
+	minishell()->status = 130;
 }

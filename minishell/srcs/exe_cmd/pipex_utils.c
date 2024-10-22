@@ -1,92 +1,99 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 04:43:44 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/20 15:37:18 by fandre-b         ###   ########.fr       */
+/*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
+/*   Updated: 2024/10/22 12:43:13 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_close(int *fd)
+void	process_child_pid(t_pipex *curr_pipex_s)
 {
-	if (*fd > 2)
+	int		status;
+
+	status = 0;
+	if (curr_pipex_s->pid < 1)
+		return ;
+	if (waitpid(curr_pipex_s->pid, &status, WNOHANG))
 	{
-		if (close(*fd) == -1)
-		{
-			*fd = -1;
-			return (-1);
-		}
-		*fd = -1;
+		ft_close(&curr_pipex_s->pipe_fd[0]);
+		ft_close(&curr_pipex_s->pipe_fd[1]);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			status = 128 + WTERMSIG(status);
+		curr_pipex_s->pid = -1;
 	}
-	return (0);
+	if (status > 0)
+		curr_pipex_s->status = status;
 }
 
-char	*ft_strnjoin(char *old_str, char *str_add, int size)
+int	process_child_pipes(t_pipex *pipex_s)
 {
-	int		len;
-	int		i;
-	char	*new_str;
+	t_pipex	*curr_pipex_s;
+	int		rep;
 
-	if (!str_add || !str_add[0] || size == 0)
-		return (old_str);
-	len = 0;
-	while (old_str && old_str[len])
-		len++;
-	i = 0;
-	while (str_add && str_add[i])
-		i++;
-	if (i < size || size == -1)
-		size = i;
-	new_str = (char *) safe_malloc(size + len + 1);
-	i = -1;
-	while (old_str && ++i < len)
-		new_str[i] = old_str[i];
-	i = -1;
-	while (str_add && ++i < size)
-		new_str[len + i] = str_add[i];
-	new_str[len + i] = '\0';
-	return (free(old_str), new_str);
-}
-
-void	critical_error(char *err_print)
-{
-	perror(err_print);
-	ft_exit(1);
-}
-
-void	*safe_malloc(size_t size)
-{
-	void	*ptr;
-
-	ptr = (void *) malloc(size);
-	if (ptr == NULL)
-		critical_error("malloc failed");
-	return (ptr);
-}
-
-void	print_err(char *format, ...)
-{
-	va_list	args;
-	int		fd_err;
-
-	fd_err = minishell()->err_fd[1];
-	va_start(args, format);
-	while (*format)
+	set_signals(SIGCMD);
+	while (pipex_s->next)
+		pipex_s = pipex_s->next;
+	curr_pipex_s = pipex_s;
+	rep = 1;
+	while (rep)
 	{
-		if (*format == '%')
+		rep = 0;
+		while (curr_pipex_s != NULL)
 		{
-			format++;
-			if (*format == 's')
-				ft_putstr_fd(va_arg(args, char *), fd_err);
+			if (curr_pipex_s->pid > 0)
+			{
+				rep = 1;
+				process_child_pid(curr_pipex_s);
+			}
+			curr_pipex_s = curr_pipex_s->prev;
 		}
-		else
-			write(fd_err, format, 1);
-		format++;
+		if (rep == 1)
+			curr_pipex_s = pipex_s;
 	}
-	va_end(args);
+	return (pipex_s->status);
+	close_all_fd(NULL);
+}
+
+//TODO perror?
+void	read_error_fd(void)
+{
+	int			ret;
+	static char	buffer[10];
+
+	ft_close(&minishell()->err_fd[1]);
+	ret = 1;
+	while (ret)
+	{
+		ret = read(minishell()->err_fd[0], buffer, 10);
+		if (ret > 0)
+			write(2, buffer, ret);
+	}
+	if (ret == -1)
+		perror("read error");
+	ret = -1;
+	while (ret++ < 10)
+		buffer[ret] = 0;
+	ft_close(&minishell()->err_fd[0]);
+}
+
+void	create_error_fd(void)
+{
+	int	err_fd[2];
+
+	if (pipe(err_fd) == -1)
+	{
+		print_err("%s\n", strerror(errno));
+		minishell()->status = 1;
+		return ;
+	}
+	minishell()->err_fd[0] = err_fd[0];
+	minishell()->err_fd[1] = err_fd[1];
 }

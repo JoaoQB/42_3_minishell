@@ -6,7 +6,7 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:37:46 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/21 18:54:30 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:13:50 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	check_cmd_path(t_pipex *pipex_s)
 	return (0);
 }
 
-static char	*find_in_path(char *paths, t_pipex *pipex_s)
+char	*find_in_path(char *paths, t_pipex *pipex_s)
 {
 	char	*temp;
 	char	*path_dir;

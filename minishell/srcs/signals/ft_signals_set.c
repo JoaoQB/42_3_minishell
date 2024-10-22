@@ -1,37 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_signals.c                                       :+:      :+:    :+:   */
+/*   ft_signals_set.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:35:28 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/20 14:56:44 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:21:58 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	sigint_handler_hd(int sig)
-{
-	(void)sig;
-	ft_exit(2);
-}
-
-static void	sigquit_handler_cmd(int sig)
-{
-	(void)sig;
-	print_err("%s\n", " Quit (core dumped)");
-}
-
-static void	sigint_handler_cmd(int sig)
-{
-	(void)sig;
-	printf("\n");
-	minishell()->status = 130;
-}
-
-static void	sigint_handler_main(int sig)
+void	sigint_handler_main(int sig)
 {
 	(void)sig;
 	printf("\n");
@@ -64,4 +45,19 @@ void	set_signals(int sigmode)
 		set_sig_handlers(SIGINT, SIG_IGN);
 		set_sig_handlers(SIGCHLD, SIG_IGN);
 	}
+}
+
+int	set_sig_handlers(int signal, void (*func_name)(int))
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = func_name;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	if (sigaction(signal, &sa, NULL) == -1)
+	{
+		print_err("sigaction failed\n");
+		return (1);
+	}
+	return (0);
 }

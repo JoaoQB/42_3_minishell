@@ -6,11 +6,11 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/18 22:23:25 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:18:04 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	invalid_exit(t_pipex *pipex, int flag)
 {

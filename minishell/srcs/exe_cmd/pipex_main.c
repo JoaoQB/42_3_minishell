@@ -6,39 +6,67 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 04:44:00 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/20 15:36:42 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:24:07 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	process_child_pipes(t_pipex *pipex_s)
+void	exe_cmd_child(t_pipex *pipex_s, char **envp)
 {
-	t_pipex	*curr_pipex_s;
-	int		rep;
+	if (pipex_s->status || minishell()->status || !pipex_s->cmd)
+		ft_exit_pid(pipex_s);
+	if (pipex_s->pipe_fd[0] != STDIN_FILENO)
+		dup2(pipex_s->pipe_fd[0], STDIN_FILENO);
+	if (pipex_s->pipe_fd[1] != STDOUT_FILENO)
+		dup2(pipex_s->pipe_fd[1], STDOUT_FILENO);
+	dup2(minishell()->err_fd[1], STDERR_FILENO);
+	close_all_fd(pipex_s);
+	if (edge_cases(pipex_s) || special_edge_cases(pipex_s))
+		ft_exit_pid(pipex_s);
+	pipex_s->status = ft_n_update_path(pipex_s);
+	if (pipex_s->status || !pipex_s->path)
+		ft_exit_pid(pipex_s);
+	else if (execve(pipex_s->path, pipex_s->cmd, envp) == -1)
+		pipex_s->status = errno;
+	ft_exit_pid(pipex_s);
+}
 
-	set_signals(SIGCMD);
-	while (pipex_s->next)
-		pipex_s = pipex_s->next;
-	curr_pipex_s = pipex_s;
-	rep = 1;
-	while (rep)
+int	check_for_pipeline(void)
+{
+	t_pipex	*first_pipe;
+
+	first_pipe = minishell()->pipex;
+	if (first_pipe && !first_pipe->next && !find_next_pipe(first_pipe->token))
+		if (first_pipe->status || special_edge_cases(first_pipe))
+			return (0);
+	return (1);
+}
+
+void	new_process_tokens(void)
+{
+	t_token	*token_s;
+	t_pipex	*pipex_s;
+
+	minishell()->status = 0;
+	token_s = minishell()->tokens;
+	while (token_s && minishell()->status == 0)
 	{
-		rep = 0;
-		while (curr_pipex_s != NULL)
+		pipex_s = add_back_pipex_s();
+		ft_n_update_cmds(pipex_s);
+		if (!check_for_pipeline())
+			break ;
+		ft_n_update_fds(pipex_s);
+		pipex_s->pid = fork();
+		if (pipex_s->pid == -1)
+			return (perror("fork failed"));
+		else if (pipex_s->pid == 0)
 		{
-			if (curr_pipex_s->pid > 0)
-			{
-				rep = 1;
-				process_child_pid(curr_pipex_s);
-			}
-			curr_pipex_s = curr_pipex_s->prev;
+			set_signals(SIGCMD);
+			exe_cmd_child(pipex_s, minishell()->menv);
 		}
-		if (rep == 1)
-			curr_pipex_s = pipex_s;
+		token_s = find_next_pipe(pipex_s->token);
 	}
-	return (pipex_s->status);
-	close_all_fd(NULL);
 }
 
 int	get_final_status(void)
@@ -51,42 +79,6 @@ int	get_final_status(void)
 	while (pipex_s->next)
 		pipex_s = pipex_s->next;
 	return (pipex_s->status);
-}
-
-void	create_error_fd(void)
-{
-	int	err_fd[2];
-
-	if (pipe(err_fd) == -1)
-	{
-		print_err("%s\n", strerror(errno));
-		minishell()->status = 1;
-		return ;
-	}
-	minishell()->err_fd[0] = err_fd[0];
-	minishell()->err_fd[1] = err_fd[1];
-}
-
-//TODO perror?
-void	read_error_fd(void)
-{
-	int			ret;
-	static char	buffer[10];
-
-	ft_close(&minishell()->err_fd[1]);
-	ret = 1;
-	while (ret)
-	{
-		ret = read(minishell()->err_fd[0], buffer, 10);
-		if (ret > 0)
-			write(2, buffer, ret);
-	}
-	if (ret == -1)
-		perror("read error");
-	ret = -1;
-	while (ret++ < 10)
-		buffer[ret] = 0;
-	ft_close(&minishell()->err_fd[0]);
 }
 
 int	ft_shell_pipex(void)

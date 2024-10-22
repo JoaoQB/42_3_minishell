@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_struct2.c                                    :+:      :+:    :+:   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 16:25:14 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/21 18:51:10 by fandre-b         ###   ########.fr       */
+/*   Created: 2024/10/22 12:25:22 by fandre-b          #+#    #+#             */
+/*   Updated: 2024/10/22 15:14:38 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	input_error(t_token *token)
+void	input_error(t_token *token)
 {
 	ft_putstr_fd("warning: here-document delimited", 2);
 	ft_putstr_fd(" by end-of-file (wanted ", 2);
@@ -75,4 +75,22 @@ int	read_heredoc(t_token *tokens_s)
 		set_signals(SIGMAIN);
 	}
 	return (piper[0]);
+}
+
+void	ft_update_heredoc(t_token *tk_s, t_pipex *pipex_s)
+{
+	while (tk_s && tk_s->type != PIPE)
+	{
+		if (minishell()->status)
+			break ;
+		if (tk_s->type == HERE_DOC)
+			ft_close (&pipex_s->pipe_fd[0]);
+		if (tk_s->type == HERE_DOC && tk_s->next && *tk_s->next->value)
+		{
+			pipex_s->pipe_fd[0] = read_heredoc(tk_s->next);
+			minishell()->temp_fd[0] = -2;
+			minishell()->temp_fd[1] = -2;
+		}
+		tk_s = tk_s->next;
+	}
 }

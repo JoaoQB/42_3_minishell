@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   len_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:36:22 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/25 12:25:47 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:00:28 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,31 @@ int	ft_strlen(const char *str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+char	*ft_strnjoin(char *old_str, char *str_add, int size)
+{
+	int		len;
+	int		i;
+	char	*new_str;
+
+	if (!str_add || !str_add[0] || size == 0)
+		return (old_str);
+	len = 0;
+	while (old_str && old_str[len])
+		len++;
+	i = 0;
+	while (str_add && str_add[i])
+		i++;
+	if (i < size || size == -1)
+		size = i;
+	new_str = (char *) safe_malloc(size + len + 1);
+	i = -1;
+	while (old_str && ++i < len)
+		new_str[i] = old_str[i];
+	i = -1;
+	while (str_add && ++i < size)
+		new_str[len + i] = str_add[i];
+	new_str[len + i] = '\0';
+	return (free(old_str), new_str);
 }

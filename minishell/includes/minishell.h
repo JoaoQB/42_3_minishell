@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:17:04 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/21 14:51:16 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:23:21 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ void	free_double_array(char **array);
 void	ft_free(char **str);
 
 /* cleanup_struct.c */
+void	free_pipex_s(void);
 void	free_tokens(t_token **first);
 void	free_env(t_env **first);
 
@@ -165,6 +166,7 @@ void	export_set_ordered(t_env **first, t_env *new);
 int		count_arrays(char **array);
 int		ft_strlen(const char *str);
 int		count_words(const char *str);
+char	*ft_strnjoin(char *old_str, char *str_add, int size);
 
 /* str_utils.c */
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -219,6 +221,7 @@ char	*extract_inside_quotes(char *str);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
+void	print_err(char *format, ...);
 
 /* to_utils.c */
 int		ft_atoi(const char *nptr);
@@ -280,7 +283,7 @@ t_token	*var_replace(t_token *current, int i);
 char	*var_replace_qstnmrk(void);
 char	*var_check_env(t_env *env, char *str);
 
-/* heredoc_expand.c */
+/* here_doc expand*/
 char	*heredoc_expand(t_token *delim, char *str);
 
 /* token_check_before_pipex.c */
@@ -299,40 +302,6 @@ void	syntax_error_msg(void);
 void	syntax_error_pipe(void);
 
 /************************/
-/******** PIPEX *********/
-/************************/
-
-int		ft_shell_pipex(void);
-int		process_child_pipes(t_pipex *pipex_s);
-void	free_pipex_s(void);
-void	close_all_fd(t_pipex *pipex_s);
-
-//Create pipex_s structure
-// int		ft_process_tokens_s(void);
-// int		ft_create_pipeline(void);
-// int		ft_update_pipex_s(t_token *tokens_s, t_pipex *pipex_s);
-// int		ft_update_cmds(t_token *tokens_s, t_pipex *pipex_s);
-void	ft_update_fds(t_token *tokens_s, t_pipex *pipex_s);
-int		read_heredoc(t_token *tokens_s);
-t_pipex	*ft_init_pipex_s(void);
-
-//Execute pipex cmds
-// void	ft_exe_pipex_s(void);
-// void	execute_command(t_pipex *pipex_s, char **envp);
-int		ft_n_update_path(t_pipex *pipex_s);
-char	*get_cmd_path(t_pipex *pipex_s);
-int		check_cmd_path(t_pipex *pipex_s);
-int		is_directory(char *path);
-int		file_access(char *file_path);
-void	exe_cmd_child(t_pipex *pipex_s, char **envp);
-
-//pipex_utils
-char	*ft_strnjoin(char *old_str, char *str_add, int size);
-// char	*ft_strstr(const char *big, const char *little);
-void	*safe_malloc(size_t size);
-int		ft_is_path(char *str);
-
-/************************/
 /******* HISTORY ********/
 /************************/
 
@@ -343,11 +312,74 @@ void	rt_one_history(void);
 void	free_history(void);
 
 /************************/
+/***** PROCESS PIPES ****/
+/************************/
+
+//pipe init/processing pipex_struct.c
+t_token	*find_next_pipe(t_token *tokens_s);
+void	ft_n_update_fds(t_pipex *pipex_s);
+void	ft_n_update_cmds(t_pipex *pipex_s);
+t_pipex	*ft_init_pipex_s(void);
+t_pipex	*add_back_pipex_s(void);
+
+/************************/
+/***** HANDLE FILES *****/
+/************************/
+
+int		ft_close(int *fd);
+void	close_all_fd(t_pipex *pipex_s);
+int		ft_process_redirect(t_token *tk_s, int *fd);
+void	ft_update_fds(t_token *tk_s, t_pipex *pipex_s);
+
+/************************/
+/****** HERE DOC ********/
+/************************/
+
+void	input_error(t_token *token);
+void	heredoc_child(int *piper, t_token *tokens_s);
+int		read_heredoc(t_token *tokens_s);
+void	ft_update_heredoc(t_token *tk_s, t_pipex *pipex_s);
+
+/************************/
 /****** EDGE CASES ******/
 /************************/
 
 int		special_edge_cases(t_pipex *pipex_s);
 int		edge_cases(t_pipex *pipex_s);
+
+/************************/
+/******** PIPEX *********/
+/************************/
+
+//pipex_main.c
+int		check_for_pipeline(void);
+void	exe_cmd_child(t_pipex *pipex_s, char **envp);
+void	new_process_tokens(void);
+int		get_final_status(void);
+int		ft_shell_pipex(void);
+
+// pipex_utils
+
+//pipex utils //exe_cmd.c
+void	read_error_fd(void);
+void	create_error_fd(void);
+void	process_child_pid(t_pipex *curr_pipex_s);
+int		process_child_pipes(t_pipex *pipex_s);
+
+/************************/
+/***** FIND EXE PATH ****/
+/************************/
+
+//path
+int		is_directory(char *path);
+int		check_cmd_path(t_pipex *pipex_s);
+char	*find_in_path(char *paths, t_pipex *pipex_s);
+char	*get_cmd_path(t_pipex *pipex_s);
+int		ft_n_update_path(t_pipex *pipex_s);
+
+//path utils
+int		file_access(char *file_path);
+int		ft_is_path(char *str);
 
 /************************/
 /****** BUILT INS *******/
@@ -361,6 +393,7 @@ void	run_unset(t_pipex *pipex_s);
 int		run_export(t_pipex *pipex_s);
 
 /* ft_exit.c */
+void	ft_exit_pid(t_pipex *pipex);
 void	ft_exit(int status);
 void	ft_exit_builtins(t_pipex *pipex);
 
@@ -376,8 +409,6 @@ void	export_check(t_env *new);
 /***** ENV FUNCTIONS ****/
 /************************/
 
-// ft_getenv(char *var_name); TODO
-// ft_setenv(char *var_name, char *var_value, int overwrite); TODO
 void	my_print_env(void);
 void	ft_setenv(char *var_nm, char *var_vl, int ovwr);
 char	*ft_getenv(char *var_name);
@@ -387,35 +418,26 @@ char	**get_array_env(void);
 /************************/
 /*** SIGNAL HANDLERS ****/
 /************************/
-/* handle_sigchild indica existencia do fim de um child e da exit ao msm */
 
-// int setup_signal_handlers(int process_type);
-// void	handle_sigquit(int sig);
-// void	handle_sigint(int sig);
-void	set_signals(int sigmode);
-int		set_sig_handlers(int signal, void (*func_name)(int));
+//signals functions
+
 void	handle_sigchild(int sig);
-void	ft_exit_pid(t_pipex *pipex);
-t_main	*minishell(void);
+void	sigint_handler_hd(int sig);
+void	sigquit_handler_cmd(int sig);
+void	sigint_handler_cmd(int sig);
+void	sigint_handler_cmd(int sig);
 
-void	print_err(char *format, ...);
+//signals setting
+void	sigint_handler_main(int sig);
+int		set_sig_handlers(int signal, void (*func_name)(int));
+void	set_signals(int sigmode);
 
 /************************/
-/*** NEW PIPEX ****/
+/***** OVERALL UTILS ****/
 /************************/
 
-// void	free_pipex_node(t_pipex *pipex_s);
-int		ft_close(int *fd);
-void	new_process_tokens(void); //corre todos os tokens e cria a struct
-t_pipex	*add_back_pipex_s(void); //adiciona o novo pipe a stuct
-		//dentro de cada cria da update aos fd
-void	ft_n_update_fds(t_pipex *pipex_s);
-void	ft_n_update_cmds(t_pipex *pipex_s);
-t_token	*find_next_pipe(t_token *tokens_s);
-void	process_child_pid(t_pipex *curr_pipex_s);
-int		ft_process_redirect(t_token *tk_s, int *fd);
-// void	ft_update_fds2(t_token *tk_s, t_pipex *pipex_s);
-int		check_for_pipeline(void);
 void	critical_error(char *err_print);
+void	*safe_malloc(size_t size);
+t_main	*minishell(void);
 
 #endif

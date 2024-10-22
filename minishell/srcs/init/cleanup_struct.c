@@ -6,11 +6,26 @@
 /*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 17:41:15 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/09/19 05:01:51 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:54:17 by fandre-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	free_pipex_s(void)
+{
+	t_pipex	*temp;
+
+	close_all_fd(minishell()->pipex);
+	while (minishell()->pipex)
+	{
+		temp = minishell()->pipex;
+		minishell()->pipex = temp->next;
+		free_double_array(temp->cmd);
+		free(temp->path);
+		free(temp);
+	}
+}
 
 void	free_env(t_env **first)
 {
