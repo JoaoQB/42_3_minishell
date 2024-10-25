@@ -6,7 +6,7 @@
 /*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:56:03 by jqueijo-          #+#    #+#             */
-/*   Updated: 2024/10/22 15:46:58 by jqueijo-         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:26:46 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static bool	is_valid_status(char *str)
 		return (false);
 	errno = 0;
 	status = ft_atoi_lng(str);
-	if (errno == ERANGE)
+	if (errno == ERANGE || status > LLONG_MAX || status < LLONG_MIN)
 		return (false);
 	return (true);
 }

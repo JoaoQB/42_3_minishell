@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fandre-b <fandre-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jqueijo- <jqueijo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:51:15 by fandre-b          #+#    #+#             */
-/*   Updated: 2024/10/20 15:36:26 by fandre-b         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:16:01 by jqueijo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	get_history(t_hist *hist_s, int index)
 			str_token = temp_s->usr_input;
 			if (!str_token)
 				break ;
-			print_err("%d %s\n", temp_s->idx, str_token);
+			printf("%d %s\n", temp_s->idx, str_token);
 			temp_s = temp_s->next;
 		}
 	}
