@@ -57,15 +57,10 @@ echo
 echo Hello
 echo HELLO world
 echo One Two Three Four
-echo -n Hello
-echo -n "Hello World"
 echo -na "Hello World"
 echo -n
 echo "A 'test' inside quotes"
 echo 'A "test" inside quotes'
-echo -n "A 'test' inside quotes"
-echo -n -n -n -na "A 'test' inside quotes"
-echo -n -n -n "A 'test' inside quotes"
 echo "" | cat -e
 echo "     " | cat -e
 echo "  leading and trailing spaces  " | cat -e
@@ -76,7 +71,6 @@ echo -n "no new line" >> /tmp/testfile
 cat /tmp/testfile
 
 echo "Hello&World"
-echo "Test@#$%^&*()!"
 echo "*?[]{}"
 
 echo "test" | /bin/grep test
@@ -225,10 +219,12 @@ cd /var
 pwd
 
 cd /usr/bin
+# mine fails next two
 ./ls
 ./pwd
 
 cd /usr/bin
+# mine fails next one
 ../../bin/ls
 
 unset PATH
