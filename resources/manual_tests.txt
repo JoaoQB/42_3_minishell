@@ -1,0 +1,5 @@
+cat > $empty | ls
+cat << END | cat << ola
+echo HELLO WORLD"||"'<>>'$""$"ola"$"$USER"|cat -e
+$epmty | cat -e
+$epmty | cat Makefile

@@ -76,6 +76,11 @@ echo "*?[]{}"
 echo "test" | /bin/grep test
 echo "hello world" | /bin/cut -d' ' -f1
 
+echo $"" $NOT $NOT
+export VAR="ls -la"
+echo $VAR
+echo "$VAR"
+
 EXIT
 
 exit
